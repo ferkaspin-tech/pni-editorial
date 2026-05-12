@@ -1,0 +1,1852 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PNI — Edición Esencial · Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" />
+<style>
+  /* ============================================================
+     PNI v3 — Editorial
+     Magazine-grade typography. Hairlines as architecture.
+     No decorative numbering. No bordered cards. No chart SVGs.
+     ============================================================ */
+  :root {
+    --navy:     #0E1B2D;
+    --navy-2:   #0A1421;
+    --teal:     #0F4C5C;
+    --lavender: #ACA2C9;
+    --paper:    #F2F3F5;
+    --bone:     #EAE7DE;
+
+    /* alpha tokens on paper */
+    --ink:     rgba(14, 27, 45, 1);
+    --ink-85:  rgba(14, 27, 45, 0.86);
+    --ink-65:  rgba(14, 27, 45, 0.66);
+    --ink-45:  rgba(14, 27, 45, 0.46);
+    --ink-25:  rgba(14, 27, 45, 0.26);
+    --ink-12:  rgba(14, 27, 45, 0.12);
+
+    /* alpha tokens on navy */
+    --pp:     rgba(242, 243, 245, 1);
+    --pp-85:  rgba(242, 243, 245, 0.86);
+    --pp-65:  rgba(242, 243, 245, 0.66);
+    --pp-45:  rgba(242, 243, 245, 0.46);
+    --pp-25:  rgba(242, 243, 245, 0.26);
+    --pp-12:  rgba(242, 243, 245, 0.12);
+
+    --serif: "Playfair Display", "Times New Roman", serif;
+    --sans:  "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --maxw: 1320px;
+    --pad: clamp(24px, 4.6vw, 72px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--pp);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+  ::selection { background: var(--lavender); color: var(--navy); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+
+  /* ============================================================
+     TYPE SYSTEM
+     ============================================================ */
+  .label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    display: inline-block;
+  }
+  .label.on-paper { color: var(--ink-65); }
+  .label.lav { color: var(--lavender); }
+  .label.teal { color: var(--teal); }
+
+  .h-display {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(46px, 7.4vw, 116px);
+    line-height: 0.96;
+    letter-spacing: -0.028em;
+    color: var(--pp);
+    text-wrap: balance;
+  }
+  .h-display em { font-style: italic; color: var(--lavender); font-weight: 400; }
+
+  .h-section {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(34px, 4.6vw, 68px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    color: var(--pp);
+    text-wrap: balance;
+  }
+  .h-section em { font-style: italic; color: var(--lavender); font-weight: 400; }
+  .h-section.on-paper { color: var(--ink); }
+  .h-section.on-paper em { color: var(--teal); }
+
+  .h-card {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(22px, 2.1vw, 30px);
+    line-height: 1.16;
+    letter-spacing: -0.012em;
+    color: var(--pp);
+  }
+  .h-card em { font-style: italic; color: var(--lavender); font-weight: 400; }
+  .h-card.on-paper { color: var(--ink); }
+  .h-card.on-paper em { color: var(--teal); }
+
+  .lede {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(16px, 1.25vw, 18px);
+    line-height: 1.65;
+    color: var(--pp-85);
+    max-width: 56ch;
+  }
+  .lede.on-paper { color: var(--ink-85); }
+  .lede strong { color: var(--pp); font-weight: 500; }
+  .lede.on-paper strong { color: var(--ink); font-weight: 500; }
+
+  .meta {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    font-weight: 500;
+  }
+  .meta.on-paper { color: var(--ink-65); }
+
+  /* ============================================================
+     BUTTONS
+     ============================================================ */
+  .btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 17px 26px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .btn::after {
+    content: "→";
+    font-family: var(--serif);
+    font-size: 17px;
+    letter-spacing: 0;
+    transition: transform .25s ease;
+  }
+  .btn:hover::after { transform: translateX(6px); }
+
+  .btn-fill {
+    background: var(--pp);
+    color: var(--navy);
+  }
+  .btn-fill:hover { background: var(--lavender); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--pp);
+    border: 1px solid var(--pp-45);
+  }
+  .btn-ghost:hover { border-color: var(--pp); background: rgba(242,243,245,0.06); }
+
+  .btn-dark {
+    background: var(--navy);
+    color: var(--pp);
+  }
+  .btn-dark:hover { background: var(--teal); }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  nav.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 18px var(--pad);
+    background: rgba(14, 27, 45, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--pp-12);
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .nav-mark {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .nav-badge {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4px;
+  }
+  .nav-badge img { width: 100%; height: 100%; object-fit: contain; }
+  .nav-wordmark {
+    line-height: 1;
+  }
+  .nav-wordmark .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 38px;
+    color: var(--pp);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .nav-wordmark .sub {
+    display: block;
+    margin-top: 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 38px;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--pp);
+    font-weight: 400;
+    line-height: 1;
+  }
+    font-size: 26px;
+    color: var(--pp);
+    letter-spacing: -0.015em;
+    line-height: 1;
+  }
+  .nav-wordmark .sub {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+  }
+  .nav-links {
+    display: flex; gap: 36px;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--pp-85);
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--lavender); }
+  .nav-cta {
+    padding: 12px 22px;
+    border: 1px solid var(--pp-45);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--pp);
+    font-weight: 500;
+    transition: all .2s;
+  }
+  .nav-cta:hover { background: var(--pp); color: var(--navy); border-color: var(--pp); }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    padding: 152px var(--pad) 72px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background:
+      radial-gradient(ellipse 60% 50% at 88% 12%, rgba(172, 162, 201, 0.14), transparent 70%),
+      radial-gradient(ellipse 70% 50% at 8% 92%, rgba(15, 76, 92, 0.22), transparent 70%),
+      var(--navy);
+  }
+  .hero-inner { max-width: var(--maxw); margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
+
+  .hero-rule {
+    display: grid;
+    grid-template-columns: 0.7fr 1fr 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+    border-top: 1px solid var(--pp-25);
+    padding-top: 18px;
+  }
+  .hero-rule > span:not(:first-child) {
+    padding-left: 18px;
+    border-left: 1px solid var(--pp-12);
+  }
+
+  .hero-headline-block {
+    flex: 1;
+    display: flex; align-items: center;
+    margin: clamp(48px, 7vw, 96px) 0;
+  }
+  .hero-headline {
+    max-width: 18ch;
+  }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 48px;
+    border-top: 1px solid var(--pp-25);
+    padding-top: 36px;
+    align-items: start;
+  }
+  .hero-foot-lede p:first-child { font-size: clamp(16px, 1.2vw, 18px); }
+  .hero-foot-lede p:last-of-type { margin-top: 12px; font-size: 14px; color: var(--pp-65); }
+
+  .hero-ctas {
+    display: flex; gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .hero-disclaimer {
+    margin-top: 26px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--pp-65);
+    max-width: 52ch;
+    text-transform: uppercase;
+  }
+
+  .hero-stat-block {
+    border-top: 1px solid var(--pp-12);
+    padding-top: 18px;
+  }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 4.2vw, 56px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--pp);
+  }
+  .hero-stat-num small {
+    font-size: 0.4em;
+    letter-spacing: 0.05em;
+    color: var(--pp-65);
+    margin-left: 6px;
+    vertical-align: 0.4em;
+    font-family: var(--sans);
+    font-weight: 500;
+  }
+  .hero-stat-lbl {
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* ============================================================
+     SECTION FRAME
+     ============================================================ */
+  section.block { padding: clamp(96px, 11vw, 168px) var(--pad); position: relative; }
+  section.block.tight-top { padding-top: clamp(40px, 4vw, 64px); }
+  section.block.paper { background: var(--paper); color: var(--ink); }
+  section.block.navy { background: var(--navy); color: var(--pp); }
+
+  /* section header — label + h2 side by side; lede underneath spanning */
+  .sec-head {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+    margin-bottom: clamp(56px, 7vw, 100px);
+  }
+  .sec-head-label {
+    border-top: 1px solid var(--pp-25);
+    padding-top: 22px;
+  }
+  .sec-head-label.on-paper { border-top-color: var(--ink-25); }
+  .sec-head h2 {
+    /* uses .h-section */
+  }
+  .sec-head .lede-wrap {
+    margin-top: 22px;
+  }
+
+  /* ============================================================
+     PROBLEMA
+     ============================================================ */
+  .problema-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--pp-25);
+  }
+  .problema-col {
+    padding: 56px 56px 56px 0;
+  }
+  .problema-col.right {
+    padding: 56px 0 56px 56px;
+    border-left: 1px solid var(--pp-25);
+  }
+  .problema-col .col-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .problema-col .col-label::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--pp-45);
+    flex-shrink: 0;
+  }
+  .problema-col.right .col-label::before { background: var(--lavender); }
+  .problema-col h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(22px, 2.1vw, 28px);
+    line-height: 1.18;
+    letter-spacing: -0.012em;
+    color: var(--pp);
+    margin-bottom: 22px;
+    max-width: 22ch;
+  }
+  .problema-col h3 em { font-style: italic; color: var(--lavender); font-weight: 400; }
+  .problema-col > p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--pp-85);
+    max-width: 42ch;
+    margin-bottom: 14px;
+  }
+  .problema-list {
+    list-style: none;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--pp-12);
+  }
+  .problema-list li {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--pp-12);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--pp-85);
+  }
+  .problema-list li::before {
+    content: ""; width: 8px; height: 1px; background: var(--pp-45);
+    align-self: center;
+    margin-top: 2px;
+  }
+  .problema-col.right .problema-list li::before { background: var(--lavender); }
+
+  .pull-quote {
+    margin: clamp(72px, 9vw, 120px) auto 0;
+    max-width: 26ch;
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 3.2vw, 42px);
+    line-height: 1.22;
+    letter-spacing: -0.018em;
+    color: var(--pp);
+  }
+  .pull-quote em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+  .pull-quote::before,
+  .pull-quote::after {
+    content: "";
+    display: block;
+    width: 48px; height: 1px;
+    background: var(--pp-25);
+    margin: 28px auto;
+  }
+
+  /* ============================================================
+     TRANSFORMACIÓN (paper)
+     ============================================================ */
+  .transform-list {
+    border-top: 1px solid var(--ink);
+  }
+  .transform-row {
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr 1.4fr;
+    gap: clamp(28px, 4vw, 60px);
+    padding: clamp(32px, 4vw, 48px) 0;
+    border-bottom: 1px solid var(--ink-12);
+    align-items: baseline;
+    transition: padding .25s ease, background .25s ease;
+  }
+  .transform-row:hover {
+    padding-left: 16px;
+    background: linear-gradient(90deg, rgba(15,76,92,0.05), transparent 70%);
+  }
+  .transform-row-tag {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-45);
+    font-weight: 500;
+  }
+  .transform-row h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(20px, 1.85vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .transform-row p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-65);
+  }
+
+  /* ============================================================
+     SISTEMA — three color blocks: teal · lavender · bone
+     ============================================================ */
+  .sistema-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .sistema-piece {
+    padding: 56px 40px 48px;
+    display: flex; flex-direction: column;
+    min-height: 580px;
+    position: relative;
+    overflow: hidden;
+  }
+  .sistema-piece.p1 { background: var(--teal); color: var(--pp); }
+  .sistema-piece.p2 { background: var(--lavender); color: var(--navy); }
+  .sistema-piece.p3 { background: var(--bone); color: var(--navy); }
+  .sistema-piece-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .sistema-piece-head .swatch {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .sistema-piece-role {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+  .sistema-piece h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(30px, 3.4vw, 46px);
+    line-height: 1;
+    letter-spacing: -0.022em;
+    color: inherit;
+    margin-bottom: 22px;
+  }
+  .sistema-piece h3 em { font-style: italic; font-weight: 400; }
+  .sistema-piece.p1 h3 em { color: var(--lavender); }
+  .sistema-piece.p2 h3 em { color: var(--teal); }
+  .sistema-piece.p3 h3 em { color: var(--teal); }
+  .sistema-piece > p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 28ch;
+    opacity: 0.9;
+  }
+  .sistema-piece ul {
+    list-style: none;
+    margin-top: auto;
+    padding-top: 26px;
+    border-top: 1px solid currentColor;
+  }
+  .sistema-piece.p1 ul { border-top-color: var(--pp-25); }
+  .sistema-piece.p2 ul, .sistema-piece.p3 ul { border-top-color: var(--ink-25); }
+  .sistema-piece ul li {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.55;
+    padding: 9px 0;
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    opacity: 0.88;
+  }
+  .sistema-piece ul li::before { content: "—"; opacity: 0.55; }
+
+  .sistema-note {
+    margin-top: clamp(64px, 8vw, 96px);
+    max-width: 48ch;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.4;
+    letter-spacing: -0.008em;
+    color: var(--pp-85);
+    padding-left: 24px;
+    border-left: 1px solid var(--lavender);
+  }
+
+  /* ============================================================
+     PROGRAMA — 4 clases
+     ============================================================ */
+  .programa-head {
+    max-width: 22ch;
+    margin-bottom: clamp(56px, 7vw, 96px);
+  }
+  .programa-head .label { margin-bottom: 28px; display: block; }
+  .programa-head h2 {
+    /* uses .h-section */
+  }
+  .programa-head .lede {
+    margin-top: 28px;
+    max-width: 56ch;
+  }
+
+  .clases {
+    border-top: 1px solid var(--pp-25);
+  }
+  .clase {
+    display: grid;
+    grid-template-columns: 1.1fr 2fr 1.5fr;
+    gap: clamp(28px, 4vw, 56px);
+    padding: clamp(36px, 4.5vw, 56px) 0;
+    border-bottom: 1px solid var(--pp-25);
+    align-items: start;
+    transition: padding .25s ease, background .25s ease;
+  }
+  .clase:hover {
+    padding-left: 16px;
+    background: linear-gradient(90deg, rgba(172,162,201,0.06), transparent 75%);
+  }
+  .clase-week {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    font-weight: 500;
+    line-height: 1;
+  }
+  .clase-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.12;
+    letter-spacing: -0.014em;
+    color: var(--pp);
+    margin-top: 18px;
+    max-width: 16ch;
+  }
+  .clase-body {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--pp-85);
+    max-width: 42ch;
+    padding-top: 4px;
+  }
+  .clase-outcome {
+    padding-left: 22px;
+    border-left: 1px solid var(--lavender);
+  }
+  .clase-outcome-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .clase-outcome-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--pp);
+    max-width: 28ch;
+  }
+
+  /* ============================================================
+     RESULTADOS (paper)
+     ============================================================ */
+  .resultados-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  .resultado {
+    padding: clamp(32px, 3.8vw, 52px) clamp(28px, 3vw, 40px);
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+    transition: background .25s ease;
+    display: flex; flex-direction: column;
+  }
+  .resultado:hover { background: var(--bone); }
+  .resultado-check {
+    width: 26px; height: 26px;
+    border: 1px solid var(--ink-25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 26px;
+  }
+  .resultado-check svg {
+    width: 12px; height: 12px;
+    stroke: var(--teal);
+    stroke-width: 1.5;
+    fill: none;
+  }
+  .resultado h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.22;
+    letter-spacing: -0.008em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .resultado p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-65);
+  }
+
+  /* ============================================================
+     INVERSIÓN
+     ============================================================ */
+  .oferta-head { text-align: left; margin-bottom: clamp(56px, 7vw, 96px); max-width: 56ch; }
+  .oferta-display {
+    font-family: var(--sans);
+    font-weight: 200;
+    font-size: clamp(72px, 11vw, 168px);
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    color: var(--pp);
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .oferta-head .label { display: block; margin-bottom: 28px; }
+  .oferta-head .lede { margin-top: 24px; }
+
+  .oferta-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    border-top: 1px solid var(--pp-25);
+  }
+  .oferta-row.single {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    margin: 0 auto;
+    border-top: none;
+  }
+  .oferta-row.single .price {
+    padding: 0;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .oferta-row.single .price-amt {
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  .oferta-row.single .price-num { font-size: clamp(96px, 13vw, 168px); line-height: 0.95; }
+  .oferta-row.single .price-period { margin-bottom: 36px; }
+  .oferta-row.single .price-sub { max-width: 48ch; margin: 0 auto 40px; }
+  .oferta-row.single ul {
+    margin: 0 auto 40px;
+    text-align: left;
+    display: inline-block;
+    border-top: 1px solid var(--pp-25);
+    border-bottom: 1px solid var(--pp-25);
+    padding: 20px 0;
+  }
+  .price {
+    padding: clamp(40px, 5vw, 64px) clamp(28px, 4vw, 56px) clamp(40px, 5vw, 64px) 0;
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .price.secondary {
+    padding-left: clamp(28px, 4vw, 56px);
+    border-left: 1px solid var(--pp-25);
+  }
+  .price-tag {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 32px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--lavender);
+    font-weight: 500;
+  }
+  .price-tag::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--lavender);
+  }
+  .price.secondary .price-tag { color: var(--pp-65); }
+  .price.secondary .price-tag::before { background: var(--pp-45); }
+  .price h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(30px, 3.2vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.022em;
+    color: var(--pp);
+    margin-bottom: 18px;
+  }
+  .price h3 em { font-style: italic; font-weight: 400; color: var(--lavender); }
+  .price.secondary h3 em { color: var(--pp); }
+  .price-sub {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--pp-85);
+    max-width: 50ch;
+    margin-bottom: 40px;
+  }
+  .price-amt {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 8px;
+  }
+  .price-cur {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    color: var(--pp-65);
+    font-weight: 500;
+  }
+  .price-num {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(72px, 9.2vw, 132px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    color: var(--pp);
+  }
+  .price.feature .price-num { color: var(--lavender); }
+  .price-period {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .price ul {
+    list-style: none;
+    margin: 14px 0 40px;
+    border-top: 1px solid var(--pp-12);
+  }
+  .price ul li {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--pp-85);
+    padding: 13px 0;
+    border-bottom: 1px solid var(--pp-12);
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+  }
+  .price ul li::before { content: "—"; color: var(--pp-45); }
+  .price .btn { align-self: flex-start; margin-top: auto; }
+  .oferta-row.single .price .btn { align-self: center; }
+  .oferta-row.single .price ul { margin: 0 auto 40px; }
+
+  /* ============================================================
+     EDITORIAL IMAGE BAND
+     ============================================================ */
+  .image-band {
+    background: var(--paper);
+    padding: 0;
+  }
+  .image-band image-slot {
+    --is-bg: var(--bone);
+    --is-fg: var(--ink-65);
+  }
+
+  /* ============================================================
+     INTERLUDE — Renacer (paper)
+     ============================================================ */
+  .interlude {
+    padding: clamp(96px, 12vw, 160px) var(--pad);
+    background: var(--paper);
+    color: var(--ink);
+    text-align: center;
+  }
+  .interlude .wrap { max-width: 920px; }
+  .interlude .label { color: var(--ink-65); margin-bottom: 32px; }
+  .interlude h2 {
+    margin: 0 auto 32px;
+    max-width: 24ch;
+  }
+  .interlude p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.65;
+    color: var(--ink-65);
+    max-width: 62ch;
+    margin: 0 auto;
+  }
+
+  /* ============================================================
+     FER KASPIN
+     ============================================================ */
+  .fer {
+    padding: 0;
+    background: var(--navy);
+  }
+  .fer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    min-height: 100vh;
+  }
+  .fer-photo {
+    position: relative;
+    background: var(--navy-2);
+    overflow: hidden;
+  }
+  .fer-photo img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 14%;
+    filter: contrast(1.04) saturate(0.92);
+  }
+  .fer-photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(14,27,45,0) 50%, rgba(14,27,45,0.8) 100%);
+    pointer-events: none;
+  }
+  .fer-photo-credit {
+    position: absolute; left: 36px; bottom: 36px; z-index: 2;
+    color: var(--pp);
+  }
+  .fer-photo-credit .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 0.95;
+    letter-spacing: -0.018em;
+  }
+  .fer-photo-credit .role {
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-85);
+    font-weight: 500;
+  }
+  .fer-copy {
+    padding: clamp(72px, 9vw, 120px) clamp(36px, 5vw, 80px);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    background: var(--navy);
+  }
+  .fer-copy .label { display: block; margin-bottom: 28px; }
+  .fer-copy h2 {
+    margin-bottom: 32px;
+    max-width: 22ch;
+  }
+  .fer-copy .intro {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(15px, 1.18vw, 17px);
+    line-height: 1.68;
+    color: var(--pp-85);
+    max-width: 58ch;
+    margin-bottom: 36px;
+  }
+  .fer-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(18px, 1.55vw, 22px);
+    line-height: 1.45;
+    color: var(--pp);
+    padding: 28px 0;
+    border-top: 1px solid var(--pp-25);
+    border-bottom: 1px solid var(--pp-25);
+    max-width: 58ch;
+    margin-bottom: 40px;
+    letter-spacing: -0.005em;
+  }
+  .fer-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .fer-stat-num {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 3.8vw, 58px);
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    color: var(--lavender);
+  }
+  .fer-stat-lbl {
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--pp-85);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* ============================================================
+     FAQ (paper)
+     ============================================================ */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+  .faq-left .label { margin-bottom: 28px; display: block; }
+  .faq-left .lede { margin-top: 24px; }
+  .faq-list {
+    border-top: 1px solid var(--ink);
+  }
+  details.faq-item {
+    border-bottom: 1px solid var(--ink-25);
+    padding: clamp(24px, 3vw, 36px) 0;
+  }
+  details.faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 28px;
+    gap: 28px;
+    align-items: center;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(18px, 1.6vw, 24px);
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    transition: padding .2s ease;
+  }
+  details.faq-item summary:hover { padding-left: 10px; }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item summary::after {
+    content: "+";
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink-45);
+    text-align: right;
+    line-height: 1;
+    transition: transform .3s ease;
+  }
+  details.faq-item[open] summary::after { content: "−"; }
+  details.faq-item .answer {
+    margin-top: 18px;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-65);
+    max-width: 64ch;
+  }
+
+  /* ============================================================
+     FINAL
+     ============================================================ */
+  .final {
+    padding: clamp(120px, 16vw, 200px) var(--pad);
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 0%, rgba(172,162,201,0.16), transparent 65%),
+      var(--navy);
+    text-align: center;
+  }
+  .final .wrap { max-width: 920px; }
+  .final .label { margin-bottom: 36px; display: block; }
+  .final h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 5.6vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--pp);
+    margin: 0 auto 40px;
+    max-width: 20ch;
+  }
+  .final h2 em { font-style: italic; color: var(--lavender); font-weight: 400; }
+  .final p {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.65;
+    color: var(--pp-85);
+    max-width: 58ch;
+    margin: 0 auto 48px;
+  }
+  .final-after {
+    margin-top: 32px;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+    font-weight: 500;
+  }
+  .final-sig {
+    margin-top: 32px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--pp-85);
+    letter-spacing: -0.005em;
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer.foot {
+    background: var(--navy-2);
+    padding: 64px var(--pad) 36px;
+    border-top: 1px solid var(--pp-12);
+  }
+  .foot-inner { max-width: var(--maxw); margin: 0 auto; }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .foot-mark { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .foot-badge {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding: 4px;
+  }
+  .foot-badge img { width: 100%; height: 100%; object-fit: contain; }
+  .foot-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--pp);
+    line-height: 1;
+  }
+  .foot-name small {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--pp-65);
+  }
+  .foot-tag {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--pp-65);
+    max-width: 36ch;
+    margin-top: 10px;
+  }
+  .foot-col h5 {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--pp);
+    margin-bottom: 20px;
+  }
+  .foot-col a, .foot-col p {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--pp-65);
+    padding: 4px 0;
+    line-height: 1.5;
+  }
+  .foot-col a:hover { color: var(--lavender); }
+  .foot-end {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--pp-12);
+    display: flex; justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pp-45);
+  }
+
+  /* ============================================================
+     REVEAL
+     ============================================================ */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1080px) {
+    .hero-foot { grid-template-columns: 1.4fr 1fr; }
+    .hero-rule { grid-template-columns: repeat(2, 1fr); }
+    .clase { grid-template-columns: 1fr 1.6fr; }
+    .clase-outcome { grid-column: 1 / -1; margin-top: 12px; }
+    .resultados-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+  }
+  @media (max-width: 820px) {
+    .nav-links { display: none; }
+    .nav-inner { gap: 16px; }
+    .nav-badge { width: 56px; height: 56px; }
+    .nav-wordmark .sub { font-size: 22px; }
+    .sec-head { grid-template-columns: 1fr; }
+    .hero-rule { grid-template-columns: 1fr 1fr; }
+    .hero-rule > span:not(:first-child) { padding-left: 0; border-left: none; }
+    .hero-foot { grid-template-columns: 1fr; gap: 32px; }
+    .problema-split { grid-template-columns: 1fr; }
+    .problema-col, .problema-col.right { padding: 48px 0; border-left: none; border-bottom: 1px solid var(--pp-25); }
+    .transform-row { grid-template-columns: 1fr; gap: 12px; padding: 32px 0; }
+    .transform-row-tag { margin-bottom: 4px; }
+    .sistema-grid { grid-template-columns: 1fr; }
+    .sistema-piece + .sistema-piece { padding-left: var(--pad); border-left: none; }
+    .sistema-piece { padding: 48px var(--pad); min-height: auto; }
+    .clase { grid-template-columns: 1fr; gap: 18px; }
+    .clase-title { margin-top: 8px; }
+    .resultados-grid { grid-template-columns: 1fr; }
+    .oferta-row { grid-template-columns: 1fr; }
+    .price, .price.secondary { padding: 56px 0; border-left: none; }
+    .price.secondary { border-top: 1px solid var(--pp-25); }
+    .fer-inner { grid-template-columns: 1fr; }
+    .fer-photo { min-height: 70vh; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .foot-end { flex-direction: column; gap: 14px; }
+  }
+  @media (max-width: 480px) {
+    .nav-badge { width: 48px; height: 48px; }
+    .nav-wordmark .sub { font-size: 17px; }
+    nav.nav { padding: 14px var(--pad); }
+    .oferta-row.single ul { display: block; padding-left: 12px; padding-right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-mark">
+      <span class="nav-badge"><img src="assets/logo-pni.png" alt="PNI" /></span>
+      <span class="nav-wordmark">
+        <span class="sub">Programa de Negocios Inteligentes</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#problema">Problema</a>
+      <a href="#sistema">Sistema</a>
+      <a href="#programa">4 clases</a>
+      <a href="#oferta">Inversión</a>
+      <a href="#fer">Fer Kaspin</a>
+    </div>
+    <a href="#oferta" class="nav-cta" style="display:none;">Reservar</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="hero-inner">
+    <div class="hero-rule meta">
+      <span>Edición Esencial</span>
+      <span>Marketing + Ventas con IA</span>
+      <span>4 semanas en vivo</span>
+      <span style="text-align:right;">Renacer en Digital</span>
+    </div>
+
+    <div class="hero-headline-block">
+      <h1 class="h-display hero-headline reveal">
+        Deja de improvisar con IA y crea un sistema que <em>ordena y ejecuta</em> tu trabajo por ti.
+      </h1>
+    </div>
+
+    <div class="hero-foot">
+      <div class="hero-foot-lede reveal">
+        <p class="lede">
+          En 4 semanas vas a configurar Claude con el contexto real de tu negocio y construir dos asistentes con IA: uno para marketing y otro para ventas.
+        </p>
+        <p class="lede">
+          Para dejar de empezar desde cero, producir contenido con más claridad y tener mejores mensajes para vender lo que haces.
+        </p>
+        <div class="hero-ctas">
+          <a href="#oferta" class="btn btn-fill">Quiero mi lugar</a>
+          <a href="#programa" class="btn btn-ghost">Ver las 4 clases</a>
+        </div>
+        <p class="hero-disclaimer">
+          No necesitas experiencia técnica · Solo estar usando IA hoy
+        </p>
+      </div>
+
+      <div class="hero-stat-block reveal">
+        <div class="hero-stat-num">2 <small>asistentes</small></div>
+        <div class="hero-stat-lbl">Marketing y Ventas<br/>activos en tu negocio</div>
+      </div>
+
+      <div class="hero-stat-block reveal">
+        <div class="hero-stat-num">1 <small>base</small></div>
+        <div class="hero-stat-lbl">Claude configurado<br/>con tu contexto real</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PROBLEMA ==================== -->
+<section class="block navy" id="problema" data-screen-label="02 Problema">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head-label">
+        <span class="label">El problema</span>
+      </div>
+      <div>
+        <h2 class="h-section">
+          Ya usas IA. Pero todavía no <em>trabaja contigo.</em>
+        </h2>
+        <p class="lede" style="margin-top:28px;">
+          Abres Claude cuando te bloqueas. Pruebas prompts que viste en redes. Cada resultado sale distinto. Nada queda guardado, nada se conecta y todo vuelve a depender de ti.
+        </p>
+      </div>
+    </div>
+
+    <div class="problema-split reveal">
+      <div class="problema-col">
+        <div class="col-label"><span class="label">Hoy · Improvisación</span></div>
+        <h3>Prompts sueltos, resultados distintos cada vez, todo en tu cabeza.</h3>
+        <p>La IA aparece cuando te bloqueas, no cuando trabajas. No hay base, no hay contexto, no hay continuidad.</p>
+        <ul class="problema-list">
+          <li>Prompts copiados de redes que casi nunca encajan con tu negocio</li>
+          <li>Cada vez tienes que volver a explicar lo que haces y a quién atiendes</li>
+          <li>Contenido y propuestas que salen sin estructura ni voz consistente</li>
+          <li>Todo sigue dependiendo de tu energía del día</li>
+        </ul>
+      </div>
+      <div class="problema-col right">
+        <div class="col-label"><span class="label lav">Después · Sistema</span></div>
+        <h3>Una base inteligente y dos asistentes <em>con tu contexto.</em></h3>
+        <p>Claude conoce tu negocio. Marketing y ventas dejan de empezar desde cero. La IA empieza a trabajar contigo, no para ti cuando te acuerdas.</p>
+        <ul class="problema-list">
+          <li>Claude configurado con tu voz, oferta y cliente</li>
+          <li>Prompts reutilizables, no copiados</li>
+          <li>Contenido con estructura y voz consistente</li>
+          <li>Mensajes de venta con argumento, no improvisación</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="pull-quote reveal">
+      Eso no es trabajar con IA.<br/>Es <em>improvisar</em> con una herramienta poderosa.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== TRANSFORMACIÓN ==================== -->
+<section class="block paper" data-screen-label="03 Transformación">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head-label on-paper">
+        <span class="label on-paper">Transformación</span>
+      </div>
+      <div>
+        <h2 class="h-section on-paper">
+          Lo que cambia cuando construyes tus primeros <em>asistentes inteligentes.</em>
+        </h2>
+      </div>
+    </div>
+
+    <div class="transform-list reveal">
+      <div class="transform-row">
+        <div class="transform-row-tag">Contexto</div>
+        <h4>Dejas de empezar desde cero cada vez</h4>
+        <p>La base inteligente guarda el contexto de tu negocio. Cada sesión arranca con todo lo que la IA ya sabe sobre ti.</p>
+      </div>
+      <div class="transform-row">
+        <div class="transform-row-tag">Infraestructura</div>
+        <h4>Claude entiende el contexto real de tu negocio</h4>
+        <p>Tu voz, tu oferta, tus clientes y tu forma de trabajar — instalados como infraestructura, no como un simple prompt.</p>
+      </div>
+      <div class="transform-row">
+        <div class="transform-row-tag">Contenido</div>
+        <h4>Tu contenido empieza a salir con más claridad</h4>
+        <p>Ideas, publicaciones y comunicación que ya tienen estructura, criterio y consistencia.</p>
+      </div>
+      <div class="transform-row">
+        <div class="transform-row-tag">Ventas</div>
+        <h4>Tus mensajes de venta tienen estructura</h4>
+        <p>Propuestas, seguimientos y respuestas a objeciones con argumento, no con improvisación.</p>
+      </div>
+      <div class="transform-row">
+        <div class="transform-row-tag">Sistema</div>
+        <h4>La IA empieza a trabajar contigo</h4>
+        <p>Deja de ser una herramienta suelta. Pasa a ser parte real de cómo creas, vendes y ordenas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SISTEMA ==================== -->
+<section class="block navy" id="sistema" data-screen-label="04 Sistema">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head-label">
+        <span class="label">El sistema</span>
+      </div>
+      <div>
+        <h2 class="h-section">
+          Una base y dos asistentes operando con <em>el contexto real</em> de tu negocio.
+        </h2>
+        <p class="lede" style="margin-top:28px;">
+          Tres piezas que se construyen contigo durante el programa y quedan activas en tu día a día. La base ordena. Marketing y ventas ejecutan.
+        </p>
+      </div>
+    </div>
+
+    <div class="sistema-grid reveal">
+      <div class="sistema-piece p1">
+        <div class="sistema-piece-head">
+          <span class="swatch"></span>
+          <span class="sistema-piece-role">Fundación</span>
+        </div>
+        <div>
+          <h3>Base <em>inteligente</em></h3>
+          <p>Claude configurado con tu negocio, tu voz, tu oferta, tus clientes y tu forma de trabajar.</p>
+        </div>
+        <ul>
+          <li>Contexto vivo del negocio</li>
+          <li>Voz de marca documentada</li>
+          <li>Prompts reutilizables base</li>
+        </ul>
+      </div>
+
+      <div class="sistema-piece p2">
+        <div class="sistema-piece-head">
+          <span class="swatch"></span>
+          <span class="sistema-piece-role">Asistente</span>
+        </div>
+        <div>
+          <h3>Marketing</h3>
+          <p>Ideas, contenido, voz de marca, publicaciones y comunicación bajo demanda.</p>
+        </div>
+        <ul>
+          <li>Generación de contenido bajo demanda</li>
+          <li>Voz de marca consistente</li>
+          <li>Estructura editorial reutilizable</li>
+        </ul>
+      </div>
+
+      <div class="sistema-piece p3">
+        <div class="sistema-piece-head">
+          <span class="swatch"></span>
+          <span class="sistema-piece-role">Asistente</span>
+        </div>
+        <div>
+          <h3>Ventas</h3>
+          <p>Propuestas, mensajes comerciales, seguimiento y manejo de objeciones.</p>
+        </div>
+        <ul>
+          <li>Propuestas y mensajes comerciales</li>
+          <li>Seguimiento estructurado</li>
+          <li>Manejo de objeciones con criterio</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="sistema-note reveal">
+      Esta edición esencial construye la base, marketing y ventas. Es el primer paso para seguir creciendo tu negocio inteligente.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== PROGRAMA ==================== -->
+<section class="block navy tight-top" id="programa" data-screen-label="05 Programa">
+  <div class="wrap">
+    <div class="programa-head reveal">
+      <span class="label">Las cuatro clases</span>
+      <h2 class="h-section">
+        Lo que construyes en <em>4 semanas.</em>
+      </h2>
+      <p class="lede">
+        Cada clase deja algo concreto funcionando dentro de tu negocio. No es teoría: es construcción guiada.
+      </p>
+    </div>
+
+    <div class="clases reveal">
+      <div class="clase">
+        <div>
+          <div class="clase-week">Semana 1</div>
+          <div class="clase-title">Tu base inteligente de negocio</div>
+        </div>
+        <div class="clase-body">
+          Configuramos Claude con el contexto real de tu negocio: qué vendes, a quién ayudas, cómo hablas y cómo quieres trabajar con IA. Creamos prompts reutilizables.
+        </div>
+        <div class="clase-outcome">
+          <div class="clase-outcome-label">Resultado</div>
+          <div class="clase-outcome-text">La IA ya te conoce y tienes una base clara.</div>
+        </div>
+      </div>
+
+      <div class="clase">
+        <div>
+          <div class="clase-week">Semana 2</div>
+          <div class="clase-title">Tu asistente de Marketing con IA</div>
+        </div>
+        <div class="clase-body">
+          Construyes tu primer asistente de marketing: contenido, ideas, voz de marca, mensajes, publicaciones y generación bajo demanda.
+        </div>
+        <div class="clase-outcome">
+          <div class="clase-outcome-label">Resultado</div>
+          <div class="clase-outcome-text">Tu contenido sale desde una estructura, no desde la urgencia.</div>
+        </div>
+      </div>
+
+      <div class="clase">
+        <div>
+          <div class="clase-week">Semana 3</div>
+          <div class="clase-title">Tu asistente de Ventas con IA</div>
+        </div>
+        <div class="clase-body">
+          Creamos sistemas para propuestas, mensajes comerciales, seguimiento y manejo de objeciones.
+        </div>
+        <div class="clase-outcome">
+          <div class="clase-outcome-label">Resultado</div>
+          <div class="clase-outcome-text">La IA empieza a impactar la caja del negocio.</div>
+        </div>
+      </div>
+
+      <div class="clase">
+        <div>
+          <div class="clase-week">Semana 4</div>
+          <div class="clase-title">Integración + mapa de crecimiento</div>
+        </div>
+        <div class="clase-body">
+          Conectamos lo construido: base, marketing y ventas. Ajustamos lo necesario y armamos el mapa para seguir creciendo tu negocio inteligente.
+        </div>
+        <div class="clase-outcome">
+          <div class="clase-outcome-label">Resultado</div>
+          <div class="clase-outcome-text">Sistema funcionando + claridad sobre los próximos pasos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RESULTADOS ==================== -->
+<section class="block paper" data-screen-label="06 Resultados">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head-label on-paper">
+        <span class="label on-paper">Al terminar tienes</span>
+      </div>
+      <div>
+        <h2 class="h-section on-paper">
+          Sales con sistemas activos, <em>no con apuntes.</em>
+        </h2>
+        <p class="lede on-paper" style="margin-top:28px;">
+          Tu base inteligente, tus dos asistentes y un mapa claro para seguir.
+        </p>
+      </div>
+    </div>
+
+    <div class="resultados-grid reveal">
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Claude configurado con el contexto real de tu negocio</h4>
+        <p>Tu voz, oferta, cliente y forma de trabajar instalados en la IA.</p>
+      </div>
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Prompts reutilizables para no empezar desde cero</h4>
+        <p>Una librería propia, lista para usar en cada sesión de trabajo.</p>
+      </div>
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Tu asistente de Marketing con IA</h4>
+        <p>Contenido, ideas y comunicación bajo demanda con voz consistente.</p>
+      </div>
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Tu asistente de Ventas con IA</h4>
+        <p>Propuestas, seguimiento y respuesta a objeciones con estructura.</p>
+      </div>
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Sistemas simples para crear, vender y ordenar mejor</h4>
+        <p>Procesos cortos que se sostienen sin tu energía cotidiana.</p>
+      </div>
+      <div class="resultado">
+        <div class="resultado-check"><svg viewBox="0 0 14 14"><polyline points="2,7 6,11 12,3"/></svg></div>
+        <h4>Mapa claro para seguir construyendo</h4>
+        <p>Próximos pasos definidos para crecer tu negocio inteligente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INVERSIÓN ==================== -->
+<section class="block navy" id="oferta" data-screen-label="07 Inversión">
+  <div class="wrap">
+    <div class="oferta-head reveal" style="text-align:center; margin-left:auto; margin-right:auto; max-width: 56ch;">
+      <h2 class="h-section" style="margin: 0 auto;"><em>Inversión.</em></h2>
+      <p class="lede" style="margin: 28px auto 0;">
+        Marketing + Ventas con IA · 4 semanas en vivo · Implementación práctica desde la primera clase.
+      </p>
+    </div>
+
+    <div class="oferta-row single reveal">
+      <div class="price feature">
+        <div class="price-amt">
+          <span class="price-cur">USD</span>
+          <span class="price-num">225</span>
+        </div>
+        <div class="price-period">Pago único · Inicio inmediato</div>
+        <p class="price-sub">Acceso completo a las 4 clases en vivo, estructuras listas y acompañamiento durante el programa.</p>
+        <ul>
+          <li>4 clases en vivo con Fer Kaspin</li>
+          <li>Implementación práctica en cada clase</li>
+          <li>Estructuras y plantillas listas para usar</li>
+          <li>Acompañamiento durante el programa</li>
+          <li>Grabaciones disponibles por 12 meses</li>
+        </ul>
+        <a href="#" class="btn btn-fill">Quiero mi lugar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INTERLUDE — RENACER ==================== -->
+<section class="interlude" data-screen-label="08 Renacer">
+  <div class="wrap">
+    <span class="label on-paper">La marca detrás</span>
+    <h2 class="h-section on-paper">
+      Renacer en Digital convierte la inteligencia artificial en <em>sistemas reales de trabajo.</em>
+    </h2>
+    <p>
+      Renacer en Digital acompaña a dueños de negocio, profesionales y emprendedores a usar IA con estrategia, claridad y estructura. No como una moda. No como prompts sueltos. Como una forma más inteligente de trabajar.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== FER KASPIN ==================== -->
+<section class="fer" id="fer" data-screen-label="09 Fer Kaspin">
+  <div class="fer-inner">
+    <div class="fer-photo">
+      <img src="assets/fer-kaspin.png" alt="Fer Kaspin" />
+      <div class="fer-photo-credit">
+        <div class="name">Fer Kaspin.</div>
+        <div class="role">Founder · Renacer en Digital</div>
+      </div>
+    </div>
+    <div class="fer-copy">
+      <span class="label lav">Quién dicta</span>
+      <h2 class="h-section">
+        No enseño IA desde afuera. Enseño <em>lo que uso adentro</em> de mi propio negocio.
+      </h2>
+      <p class="intro">
+        Soy Fer Kaspin. Tengo 30 años de experiencia en marketing, construí una marca de mascotas presente en 8 países y hoy dirijo Renacer en Digital usando IA como infraestructura diaria de trabajo.
+      </p>
+      <p class="fer-quote">
+        “Lo que aprendés en PNI es lo mismo que aplico cada día para crear, vender y ordenar mi propio negocio.”
+      </p>
+      <div class="fer-stats">
+        <div>
+          <div class="fer-stat-num">30</div>
+          <div class="fer-stat-lbl">Años en<br/>marketing</div>
+        </div>
+        <div>
+          <div class="fer-stat-num">8</div>
+          <div class="fer-stat-lbl">Países con marca<br/>propia</div>
+        </div>
+        <div>
+          <div class="fer-stat-num">100%</div>
+          <div class="fer-stat-lbl">IA aplicada al<br/>propio negocio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section class="block paper" data-screen-label="10 FAQ">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div class="faq-left reveal">
+        <span class="label on-paper">Preguntas</span>
+        <h2 class="h-section on-paper">
+          Lo que <em>conviene saber.</em>
+        </h2>
+        <p class="lede on-paper">
+          Si tu duda no está aquí, escríbenos. Respondemos personalmente antes de cada edición.
+        </p>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item" open>
+          <summary>¿Necesito saber de IA?</summary>
+          <div class="answer">No. Si ya usas Claude o alguna herramienta de IA, alcanza. Este programa te ayuda a convertir ese uso suelto en un sistema.</div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Es solo teoría?</summary>
+          <div class="answer">No. Cada clase está pensada para construir algo concreto dentro de tu negocio.</div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué voy a tener al final?</summary>
+          <div class="answer">Tu base inteligente configurada, un asistente de marketing, un asistente de ventas y un mapa para seguir creciendo.</div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Esto reemplaza al programa completo?</summary>
+          <div class="answer">No. Esta es la edición esencial: el punto de entrada para construir la base, marketing y ventas. Más adelante podrás avanzar hacia un sistema más completo.</div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto tiempo necesito?</summary>
+          <div class="answer">Las clases en vivo más tiempo de implementación durante la semana.</div>
+        </details>
+        <details class="faq-item">
+          <summary>¿Qué herramienta usamos?</summary>
+          <div class="answer">Trabajamos principalmente con Claude.</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FINAL ==================== -->
+<section class="final" data-screen-label="11 Final">
+  <div class="wrap">
+    <span class="label">Última palabra</span>
+    <h2>
+      Puedes seguir improvisando con IA…<br/>
+      <em>o puedes construir tus primeros asistentes inteligentes.</em>
+    </h2>
+    <p>
+      En 4 semanas empiezas a trabajar con un sistema real: tu contexto, tu marketing y tus ventas organizados con inteligencia artificial.
+    </p>
+    <a href="#oferta" class="btn btn-fill" style="background: var(--lavender);">Quiero mi lugar</a>
+    <div class="final-after">Acceso inmediato tras la inscripción</div>
+    <div class="final-sig">— Fer Kaspin · Renacer en Digital</div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-mark">
+          <span class="foot-badge"><img src="assets/logo-pni.png" alt="PNI" /></span>
+          <span class="foot-name">
+            PNI
+            <small>Renacer en Digital</small>
+          </span>
+        </div>
+        <p class="foot-tag">
+          Inteligencia aplicada a negocios que crecen. Estrategia, sistemas y resultados.
+        </p>
+      </div>
+      <div class="foot-col">
+        <h5>El programa</h5>
+        <a href="#problema">El problema</a>
+        <a href="#sistema">El sistema</a>
+        <a href="#programa">Las 4 clases</a>
+        <a href="#oferta">Inversión</a>
+      </div>
+      <div class="foot-col">
+        <h5>Renacer</h5>
+        <a href="#fer">Fer Kaspin</a>
+        <a href="#">Manifiesto</a>
+        <a href="#">Contacto</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contacto</h5>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc4c3c0cdecdec9c2cdcfc9dec9c2c8c5cbc5d8cdc082cfc3c1">[email&#160;protected]</a></p>
+        <p>Inscripciones abiertas</p>
+      </div>
+    </div>
+    <div class="foot-end">
+      <span>© 2026 Renacer en Digital</span>
+      <span>Edición Esencial · PNI</span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+
+<script src="image-slot.js"></script>
+</body>
+</html>
