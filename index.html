@@ -758,6 +758,56 @@
   }
 
   /* ============================================================
+     TESTIMONIALES
+     ============================================================ */
+  .testimoniales-grid {
+    border-top: 1px solid var(--pp-25);
+  }
+  .testimonio {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(32px, 4vw, 72px);
+    padding: clamp(40px, 5vw, 64px) 0;
+    border-bottom: 1px solid var(--pp-12);
+    align-items: start;
+  }
+  .testimonio-meta {
+    border-top: 1px solid var(--pp-12);
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .testimonio-nombre {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--pp);
+  }
+  .testimonio-rol {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pp-45);
+    font-weight: 500;
+  }
+  .testimonio-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.32;
+    letter-spacing: -0.012em;
+    color: var(--pp-85);
+  }
+  .testimonio-quote em { font-style: italic; color: var(--lavender); }
+  @media (max-width: 680px) {
+    .testimonio { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* ============================================================
      INVERSIÓN
      ============================================================ */
   .oferta-head { text-align: left; margin-bottom: clamp(56px, 7vw, 96px); max-width: 56ch; }
@@ -1651,6 +1701,56 @@
     </div>
     <div style="text-align:center; margin-top: clamp(48px, 6vw, 72px);">
       <a href="#oferta" class="btn btn-dark">Quiero mi lugar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TESTIMONIALES ==================== -->
+<section class="block navy" id="testimoniales" data-screen-label="07 Testimoniales">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-head-label">
+        <span class="label lav">Lo que dicen</span>
+      </div>
+      <div>
+        <h2 class="h-section">
+          Resultados reales, <em>en sus palabras.</em>
+        </h2>
+      </div>
+    </div>
+
+    <div class="testimoniales-grid reveal">
+
+      <div class="testimonio">
+        <div class="testimonio-meta">
+          <span class="testimonio-nombre">NOMBRE APELLIDO</span>
+          <span class="testimonio-rol">Rol · País</span>
+        </div>
+        <p class="testimonio-quote">
+          "Antes perdía horas en tareas que ahora hago en minutos. <em>Por primera vez siento que la IA trabaja para mi negocio</em>, no al revés."
+        </p>
+      </div>
+
+      <div class="testimonio">
+        <div class="testimonio-meta">
+          <span class="testimonio-nombre">NOMBRE APELLIDO</span>
+          <span class="testimonio-rol">Rol · País</span>
+        </div>
+        <p class="testimonio-quote">
+          "Llegué sin saber nada de IA y salí con un sistema funcionando. <em>Fer explica de una forma que tiene sentido</em> para quienes no somos técnicos."
+        </p>
+      </div>
+
+      <div class="testimonio">
+        <div class="testimonio-meta">
+          <span class="testimonio-nombre">NOMBRE APELLIDO</span>
+          <span class="testimonio-rol">Rol · País</span>
+        </div>
+        <p class="testimonio-quote">
+          "Recuperé mi tiempo y mi cabeza. <em>Ahora tengo claridad de qué delegar a la IA</em> y puedo enfocarme en lo que realmente importa."
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
