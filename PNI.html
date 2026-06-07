@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PNI · Programa de Negocios Inteligentes — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="pni.css">
+<script>document.documentElement.classList.add('reveal-on')</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '230704174608041');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<!-- ===== SVG sprite ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-ia" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.5A3 3 0 0 0 6 7.5a3 3 0 0 0-1.8 5.4A3 3 0 0 0 6 18a3 3 0 0 0 3 1.5V4.5Z"/><path d="M15 4.5A3 3 0 0 1 18 7.5a3 3 0 0 1 1.8 5.4A3 3 0 0 1 18 18a3 3 0 0 1-3 1.5V4.5Z"/><path d="M9 8.5h1.5M13.5 12h1.5M9 15h1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4 4 10-10"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7L7 17"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1Z"/><path d="M15 8a4 4 0 0 1 0 8M18 5a8 8 0 0 1 0 14"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.5 12h10L20 7H6"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 7v13l6-3 6 3 6-3V4l-6 3-6-3Z"/><path d="M9 4v13M15 7v13"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ===== Sticky buy bar ===== -->
+<div class="buybar" id="buybar">
+  <div class="wrap inner">
+    <div class="bb-left">
+      <b>PNI · Marketing + Ventas con IA</b>
+      <span>4 semanas en vivo con Fer Kaspin</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:1.2rem">
+      <span class="price">USD 225 <span style="color:#aab3bd;font-weight:400;font-size:.8rem">· pago único</span></span>
+      <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav" data-checkout>Quiero mi lugar</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Nav ===== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="Renacer en Digital — inicio">
+      <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+      <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html"><svg width="14" height="14" style="vertical-align:-1px;margin-right:4px"><use href="#i-arrow-l"></use></svg>Volver al inicio</a>
+      <a href="#sistema">El sistema</a>
+      <a href="#clases">Las clases</a>
+      <a href="#inversion">Inversión</a>
+      <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav" data-checkout>Quiero mi lugar</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== HERO ===== -->
+<section class="pni-hero">
+  <span class="blob l"></span><span class="blob t"></span>
+  <div class="wrap">
+    <div class="reveal" style="max-width:880px">
+      <img class="pni-seal" src="logo-pni.png" alt="PNI · Programa de Negocios Inteligentes" width="120" height="120">
+      <span class="eyebrow">PNI · Programa de Negocios Inteligentes</span>
+      <h1 class="display">Dejá de improvisar con IA y creá un sistema que <em>ordena y ejecuta</em> tu trabajo por vos.</h1>
+      <p class="lead">En 4 semanas vas a configurar Claude con el contexto real de tu negocio y construir dos asistentes con IA: uno para marketing y otro para ventas. Para dejar de empezar desde cero, producir contenido con más claridad y tener mejores mensajes para vender lo que hacés.</p>
+      <div class="hero-cta">
+        <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lg lav" data-checkout>Quiero mi lugar <svg class="arr" width="16" height="16"><use href="#i-arrow"></use></svg></a>
+        <a href="#clases" class="link-arrow">Ver las 4 clases <svg class="arr" width="15" height="15"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <span class="hero-note"><svg width="16" height="16"><use href="#i-check"></use></svg> No necesitás experiencia técnica · Solo estar usando IA hoy</span>
+    </div>
+    <div class="pni-stats reveal">
+      <div class="pni-stat">
+        <b><svg><use href="#i-ia"></use></svg> 2</b>
+        <span class="lbl">Asistentes</span>
+        <span class="sub">Marketing y Ventas activos en tu negocio</span>
+      </div>
+      <div class="pni-stat">
+        <b><svg><use href="#i-layers"></use></svg> 1</b>
+        <span class="lbl">Base</span>
+        <span class="sub">Claude configurado con tu contexto real</span>
+      </div>
+      <div class="pni-stat">
+        <b><svg><use href="#i-clock"></use></svg> 4</b>
+        <span class="lbl">Semanas en vivo</span>
+        <span class="sub">Implementación práctica desde la primera clase</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEMA ===== -->
+<section class="section-mist" id="problema">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">El problema</span>
+      <h2 class="h1 measure mx-auto">Ya usás IA. Pero todavía <em>no trabaja con vos</em>.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Abrís Claude cuando te bloqueás. Probás prompts que viste en redes. Cada resultado sale distinto. Nada queda guardado, nada se conecta y todo vuelve a depender de vos.</p>
+    </div>
+    <div class="contrast reveal">
+      <div class="col-card old">
+        <span class="tag old">Hoy · Improvisación</span>
+        <h3>Prompts sueltos, todo en tu cabeza</h3>
+        <ul>
+          <li><svg class="ti" width="20" height="20"><use href="#i-x"></use></svg> Prompts copiados de redes que casi nunca encajan con tu negocio</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-x"></use></svg> Cada vez tenés que volver a explicar lo que hacés y a quién atendés</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-x"></use></svg> Contenido y propuestas que salen sin estructura ni voz consistente</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-x"></use></svg> Todo sigue dependiendo de tu energía del día</li>
+        </ul>
+      </div>
+      <div class="col-card new">
+        <span class="tag new">Después · Sistema</span>
+        <h3>Una base inteligente y dos asistentes</h3>
+        <ul>
+          <li><svg class="ti" width="20" height="20"><use href="#i-check"></use></svg> Claude configurado con tu voz, oferta y cliente</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-check"></use></svg> Prompts reutilizables, no copiados</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-check"></use></svg> Contenido con estructura y voz consistente</li>
+          <li><svg class="ti" width="20" height="20"><use href="#i-check"></use></svg> Mensajes de venta con argumento, no improvisación</li>
+        </ul>
+      </div>
+    </div>
+    <p class="center reveal serif-italic" style="font-size:1.25rem;color:var(--ink-soft);max-width:40ch;margin:2.4rem auto 0">Eso no es trabajar con IA. Es improvisar con una herramienta poderosa.</p>
+  </div>
+</section>
+
+<!-- ===== TRANSFORMACIÓN ===== -->
+<section id="transformacion">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">Transformación</span>
+      <h2 class="h1 measure mx-auto">Lo que cambia cuando construís tus primeros <em>asistentes inteligentes</em>.</h2>
+    </div>
+    <div class="tgrid reveal">
+      <div class="tg-card"><div class="klabel">Contexto</div><h3>Dejás de empezar desde cero cada vez</h3><p>La base inteligente guarda el contexto de tu negocio. Cada sesión arranca con todo lo que la IA ya sabe sobre vos.</p></div>
+      <div class="tg-card"><div class="klabel">Infraestructura</div><h3>Claude entiende el contexto real de tu negocio</h3><p>Tu voz, tu oferta, tus clientes y tu forma de trabajar — instalados como infraestructura, no como un simple prompt.</p></div>
+      <div class="tg-card"><div class="klabel">Contenido</div><h3>Tu contenido sale con más claridad</h3><p>Ideas, publicaciones y comunicación que ya tienen estructura, criterio y consistencia.</p></div>
+      <div class="tg-card"><div class="klabel">Ventas</div><h3>Tus mensajes de venta tienen estructura</h3><p>Propuestas, seguimientos y respuestas a objeciones con argumento, no con improvisación.</p></div>
+      <div class="tg-card"><div class="klabel">Sistema</div><h3>La IA empieza a trabajar con vos</h3><p>Deja de ser una herramienta suelta. Pasa a ser parte real de cómo creás, vendés y ordenás.</p></div>
+      <div class="tg-card" style="background:var(--navy);display:flex;flex-direction:column;justify-content:center">
+        <p style="color:#cbd3da;font-size:.95rem;margin-bottom:1.2rem">¿Listo para construir tu sistema?</p>
+        <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav" data-checkout style="align-self:flex-start">Quiero mi lugar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EL SISTEMA ===== -->
+<section id="sistema" class="section-mist">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">El sistema</span>
+      <h2 class="h1 measure mx-auto">Una base y dos asistentes operando con el <em>contexto real</em> de tu negocio.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Tres piezas que se construyen con vos durante el programa y quedan activas en tu día a día. La base ordena. Marketing y ventas ejecutan.</p>
+    </div>
+    <div class="trio reveal">
+      <div class="sys-card f">
+        <div class="sc-top">
+          <span class="sc-icon"><svg width="22" height="22"><use href="#i-layers"></use></svg></span>
+          <span class="role">Fundación</span>
+          <h3>Base inteligente</h3>
+          <p>Claude configurado con tu negocio, tu voz, tu oferta, tus clientes y tu forma de trabajar.</p>
+        </div>
+        <ul>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Contexto vivo del negocio</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Voz de marca documentada</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Prompts reutilizables base</li>
+        </ul>
+      </div>
+      <div class="sys-card m">
+        <div class="sc-top">
+          <span class="sc-icon"><svg width="22" height="22"><use href="#i-mega"></use></svg></span>
+          <span class="role">Asistente</span>
+          <h3>Marketing</h3>
+          <p>Ideas, contenido, voz de marca, publicaciones y comunicación bajo demanda.</p>
+        </div>
+        <ul>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Generación de contenido bajo demanda</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Voz de marca consistente</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Estructura editorial reutilizable</li>
+        </ul>
+      </div>
+      <div class="sys-card v">
+        <div class="sc-top">
+          <span class="sc-icon"><svg width="22" height="22"><use href="#i-cart"></use></svg></span>
+          <span class="role">Asistente</span>
+          <h3>Ventas</h3>
+          <p>Propuestas, mensajes comerciales, seguimiento y manejo de objeciones.</p>
+        </div>
+        <ul>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Propuestas y mensajes comerciales</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Seguimiento estructurado</li>
+          <li><svg width="16" height="16"><use href="#i-check"></use></svg> Manejo de objeciones con criterio</li>
+        </ul>
+      </div>
+    </div>
+    <p class="center reveal muted" style="margin-top:2rem;max-width:60ch;margin-inline:auto;font-size:.95rem">Esta edición esencial construye la base, marketing y ventas. Es el primer paso para seguir creciendo tu negocio inteligente.</p>
+  </div>
+</section>
+
+<!-- ===== LAS 4 CLASES ===== -->
+<section id="clases">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">Las cuatro clases</span>
+      <h2 class="h1 measure mx-auto">Lo que construís en <em>4 semanas</em>.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Cada clase deja algo concreto funcionando dentro de tu negocio. No es teoría: es construcción guiada.</p>
+    </div>
+    <div class="weeks reveal">
+      <div class="week">
+        <div class="wk-num"><span class="n">01</span><span class="t">Semana</span></div>
+        <div>
+          <h3>Tu base inteligente de negocio</h3>
+          <p>Configuramos Claude con el contexto real de tu negocio: qué vendés, a quién ayudás, cómo hablás y cómo querés trabajar con IA. Creamos prompts reutilizables.</p>
+          <span class="result"><svg width="17" height="17"><use href="#i-check"></use></svg><span><b>Resultado:</b> la IA ya te conoce y tenés una base clara.</span></span>
+        </div>
+      </div>
+      <div class="week">
+        <div class="wk-num"><span class="n">02</span><span class="t">Semana</span></div>
+        <div>
+          <h3>Tu asistente de Marketing con IA</h3>
+          <p>Construís tu primer asistente de marketing: contenido, ideas, voz de marca, mensajes, publicaciones y generación bajo demanda.</p>
+          <span class="result"><svg width="17" height="17"><use href="#i-check"></use></svg><span><b>Resultado:</b> tu contenido sale desde una estructura, no desde la urgencia.</span></span>
+        </div>
+      </div>
+      <div class="week">
+        <div class="wk-num"><span class="n">03</span><span class="t">Semana</span></div>
+        <div>
+          <h3>Tu asistente de Ventas con IA</h3>
+          <p>Creamos sistemas para propuestas, mensajes comerciales, seguimiento y manejo de objeciones.</p>
+          <span class="result"><svg width="17" height="17"><use href="#i-check"></use></svg><span><b>Resultado:</b> la IA empieza a impactar la caja del negocio.</span></span>
+        </div>
+      </div>
+      <div class="week">
+        <div class="wk-num"><span class="n">04</span><span class="t">Semana</span></div>
+        <div>
+          <h3>Integración + mapa de crecimiento</h3>
+          <p>Conectamos lo construido: base, marketing y ventas. Ajustamos lo necesario y armamos el mapa para seguir creciendo tu negocio inteligente.</p>
+          <span class="result"><svg width="17" height="17"><use href="#i-check"></use></svg><span><b>Resultado:</b> sistema funcionando + claridad sobre los próximos pasos.</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AL TERMINAR ===== -->
+<section id="resultado" class="section-mist">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">Al terminar tenés</span>
+      <h2 class="h1 measure mx-auto">Salís con sistemas activos, <em>no con apuntes</em>.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Tu base inteligente, tus dos asistentes y un mapa claro para seguir.</p>
+    </div>
+    <div class="delivers reveal">
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-ia"></use></svg></span><h4>Claude configurado con tu contexto real</h4><p>Tu voz, oferta, cliente y forma de trabajar instalados en la IA.</p></div>
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-doc"></use></svg></span><h4>Prompts reutilizables para no empezar desde cero</h4><p>Una librería propia, lista para usar en cada sesión de trabajo.</p></div>
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-mega"></use></svg></span><h4>Tu asistente de Marketing con IA</h4><p>Contenido, ideas y comunicación bajo demanda con voz consistente.</p></div>
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-cart"></use></svg></span><h4>Tu asistente de Ventas con IA</h4><p>Propuestas, seguimiento y respuesta a objeciones con estructura.</p></div>
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-bolt"></use></svg></span><h4>Sistemas simples para crear, vender y ordenar</h4><p>Procesos cortos que se sostienen sin tu energía cotidiana.</p></div>
+      <div class="deliver"><span class="di"><svg width="20" height="20"><use href="#i-map"></use></svg></span><h4>Mapa claro para seguir construyendo</h4><p>Próximos pasos definidos para crecer tu negocio inteligente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIOS ===== -->
+<section id="testimonios">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(36px,4vw,56px)">
+      <span class="eyebrow center">Lo que dicen</span>
+      <h2 class="h1 measure mx-auto">Resultados reales, <em>en sus palabras</em>.</h2>
+    </div>
+    <div class="tcards reveal">
+      <article class="tcard">
+        <div class="stars">★★★★★</div>
+        <p>"Fernanda es una persona que no sólo motiva, sino que inspira. Mi vida hizo un quiebre y hoy es un antes y después de Fernanda. Me ayudó a ver que uno puede moverse libre — nada es obstáculo, todo es motivación."</p>
+        <div class="who"><div class="av av-ini" aria-hidden="true">E</div><div><b>Esteban</b><span>—</span></div></div>
+      </article>
+      <article class="tcard">
+        <div class="stars">★★★★★</div>
+        <p>"Fer me ayudó a tener claridad en dónde poner la energía. Ha sido un acompañamiento maravilloso — y también hay que saber dejarse acompañar."</p>
+        <div class="who"><div class="av av-ini" aria-hidden="true">R</div><div><b>Roxana</b><span>Facilitadora de transformación · Argentina</span></div></div>
+      </article>
+      <article class="tcard">
+        <div class="stars">★★★★★</div>
+        <p>"Traté de aprender a usar la inteligencia artificial y hoy es mi aliada. Una noche me encontré chateando con ella para resolver algo y dije: '¡Qué loco!' No soy programadora ni científica — solo agarré las herramientas y las usé."</p>
+        <div class="who"><div class="av av-ini" aria-hidden="true">MC</div><div><b>María Cecilia Roso</b><span>Artista y maestra · Argentina</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INVERSIÓN ===== -->
+<section id="inversion" class="section-navy">
+  <div class="wrap price-wrap">
+    <div class="price-aside reveal">
+      <span class="eyebrow" style="color:var(--lavender)">Inversión</span>
+      <h2 class="h1">Marketing + Ventas con IA.</h2>
+      <p class="lead" style="color:#b9c1ca">4 semanas en vivo · implementación práctica desde la primera clase. Un pago único y empezás de inmediato.</p>
+      <p style="color:#8d97a2;font-size:.92rem;margin-top:1.4rem">Acceso completo a las 4 clases en vivo, estructuras listas y acompañamiento durante todo el programa.</p>
+    </div>
+    <div class="price-card reveal">
+      <span class="circuit" id="circuit-price"></span>
+      <img class="pni-seal sm" src="logo-pni.png" alt="PNI" width="64" height="64" style="position:absolute;top:clamp(20px,2.6vw,30px);right:clamp(20px,2.6vw,30px)">
+      <div class="pc-kicker">Edición esencial</div>
+      <div class="amount"><span class="cur">USD</span><span class="num">225</span></div>
+      <p class="terms">Pago único · Inicio inmediato</p>
+      <ul>
+        <li><svg width="18" height="18"><use href="#i-check"></use></svg> 4 clases en vivo con Fer Kaspin</li>
+        <li><svg width="18" height="18"><use href="#i-check"></use></svg> Implementación práctica en cada clase</li>
+        <li><svg width="18" height="18"><use href="#i-check"></use></svg> Estructuras y plantillas listas para usar</li>
+        <li><svg width="18" height="18"><use href="#i-check"></use></svg> Acompañamiento durante el programa</li>
+        <li><svg width="18" height="18"><use href="#i-check"></use></svg> Grabaciones disponibles por 12 meses</li>
+      </ul>
+      <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav lg" data-checkout>Quiero mi lugar <svg class="arr" width="16" height="16"><use href="#i-arrow"></use></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LA MARCA / FER ===== -->
+<section id="fer">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(32px,4vw,52px)">
+      <span class="eyebrow center">La marca detrás</span>
+      <h2 class="h1 measure mx-auto">Renacer en Digital convierte la inteligencia artificial en <em>sistemas reales de trabajo</em>.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Acompañamos a dueños de negocio, profesionales y emprendedores a usar IA con estrategia, claridad y estructura. No como una moda. No como prompts sueltos. Como una forma más inteligente de trabajar.</p>
+    </div>
+    <div class="bb-stats reveal" style="justify-content:center;gap:clamp(2rem,5vw,4rem)">
+      <div class="stat" style="text-align:center"><b>30</b><span>años en marketing</span></div>
+      <div class="stat" style="text-align:center"><b>8</b><span>países con marca propia</span></div>
+      <div class="stat" style="text-align:center"><b>100%</b><span>IA aplicada al propio negocio</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="section-mist">
+  <div class="wrap">
+    <div class="center reveal" style="margin-bottom:clamp(32px,4vw,48px)">
+      <span class="eyebrow center">Preguntas</span>
+      <h2 class="h1">Lo que conviene saber.</h2>
+      <p class="lead measure mx-auto" style="margin-top:1rem">Si tu duda no está acá, escribinos. Respondemos personalmente antes de cada edición.</p>
+    </div>
+    <div class="faq reveal">
+      <div class="qa open">
+        <button class="qa-head" aria-expanded="true"><h4>¿Necesito saber de IA?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">No. Si ya usás Claude o alguna herramienta de IA, alcanza. Este programa te ayuda a convertir ese uso suelto en un sistema.</div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-head" aria-expanded="false"><h4>¿Es solo teoría?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">No. Cada clase es construcción guiada: salís de cada semana con una pieza concreta funcionando dentro de tu negocio (tu base, tu asistente de marketing, tu asistente de ventas y el mapa de crecimiento).</div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-head" aria-expanded="false"><h4>¿Qué voy a tener al final?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">Claude configurado con el contexto real de tu negocio, una librería de prompts reutilizables, tu asistente de Marketing, tu asistente de Ventas y un mapa claro para seguir construyendo.</div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-head" aria-expanded="false"><h4>¿Esto reemplaza al programa completo?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">Es la edición esencial: construye la base, marketing y ventas. Es el primer paso del negocio inteligente y la puerta de entrada para seguir creciendo.</div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-head" aria-expanded="false"><h4>¿Cuánto tiempo necesito?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">Son 4 semanas en vivo. Cada clase incluye implementación práctica, así que el trabajo lo vas haciendo durante el programa, no después. Si no podés conectarte en vivo, las grabaciones quedan disponibles por 12 meses.</div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-head" aria-expanded="false"><h4>¿Qué herramienta usamos?</h4><svg class="qi" width="20" height="20"><use href="#i-plus"></use></svg></button>
+        <div class="qa-body"><div class="qb-inner">Trabajamos con Claude como base inteligente del negocio, configurado con tu contexto real para que cada asistente trabaje con tu voz, tu oferta y tus clientes.</div></div>
+      </div>
+    </div>
+    <div class="center reveal" style="margin-top:2.4rem">
+      <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lg lav" data-checkout>Quiero mi lugar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ÚLTIMA PALABRA ===== -->
+<section id="cierre" class="section-navy cta-final">
+  <span class="circuit" id="circuit-cta"></span>
+  <div class="wrap">
+    <div class="reveal measure-tight mx-auto">
+      <span class="eyebrow center" style="color:var(--lavender)">Última palabra</span>
+      <h2 class="h1">Podés seguir improvisando con IA… o construir tus primeros asistentes inteligentes.</h2>
+      <p class="lead" style="color:#b9c1ca;margin-top:1rem">En 4 semanas empezás a trabajar con un sistema real: tu contexto, tu marketing y tus ventas organizados con inteligencia artificial.</p>
+      <div class="btn-row">
+        <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav lg" data-checkout>Quiero mi lugar <svg class="arr" width="16" height="16"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <p style="color:#8d97a2;font-size:.85rem;margin-top:1.4rem">Acceso inmediato tras la inscripción · — Fer Kaspin · Renacer en Digital</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:1.2rem">
+          <svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg>
+          <span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span>
+        </a>
+        <p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen. Estrategia · Sistemas · Resultados.</p>
+      </div>
+      <div>
+        <h5>PNI</h5>
+        <ul>
+          <li><a href="#sistema">El sistema</a></li>
+          <li><a href="#clases">Las 4 clases</a></li>
+          <li><a href="#inversion">Inversión</a></li>
+          <li><a href="#faq">Preguntas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Renacer</h5>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#fer">Fer Kaspin</a></li>
+          <li><a href="index.html#inside">INSIDE</a></li>
+          <li><a href="recursos.html">Recursos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Empezá hoy</h5>
+        <p style="font-size:.9rem">Marketing + Ventas con IA en 4 semanas. Pago único USD 225.</p>
+        <a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener" class="btn lav" data-checkout style="margin-top:.6rem">Quiero mi lugar</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Renacer en Digital · Fer Kaspin. Todos los derechos reservados.</span>
+      <span>Inteligencia aplicada a negocios que crecen.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="image-slot.js"></script>
+<script>
+const nav=document.getElementById('nav'),buybar=document.getElementById('buybar');
+addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>10);buybar.classList.toggle('show',scrollY>700);},{passive:true});
+
+const toggle=document.getElementById('navToggle'),links=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+// FAQ accordion
+document.querySelectorAll('.qa-head').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const qa=btn.closest('.qa'),body=qa.querySelector('.qa-body'),open=qa.classList.contains('open');
+    document.querySelectorAll('.qa').forEach(q=>{q.classList.remove('open');q.querySelector('.qa-body').style.maxHeight=null;q.querySelector('.qa-head').setAttribute('aria-expanded','false');});
+    if(!open){qa.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';btn.setAttribute('aria-expanded','true');}
+  });
+});
+(function(){const f=document.querySelector('.qa.open .qa-body');if(f)f.style.maxHeight=f.scrollHeight+'px';})();
+
+// Reveal
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>{el.classList.add('in');el.style.transition='none';el.style.opacity='1';el.style.transform='none';});},1400);
+
+// Circuit deco
+function circuit(el){
+  if(!el)return;const w=el.clientWidth||800,h=el.clientHeight||500,ns='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('width','100%');svg.setAttribute('height','100%');svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+  for(let i=0;i<10;i++){const x=Math.random()*w,y=Math.random()*h,len=40+Math.random()*110,dir=Math.random()>.5?1:0;
+    const p=document.createElementNS(ns,'path');p.setAttribute('d',dir?`M${x} ${y} h${len} v${30+Math.random()*40}`:`M${x} ${y} v${len} h${30+Math.random()*40}`);
+    p.setAttribute('fill','none');p.setAttribute('stroke','#ACA2C9');p.setAttribute('stroke-width','1');p.setAttribute('opacity','.5');svg.appendChild(p);
+    const c=document.createElementNS(ns,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r','3');c.setAttribute('fill','#ACA2C9');svg.appendChild(c);}
+  el.appendChild(svg);
+}
+circuit(document.getElementById('circuit-price'));
+circuit(document.getElementById('circuit-cta'));
+</script>
+</body>
+</html>

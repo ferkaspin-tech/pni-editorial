@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo armar tu Proyecto en Claude — Recursos · Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ===== Artículo / Guía ===== */
+  .art-hero{padding-block:clamp(40px,5vw,68px) clamp(20px,2.5vw,32px);position:relative;overflow:hidden}
+  .art-hero .blob.l{top:-160px;right:-120px}
+  .art-back{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6rem}
+  .art-back svg{transform:rotate(180deg);width:14px;height:14px}
+  .art-back:hover{color:var(--ink)}
+  .art-type{font-family:var(--sans);font-weight:700;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:.7em;margin-bottom:1rem}
+  .art-type .lvl{color:var(--muted)}
+  .art-type .lvl::before{content:"·";margin-right:.6em;color:var(--line)}
+  .art-title{font-size:clamp(2rem,4vw,3.3rem);max-width:18ch;margin-bottom:1.1rem}
+  .art-stand{font-size:clamp(1.05rem,1.5vw,1.28rem);color:var(--ink-soft);max-width:60ch;margin:0}
+  .art-meta{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.6rem;font-size:.82rem;color:var(--muted);letter-spacing:.02em}
+  .art-meta b{color:var(--ink);font-weight:600}
+
+  .art-wrap{max-width:760px}
+  .art-body{font-size:1.08rem;line-height:1.72;color:var(--ink-soft);padding-bottom:clamp(40px,5vw,64px)}
+  .art-body h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.45rem,2.4vw,1.95rem);color:var(--ink);margin:2.6rem 0 .9rem;letter-spacing:-.01em}
+  .art-body h2:first-child{margin-top:.5rem}
+  .art-body p{margin:0 0 1.15rem}
+  .art-body strong{color:var(--ink);font-weight:600}
+  .art-body em{font-style:italic;color:var(--teal);font-family:var(--serif)}
+  .art-body a.inl{color:var(--teal);border-bottom:1px solid var(--lavender)}
+
+  /* lista con check */
+  .feat-list{list-style:none;margin:.4rem 0 1.4rem;padding:0;display:grid;gap:.7rem}
+  .feat-list li{display:flex;gap:.8rem;align-items:flex-start;font-size:1rem;color:var(--ink-soft)}
+  .feat-list .ti{flex:none;margin-top:4px;color:var(--teal)}
+  .feat-list b{color:var(--ink)}
+
+  /* pasos numerados */
+  .steps{list-style:none;counter-reset:s;margin:1rem 0 1.6rem;padding:0;display:grid;gap:1rem}
+  .steps li{counter-increment:s;position:relative;padding:1.1rem 1.3rem 1.1rem 3.6rem;background:#fff;border:1px solid var(--line);border-radius:14px;font-size:.98rem;color:var(--ink-soft)}
+  .steps li::before{content:counter(s);position:absolute;left:1.1rem;top:1.05rem;width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--serif);font-size:.95rem;display:grid;place-items:center}
+  .steps li b{color:var(--ink);font-weight:600}
+
+  /* callout */
+  .callout{background:var(--lav-tint);border:1px solid #ddd6ec;border-radius:16px;padding:1.3rem 1.5rem;margin:1.6rem 0;font-size:.98rem;color:var(--ink-soft)}
+  .callout b{color:var(--navy)}
+  .callout.teal{background:var(--teal-tint);border-color:#cfe0e3}
+
+  /* ejemplos */
+  .ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1rem 0 1.6rem}
+  .ex{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.3rem}
+  .ex h4{font-family:var(--serif);font-weight:600;font-size:1.05rem;color:var(--ink);margin:0 0 .4rem}
+  .ex p{font-size:.9rem;color:var(--muted);margin:0;line-height:1.5}
+
+  /* CTA al pie del artículo */
+  .art-cta{background:var(--navy);color:#dfe3e8;border-radius:20px;padding:clamp(28px,3.5vw,44px);display:flex;align-items:center;justify-content:space-between;gap:1.6rem;flex-wrap:wrap;margin:1.4rem 0 clamp(48px,6vw,80px)}
+  .art-cta h3{color:#fff;font-size:clamp(1.3rem,2.4vw,1.8rem);margin-bottom:.4rem;max-width:20ch}
+  .art-cta p{color:#b9c1ca;font-size:.95rem;margin:0;max-width:40ch}
+
+  @media (max-width:560px){ .ex-grid{grid-template-columns:1fr} .art-cta{flex-direction:column;align-items:flex-start} }
+
+  /* botón descargar PDF */
+  .pdf-btn{display:inline-flex;align-items:center;gap:.6em;background:var(--navy);border:1.5px solid var(--navy);border-radius:999px;padding:.85em 1.6em;font-family:var(--sans);font-weight:600;font-size:.88rem;letter-spacing:.01em;color:#fff;cursor:pointer;box-shadow:0 10px 24px -14px rgba(14,27,45,.65);transition:transform .2s var(--ease),box-shadow .2s var(--ease),background .2s}
+  .pdf-btn:hover{background:#16273f;transform:translateY(-2px);box-shadow:0 18px 32px -16px rgba(14,27,45,.75)}
+  .pdf-btn svg{width:18px;height:18px;color:var(--lavender)}
+  .art-actions{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:1.6rem}
+
+  /* FAQ */
+  .faq{display:grid;gap:.7rem;margin:1rem 0 1.6rem}
+  .faq details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 1.3rem;overflow:hidden}
+  .faq summary{list-style:none;cursor:pointer;padding:1.1rem 0;font-family:var(--sans);font-weight:600;font-size:1rem;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:1.4rem;color:var(--teal);font-weight:400;transition:transform .2s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 1.1rem;font-size:.96rem;color:var(--ink-soft)}
+
+  /* ===== Print / PDF ===== */
+  @media print{
+    @page{margin:16mm 14mm}
+    .announce,header.nav,footer,.art-back,.art-actions,.art-cta,.blob{display:none !important}
+    body{font-size:11pt;line-height:1.5;color:#1a1a1a;background:#fff}
+    .art-hero{padding:0 !important}
+    .art-wrap{max-width:100% !important}
+    .art-title{font-size:24pt;margin-bottom:.5rem}
+    .art-stand{font-size:12pt;color:#333}
+    .art-body{font-size:11pt;color:#222;padding-bottom:0}
+    .art-body h2{font-size:15pt;margin:1.4rem 0 .5rem;break-after:avoid}
+    .steps li,.ex,.callout,.faq details{break-inside:avoid;box-shadow:none}
+    .steps li::before{background:#0E1B2D !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .callout,.ex,.faq details{border:1px solid #ccc;background:#fff !important}
+    .faq details{break-inside:avoid}
+    .faq summary::after{display:none}
+    .faq details:not([open]) p{display:block}
+    a{color:#0F4C5C;text-decoration:none}
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '230704174608041');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4 4 10-10"/></symbol>
+  </defs>
+</svg>
+
+<!-- ===== Announce ===== -->
+<div class="announce">
+  PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a>
+</div>
+
+<!-- ===== Nav ===== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="Renacer en Digital — inicio">
+      <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+      <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a>
+      <a href="index.html#inside">INSIDE</a>
+      <a href="PNI.html">PNI</a>
+      <a href="recursos.html" style="color:var(--ink)">Recursos</a>
+      <a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<article class="art-hero">
+  <span class="blob l"></span>
+  <div class="wrap art-wrap">
+    <a class="art-back" href="recursos.html"><svg><use href="#i-arrow"></use></svg> Volver a Recursos</a>
+    <div class="art-type">Guía<span class="lvl">Principiante</span></div>
+    <h1 class="art-title">Cómo armar tu Proyecto en Claude</h1>
+    <p class="art-stand">Un <em>Proyecto</em> es el lugar donde todo se integra: tus instrucciones, tus archivos y el contexto de un tema viven juntos, para que no tengas que repetir nada cada vez. Es el paso natural después de entender los modos y los skills. Acá te muestro cómo armar el tuyo.</p>
+    <div class="art-actions">
+      <button class="pdf-btn" type="button" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg> Descargar PDF</button>
+    </div>
+  </div>
+</article>
+
+<section style="padding-top:0">
+  <div class="wrap art-wrap">
+    <div class="art-body">
+
+      <h2>¿Qué es un Proyecto?</h2>
+      <p>Pensá en un Proyecto como una <strong>carpeta inteligente</strong>: un espacio dedicado a un tema, un cliente o una tarea, donde Claude ya sabe el contexto desde el primer mensaje. En vez de explicarle todo cada vez que abrís un chat, lo cargás una sola vez y queda fijo ahí adentro.</p>
+      <p>Es la diferencia entre hablar con alguien que recién llega y no sabe nada, y hablar con alguien que ya conoce tu negocio, tu tono y tus archivos.</p>
+
+      <h2>Qué guardás dentro de un Proyecto</h2>
+      <ul class="feat-list">
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Instrucciones fijas:</b> cómo querés que responda siempre —tu tono, tus reglas, lo que nunca debe hacer—.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Archivos de referencia:</b> tu manual de marca, plantillas, propuestas anteriores, listas de precios.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>El historial del tema:</b> las conversaciones quedan agrupadas, así no se te mezcla con todo lo demás.</span></li>
+      </ul>
+      <div class="callout teal"><b>La idea clave:</b> todo lo que cargás una vez, Claude lo tiene presente en cada conversación de ese Proyecto. Cargás el contexto una vez, lo usás siempre.</div>
+
+      <h2>Por qué te cambia la forma de trabajar</h2>
+      <ul class="feat-list">
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Dejás de repetirte.</b> No reexplicás tu negocio en cada chat.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Todo sale más consistente.</b> Mismo tono y mismas reglas en cada respuesta.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Ordenás tu cabeza.</b> Un Proyecto por cliente o por tema; nada se mezcla.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Tu equipo trabaja igual que vos.</b> Si comparten el Proyecto, todos parten de la misma base.</span></li>
+      </ul>
+
+      <h2>Armá tu primer Proyecto, paso a paso</h2>
+      <ol class="steps">
+        <li><b>Creá el Proyecto</b> y ponele un nombre claro: "Atención al cliente", "Cliente X", "Contenido redes".</li>
+        <li><b>Escribí las instrucciones:</b> quién es Claude ahí, tu tono, qué hacer y qué evitar. Dos o tres párrafos alcanzan.</li>
+        <li><b>Subí tus archivos clave:</b> lo que Claude necesita conocer para ese tema (manual, plantillas, ejemplos).</li>
+        <li><b>Probalo con una tarea real</b> y mirá si responde con tu contexto. Ajustá las instrucciones según lo que falte.</li>
+        <li><b>Usalo siempre desde ahí.</b> Cada vez que toques ese tema, entrá al Proyecto en vez de abrir un chat suelto.</li>
+      </ol>
+
+      <h2>Ejemplos de Proyectos para un negocio</h2>
+      <div class="ex-grid">
+        <div class="ex"><h4>Atención al cliente</h4><p>Tu tono y tus respuestas tipo. Cada consulta sale alineada sola.</p></div>
+        <div class="ex"><h4>Un cliente importante</h4><p>Su contexto, sus archivos y su historia, todo en un solo lugar.</p></div>
+        <div class="ex"><h4>Contenido y redes</h4><p>Tu voz de marca y tus formatos para generar posteos al toque.</p></div>
+        <div class="ex"><h4>Propuestas y ventas</h4><p>Tus plantillas y precios para armar cotizaciones consistentes.</p></div>
+      </div>
+
+      <h2>Cómo se conecta con modos y skills</h2>
+      <p>Si ya leíste las otras guías, esto te cierra el círculo: el <strong>Proyecto</strong> es el espacio, los <strong>skills</strong> son las tareas que sabe hacer ahí adentro, y el <strong>modo/modelo</strong> es con qué potencia lo resuelve. Juntos convierten a Claude en algo cercano a un colaborador que conoce tu negocio.</p>
+      <div class="callout teal"><b>Orden sugerido:</b> primero entendé los modos, después armá un par de skills, y metelos dentro de un Proyecto con tu contexto. Ahí es donde todo encaja.</div>
+
+      <h2>Errores comunes (y cómo evitarlos)</h2>
+      <ul class="feat-list">
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Un solo Proyecto para todo.</b> Se vuelve un cajón de sastre. Mejor uno por tema o cliente.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Instrucciones vagas.</b> "Ayudame con marketing" no alcanza. Sé específico con tono, reglas y objetivo.</span></li>
+        <li><svg class="ti" width="18" height="18"><use href="#i-check"></use></svg><span><b>Cargarlo y olvidarlo.</b> Actualizá los archivos e instrucciones cuando tu negocio cambie.</span></li>
+      </ul>
+
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq">
+        <details><summary>¿Necesito plan pago para usar Proyectos?</summary><p>Sí, los Proyectos están en los planes pagos de Claude. En el gratuito podés probar el chat, pero esta función viene con la versión paga.</p></details>
+        <details><summary>¿Cuántos Proyectos conviene tener?</summary><p>Los que de verdad uses. Empezá con uno —tu tema más recurrente— y sumá a medida que le tomes la mano. Mejor pocos y bien armados.</p></details>
+        <details><summary>¿Los archivos que subo quedan guardados?</summary><p>Sí, viven dentro del Proyecto y Claude los usa como referencia en cada conversación de ahí. Los podés actualizar o quitar cuando quieras.</p></details>
+        <details><summary>¿Puedo compartir un Proyecto con mi equipo?</summary><p>Según el plan, sí. Es ideal para que todos trabajen con el mismo contexto y el mismo tono, sin depender de una sola persona.</p></details>
+      </div>
+
+      <div class="callout"><b>En una frase:</b> un Proyecto es donde tu negocio "vive" dentro de Claude. Cargá el contexto una vez y trabajá siempre desde ahí, sin repetirte.</div>
+
+      <div class="art-cta">
+        <div>
+          <h3>¿Querés que esto funcione en tu negocio, sin marearte?</h3>
+          <p>En el PNI armamos tus asistentes con el contexto real de tu negocio, paso a paso.</p>
+        </div>
+        <a href="diagnostico.html" class="btn lav lg">Hacer mi diagnóstico <svg class="arr" width="16" height="16"><use href="#i-arrow"></use></svg></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:1.2rem">
+          <svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg>
+          <span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span>
+        </a>
+        <p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen. Estrategia · Sistemas · Resultados.</p>
+      </div>
+      <div>
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="index.html#fer">Fer Kaspin</a></li>
+          <li><a href="index.html#metodo">El método</a></li>
+          <li><a href="recursos.html">Recursos</a></li>
+          <li><a href="index.html#testimonios">Testimonios</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Programas</h5>
+        <ul>
+          <li><a href="index.html#inside">INSIDE — Para equipos</a></li>
+          <li><a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener">PNI — Comprar programa</a></li>
+          <li><a href="diagnostico.html">Diagnóstico 1:1</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Recibí ideas que aplican</h5>
+        <p style="font-size:.9rem">Estrategia, sistemas e IA aplicada a tu negocio. Una vez por semana, sin relleno.</p>
+        <form class="news" onsubmit="return false">
+          <input type="email" placeholder="Tu email" aria-label="Tu email">
+          <button type="submit">Sumarme</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Renacer en Digital · Fer Kaspin. Todos los derechos reservados.</span>
+      <span>Inteligencia aplicada a negocios que crecen.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+const toggle=document.getElementById('navToggle'),navlinks=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+</script>
+</body>
+</html>

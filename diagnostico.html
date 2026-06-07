@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ===== Quiz — específico ===== */
+  body{background:var(--mist);min-height:100vh;display:flex;flex-direction:column}
+  .q-blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.55;z-index:0;pointer-events:none}
+  .q-blob.a{width:460px;height:460px;background:var(--lav-tint);top:-160px;right:-120px}
+  .q-blob.b{width:400px;height:400px;background:var(--teal-tint);bottom:-180px;left:-140px}
+
+  .q-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:1.1rem var(--gutter)}
+  .q-top .brand .wordmark{font-size:1.05rem}
+  .q-back-home{display:inline-flex;align-items:center;gap:.5em;font-weight:500;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .q-back-home:hover{color:var(--ink)}
+  .q-back-home svg{transform:rotate(180deg)}
+
+  .q-wrap{position:relative;z-index:2;flex:1 0 auto;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px)}
+  .q-card{
+    width:100%;max-width:760px;background:#fff;border:1px solid var(--line);
+    border-radius:22px;box-shadow:var(--shadow);
+    padding:clamp(26px,4vw,52px) clamp(24px,4vw,56px) clamp(22px,3vw,40px);
+  }
+
+  /* header: paso + tiempo + barra */
+  .q-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.9rem}
+  .q-step{font-family:var(--sans);font-weight:700;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .q-time{font-size:.78rem;color:var(--muted);letter-spacing:.02em}
+  .q-track{height:3px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:clamp(26px,3.5vw,40px)}
+  .q-fill{height:100%;width:12.5%;background:var(--navy);border-radius:99px;transition:width .45s var(--ease)}
+
+  .q-h{font-family:var(--serif);font-weight:600;font-size:clamp(1.55rem,3.3vw,2.35rem);line-height:1.12;letter-spacing:-.01em;color:var(--ink);margin:0 0 .5rem}
+  .q-sub{font-size:clamp(.95rem,1.4vw,1.08rem);color:var(--ink-soft);margin:0 0 clamp(22px,3vw,32px)}
+
+  /* opciones */
+  .q-options{display:flex;flex-direction:column;gap:.7rem}
+  .opt{
+    display:flex;align-items:center;gap:1rem;width:100%;text-align:left;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);border-radius:14px;
+    padding:1.05rem 1.2rem;font-family:var(--sans);color:var(--ink);
+    transition:border-color .22s var(--ease),background .22s var(--ease),box-shadow .22s var(--ease),transform .18s var(--ease);
+  }
+  .opt:hover{border-color:var(--teal);background:var(--teal-tint);transform:translateY(-1px)}
+  .opt.sel{border-color:var(--navy);background:var(--lav-tint);box-shadow:0 12px 26px -18px rgba(14,27,45,.5)}
+  .opt-ic{width:42px;height:42px;flex:none;border-radius:11px;background:var(--mist);display:grid;place-items:center;color:var(--teal);transition:background .22s,color .22s}
+  .opt:hover .opt-ic,.opt.sel .opt-ic{background:#fff;color:var(--navy)}
+  .opt-ic svg{width:20px;height:20px}
+  .opt-txt{flex:1;min-width:0}
+  .opt-txt b{display:block;font-weight:600;font-size:1.02rem;line-height:1.25}
+  .opt-txt span{display:block;font-size:.85rem;color:var(--muted);margin-top:2px}
+  .opt-arr{flex:none;color:var(--muted);transition:transform .22s var(--ease),color .22s}
+  .opt:hover .opt-arr,.opt.sel .opt-arr{color:var(--navy);transform:translateX(3px)}
+  .opt-arr svg{width:20px;height:20px;display:block}
+
+  /* form final */
+  .q-form{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem 1.2rem}
+  .q-field{display:flex;flex-direction:column;gap:.45rem}
+  .q-field.full{grid-column:1 / -1}
+  .q-field label{font-weight:600;font-size:.82rem;letter-spacing:.02em;color:var(--ink)}
+  .q-field label .opt-req{color:var(--teal)}
+  .q-field input,.q-field textarea{
+    font-family:var(--sans);font-size:1rem;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:.85rem 1rem;
+    transition:border-color .2s,box-shadow .2s;width:100%;resize:vertical;
+  }
+  .q-field input::placeholder,.q-field textarea::placeholder{color:#a9b1bb}
+  .q-field input:focus,.q-field textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px var(--lav-tint)}
+  .q-field textarea{min-height:96px;line-height:1.5}
+
+  /* footer */
+  .q-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:clamp(24px,3vw,34px)}
+  .q-back{display:inline-flex;align-items:center;gap:.5em;background:none;border:none;cursor:pointer;font-family:var(--sans);font-weight:600;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:.4rem 0;transition:color .2s}
+  .q-back:hover{color:var(--ink)}
+  .q-back svg{transform:rotate(180deg);width:16px;height:16px}
+  .q-back[hidden]{visibility:hidden}
+  .q-next{opacity:.45;pointer-events:none;transition:opacity .25s}
+  .q-next.ready{opacity:1;pointer-events:auto}
+
+  /* pantalla final / éxito */
+  .q-done{text-align:center;padding:clamp(8px,2vw,20px) 0}
+  .q-done .seal{width:74px;height:74px;border-radius:50%;background:var(--sage-tint);display:grid;place-items:center;color:var(--sage);margin:0 auto 1.4rem}
+  .q-done .seal svg{width:34px;height:34px}
+  .q-done h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.2vw,2.3rem);margin:0 0 .7rem;color:var(--ink)}
+  .q-done p{font-size:1.05rem;color:var(--ink-soft);max-width:46ch;margin:0 auto 1.8rem}
+  .q-summary{text-align:left;max-width:440px;margin:0 auto 2rem;background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.4rem}
+  .q-summary .row{display:flex;gap:.8rem;padding:.5rem 0;border-bottom:1px solid var(--line-soft);font-size:.93rem}
+  .q-summary .row:last-child{border-bottom:none}
+  .q-summary .row .k{flex:none;width:118px;color:var(--muted);font-weight:600;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+  .q-summary .row .v{color:var(--ink);font-weight:500}
+
+  /* bloque de recomendación */
+  .q-reco{text-align:left;max-width:480px;margin:0 auto 1.4rem;background:var(--lav-tint);border:1px solid #ddd6ec;border-radius:18px;padding:1.6rem 1.7rem}
+  .q-reco-tag{display:inline-block;font-family:var(--sans);font-weight:700;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--navy);background:#fff;border-radius:99px;padding:.3rem .8rem;margin-bottom:.9rem}
+  .q-reco h3{font-family:var(--serif);font-weight:600;font-size:1.5rem;line-height:1.12;color:var(--ink);margin:0 0 .55rem}
+  .q-reco p{font-size:.98rem;color:var(--ink-soft);margin:0 0 1.2rem}
+  .q-wa-btn{--bg:#0E1B2D}
+  .q-summary-wrap{max-width:440px;margin:1.6rem auto 0;text-align:left}
+  .q-summary-wrap summary{cursor:pointer;font-family:var(--sans);font-weight:600;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);list-style:none;text-align:center;padding:.5rem}
+  .q-summary-wrap summary::-webkit-details-marker{display:none}
+  .q-summary-wrap summary:hover{color:var(--ink)}
+  .q-summary-wrap .q-summary{margin-top:.8rem}
+
+  .q-legal{text-align:center;font-size:.78rem;color:var(--muted);margin-top:1rem}
+
+  @media (max-width:560px){
+    .q-form{grid-template-columns:1fr}
+    .q-back-home span{display:none}
+    .opt-txt span{display:none}
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '230704174608041');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<!-- sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4 4 10-10"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c-1.5 1-2 4-2 4s3-.5 4-2M14 4c3.5 0 6 2.5 6 6 0 4-4 8-8 10l-4-4C10 14 10 4 14 4Z"/><circle cx="14.5" cy="9.5" r="1.6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 9h18M16 13h2"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="7" rx="6" ry="2.6"/><path d="M3 7v5c0 1.4 2.7 2.6 6 2.6"/><ellipse cx="15" cy="14" rx="6" ry="2.6"/><path d="M9 14v3c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6v-3"/></symbol>
+    <symbol id="i-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l3 6-9 12L3 9Z"/><path d="M3 9h18M9 3 7 9l5 12 5-12-2-6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.4 1c0 1.8-2.6 2.2-2.6 3.8"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3 4 4.5 4 8a4 4 0 0 1-8 0c0-1.2.5-2 1-2.6C9.2 9.6 11 8 12 3Z"/><path d="M12 21a6 6 0 0 0 6-6c0-3.5-3-5-4-8"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-cal-long" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4M7 13h3M7 17h3M14 13h3"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11Z"/></symbol>
+    <symbol id="i-seed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7M12 14c0-3 2.5-5 6-5 0 3.5-2.5 5-6 5ZM12 14c0-3-2.5-5-6-5 0 3.5 2.5 5 6 5Z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6Z"/></symbol>
+    <symbol id="i-team" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="3"/><path d="M3.5 19c.5-3 2.7-4.5 5.5-4.5S14 16 14.5 19"/><path d="M16 6.5a3 3 0 0 1 0 5.6M17.5 14.6c2.2.5 3.7 2 4 4.4"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 17v-4M12 17V9M16 17v-7"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h16M4 18l-1-9 5 4 4-7 4 7 5-4-1 9"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.3 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.2-.2-1.2-1.5-1.2-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.3 0 .5-.1.2-.2.4-.4.5l-.3.4c-.1.1-.2.3-.1.5.1.2.6 1 1.3 1.6.9.8 1.6 1 1.8 1.1.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.5-.1l1.8.9c.2.1.4.2.4.3.1.2.1.6 0 1z"/></symbol>
+  </defs>
+</svg>
+
+<div class="q-blob a"></div>
+<div class="q-blob b"></div>
+
+<header class="q-top">
+  <a class="brand" href="index.html" aria-label="Renacer en Digital — inicio">
+    <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+    <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+  </a>
+  <a class="q-back-home" href="index.html"><svg width="14" height="14"><use href="#i-arrow"></use></svg><span>Volver al inicio</span></a>
+</header>
+
+<main class="q-wrap">
+  <div class="q-card" id="card">
+    <!-- meta -->
+    <div class="q-meta" id="meta">
+      <span class="q-step" id="stepLabel">Paso 1 de 5</span>
+      <span class="q-time">~60 segundos</span>
+    </div>
+    <div class="q-track" id="track"><div class="q-fill" id="fill"></div></div>
+
+    <!-- contenido dinámico -->
+    <div id="stage"></div>
+
+    <!-- footer -->
+    <div class="q-foot" id="foot">
+      <button class="q-back" id="backBtn" type="button" hidden><svg><use href="#i-arrow"></use></svg> Atrás</button>
+      <span id="footRight"></span>
+    </div>
+  </div>
+</main>
+
+<script>
+// ====== Número de WhatsApp de Fer ======
+const WA_NUMBER = "50764147770";
+
+// ====== Definición del quiz ======
+const STEPS = [
+  {
+    key: "perfil",
+    h: "¿Cómo describirías tu situación hoy?",
+    sub: "Así sé desde dónde estás trabajando.",
+    options: [
+      { ic:"i-building", label:"Tengo una empresa con equipo", sub:"Varias personas trabajando conmigo" },
+      { ic:"i-user",     label:"Soy profesional independiente", sub:"Trabajo por mi cuenta o con apoyo puntual" },
+      { ic:"i-rocket",   label:"Estoy emprendiendo / recién empiezo", sub:"Armando o haciendo crecer mi proyecto" },
+    ],
+  },
+  {
+    key: "dolor",
+    h: "¿Cuál es tu mayor cuello de botella hoy?",
+    sub: "Lo que más te está frenando. Acá la IA no es una moda: es para resolver algo concreto.",
+    options: [
+      { ic:"i-clock",  label:"Tareas manuales que me comen el tiempo", sub:"Hago todo a mano y no doy abasto" },
+      { ic:"i-layers", label:"Desorden e información dispersa", sub:"Todo en mil lados, sin sistema" },
+      { ic:"i-target", label:"No vendo o no hago seguimiento como debería", sub:"Pierdo clientes por falta de proceso" },
+      { ic:"i-help",   label:"No tengo claro cómo aplicar la IA", sub:"Sé que sirve, pero no por dónde empezar" },
+      { ic:"i-cpu",    label:"Quiero crear asistentes o un sistema a medida", sub:"Algo que piense y trabaje conmigo" },
+    ],
+  },
+  {
+    key: "presupuesto",
+    h: "¿Tenés presupuesto para invertir en esto?",
+    sub: "Un rango aproximado está perfecto. Es solo para entender en qué nivel ayudarte.",
+    options: [
+      { ic:"i-wallet", label:"Menos de USD 250", sub:"Quiero empezar por lo esencial" },
+      { ic:"i-coins",  label:"USD 250 – 1,000", sub:"Listo para un primer sistema" },
+      { ic:"i-chart",  label:"USD 1,000 – 5,000", sub:"Quiero algo a medida" },
+      { ic:"i-gem",    label:"Más de USD 5,000", sub:"Implementación seria, con equipo" },
+      { ic:"i-help",   label:"Todavía no lo sé", sub:"Necesito entender opciones primero" },
+    ],
+  },
+  {
+    key: "tiempo",
+    h: "¿Para cuándo querés tenerlo funcionando?",
+    sub: "Tu urgencia me ayuda a priorizar.",
+    options: [
+      { ic:"i-flame",    label:"Este mes", sub:"Estoy listo para arrancar ya" },
+      { ic:"i-cal",      label:"Este trimestre", sub:"En las próximas semanas" },
+      { ic:"i-cal-long", label:"En los próximos 6 meses", sub:"Planeando con calma" },
+      { ic:"i-compass",  label:"Solo estoy explorando", sub:"Sin fecha definida todavía" },
+    ],
+  },
+  {
+    key: "nivel_ia",
+    h: "¿Qué tanto usás IA hoy?",
+    sub: "Para saber desde qué nivel partimos.",
+    options: [
+      { ic:"i-seed",  label:"Casi nada todavía", sub:"No la he incorporado a mi trabajo" },
+      { ic:"i-spark", label:"Uso ChatGPT de vez en cuando", sub:"De forma suelta, sin sistema" },
+      { ic:"i-team",  label:"La uso en mi día a día", sub:"Yo o mi equipo, con frecuencia" },
+      { ic:"i-cpu",   label:"Ya tengo sistemas de IA andando", sub:"Quiero llevarlos más lejos" },
+    ],
+  },
+  {
+    key: "contacto",
+    h: "¿Cómo es tu nombre?",
+    sub: "Último paso. Con esto armo tu recomendación y, si querés, hablamos directo por WhatsApp.",
+    form: true,
+  },
+];
+
+// ====== Estado ======
+const SAVE_KEY = "rd_diagnostico_v1";
+let answers = {};
+let cur = 0;
+try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)||"{}"); answers = s.answers||{}; cur = Math.min(s.cur||0, STEPS.length-1); } catch(e){}
+
+const stage = document.getElementById("stage");
+const fill = document.getElementById("fill");
+const stepLabel = document.getElementById("stepLabel");
+const backBtn = document.getElementById("backBtn");
+const footRight = document.getElementById("footRight");
+const meta = document.getElementById("meta");
+const track = document.getElementById("track");
+const foot = document.getElementById("foot");
+
+function save(){ localStorage.setItem(SAVE_KEY, JSON.stringify({answers, cur})); }
+function esc(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+
+function render(){
+  const step = STEPS[cur];
+  // progreso
+  const pct = ((cur+1) / STEPS.length) * 100;
+  fill.style.width = pct + "%";
+  stepLabel.textContent = "Paso " + (cur+1) + " de " + STEPS.length;
+  backBtn.hidden = cur === 0;
+  footRight.innerHTML = "";
+
+  if(step.form){ renderForm(step); return; }
+
+  // pregunta con opciones
+  let html = '<h2 class="q-h">'+esc(step.h)+'</h2>';
+  if(step.sub) html += '<p class="q-sub">'+esc(step.sub)+'</p>';
+  html += '<div class="q-options">';
+  step.options.forEach((o,i)=>{
+    const sel = answers[step.key] === o.label ? " sel" : "";
+    html += '<button type="button" class="opt'+sel+'" data-i="'+i+'">'
+      + '<span class="opt-ic"><svg><use href="#'+o.ic+'"></use></svg></span>'
+      + '<span class="opt-txt"><b>'+esc(o.label)+'</b>'+(o.sub?'<span>'+esc(o.sub)+'</span>':'')+'</span>'
+      + '<span class="opt-arr"><svg><use href="#i-arrow"></use></svg></span>'
+      + '</button>';
+  });
+  html += '</div>';
+  stage.innerHTML = html;
+
+  stage.querySelectorAll(".opt").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      answers[step.key] = step.options[+btn.dataset.i].label;
+      save();
+      // feedback breve y avanza
+      stage.querySelectorAll(".opt").forEach(b=>b.classList.remove("sel"));
+      btn.classList.add("sel");
+      setTimeout(()=>{ cur++; save(); render(); }, 240);
+    });
+  });
+}
+
+function renderForm(step){
+  const a = answers;
+  stage.innerHTML =
+    '<h2 class="q-h">'+esc(step.h)+'</h2>'
+    + '<p class="q-sub">'+esc(step.sub)+'</p>'
+    + '<div class="q-form">'
+    + '  <div class="q-field full"><label for="f-nombre">Tu nombre <span class="opt-req">*</span></label>'
+    + '    <input id="f-nombre" type="text" placeholder="Nombre y apellido" value="'+esc(a.nombre||"")+'" autocomplete="name"></div>'
+    + '  <div class="q-field full"><label for="f-meta">¿Qué te gustaría lograr o resolver? <span class="opt-req">*</span></label>'
+    + '    <textarea id="f-meta" placeholder="Una o dos frases alcanzan. Ej: ordenar mis ventas, automatizar tareas, armar mis asistentes…">'+esc(a.meta||"")+'</textarea></div>'
+    + '</div>';
+
+  // botón enviar en el footer
+  footRight.innerHTML = '<button class="btn lg q-next" id="sendBtn" type="button">Ver mi recomendación <svg class="arr" width="16" height="16"><use href="#i-arrow"></use></svg></button>';
+  const nombre = document.getElementById("f-nombre");
+  const metaT = document.getElementById("f-meta");
+  const sendBtn = document.getElementById("sendBtn");
+
+  function check(){
+    a.nombre = nombre.value.trim();
+    a.meta = metaT.value.trim();
+    save();
+    sendBtn.classList.toggle("ready", a.nombre.length>1 && a.meta.length>2);
+  }
+  nombre.addEventListener("input", check);
+  metaT.addEventListener("input", check);
+  check();
+
+  sendBtn.addEventListener("click", finish);
+}
+
+function recommend(a){
+  // Empresa con equipo -> INSIDE ; profesional / emprendedor -> PNI
+  if(a.perfil === "Tengo una empresa con equipo"){
+    return {
+      key:"INSIDE",
+      tag:"Para tu empresa",
+      title:"INSIDE",
+      desc:"Entro a trabajar adentro de tu negocio: ordenamos procesos y montamos sistemas de IA junto a tu equipo, con tu contexto real.",
+      href:"index.html#inside",
+      cta:"Conocer INSIDE",
+    };
+  }
+  return {
+    key:"PNI",
+    tag:"Para vos",
+    title:"PNI — Programa de Negocios Inteligentes",
+    desc:"Aprendés a poner la IA a trabajar con vos y construís tus propios asistentes en 4 semanas. Pago único, acceso inmediato.",
+    href:"PNI.html",
+    cta:"Conocer el PNI",
+  };
+}
+
+function buildWaUrl(a, reco){
+  const L = [
+    "Hola Fer 👋 Hice el diagnóstico en tu web y acá va mi info:",
+    "",
+    "• Soy: " + (a.perfil || "—"),
+    "• Mi mayor cuello de botella: " + (a.dolor || "—"),
+    "• Presupuesto: " + (a.presupuesto || "—"),
+    "• Cuándo lo quiero hacer: " + (a.tiempo || "—"),
+    "• Nivel de IA hoy: " + (a.nivel_ia || "—"),
+    "• Quiero lograr: " + (a.meta || "—"),
+    "",
+    "Camino sugerido: " + reco.title,
+    "Mi nombre: " + (a.nombre || "—"),
+  ];
+  return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(L.join("\n"));
+}
+
+function finish(){
+  renderDone();
+}
+
+function renderDone(){
+  meta.style.display = "none";
+  track.style.display = "none";
+  foot.style.display = "none";
+  const a = answers;
+  const reco = recommend(a);
+  const waUrl = buildWaUrl(a, reco);
+
+  const rows = [
+    ["Perfil", a.perfil],
+    ["Cuello de botella", a.dolor],
+    ["Presupuesto", a.presupuesto],
+    ["Tiempo", a.tiempo],
+    ["Nivel de IA", a.nivel_ia],
+  ].filter(r=>r[1]).map(r=>'<div class="row"><span class="k">'+esc(r[0])+'</span><span class="v">'+esc(r[1])+'</span></div>').join("");
+
+  stage.innerHTML =
+    '<div class="q-done">'
+    + '<div class="seal"><svg><use href="#i-check"></use></svg></div>'
+    + '<h2>Listo, '+esc((a.nombre||"").split(" ")[0]||"")+' 🌱</h2>'
+    + '<p>Según lo que me contaste, este es el camino que más te conviene. Y si querés, hablamos directo.</p>'
+    + '<div class="q-reco">'
+    + '  <span class="q-reco-tag">Te recomiendo · '+esc(reco.tag)+'</span>'
+    + '  <h3>'+esc(reco.title)+'</h3>'
+    + '  <p>'+esc(reco.desc)+'</p>'
+    + '  <a class="btn lav" href="'+reco.href+'">'+esc(reco.cta)+' <svg class="arr" width="15" height="15"><use href="#i-arrow"></use></svg></a>'
+    + '</div>'
+    + '<a class="btn lg q-wa-btn" href="'+waUrl+'" target="_blank" rel="noopener"><svg width="18" height="18" style="margin-right:.1em"><use href="#i-wa"></use></svg> Hablar con Fer por WhatsApp</a>'
+    + '<details class="q-summary-wrap"><summary>Ver mis respuestas</summary><div class="q-summary">'+rows+'</div></details>'
+    + '</div>';
+  // limpiar progreso guardado para no reabrir en "done"
+  localStorage.removeItem(SAVE_KEY);
+}
+
+render();
+</script>
+</body>
+</html>
