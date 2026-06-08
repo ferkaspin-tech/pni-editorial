@@ -214,6 +214,11 @@ header.nav.scrolled{border-color:var(--line);box-shadow:0 10px 30px -24px rgba(1
 .tcard p{font-size:.98rem;color:var(--ink-soft);line-height:1.55}
 .tcard .who{display:flex;align-items:center;gap:.85rem;margin-top:auto;padding-top:1.4rem}
 .tcard .av{width:46px;height:46px;border-radius:50%;flex:none}
+.tcard .av.mono{display:grid;place-items:center;font-family:var(--serif);font-weight:600;font-size:1.18rem;color:#fff;line-height:1;user-select:none}
+.tcard .av.mono.q{font-size:1.7rem;padding-top:.42em}
+.tcard .av.c1{background:linear-gradient(135deg,var(--teal),#0c3f4a)}
+.tcard .av.c2{background:linear-gradient(135deg,var(--lavender),#9a86d4)}
+.tcard .av.c3{background:linear-gradient(135deg,var(--sage,#5b8b6f),#3f6e54)}
 .tcard .who b{display:block;font-size:.92rem;font-family:var(--serif)}
 .tcard .who span{font-size:.78rem;color:var(--muted)}
 
@@ -255,14 +260,39 @@ footer ul a:hover{color:#fff}
   .tcards{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr 1fr}
 }
-@media (max-width:680px){
+
+/* Nav: pasar a menú hamburguesa antes de que los links se amontonen */
+@media (max-width:860px){
   .nav-links{position:fixed;inset:0 0 auto 0;top:0;flex-direction:column;background:#fff;padding:6rem 2rem 2.5rem;align-items:flex-start;gap:1.4rem;transform:translateY(-100%);transition:transform .4s var(--ease);box-shadow:var(--shadow);height:auto}
   .nav-links.open{transform:none}
+  .nav-links a:not(.btn){font-size:1rem}
+  .nav-links .btn{margin-top:.4rem}
   .nav-toggle{display:block;z-index:60}
-  .pillars{grid-template-columns:1fr}
-  .foot-grid{grid-template-columns:1fr}
-  .stat-row{gap:1.6rem}
 }
 
-/* Avatares de testimonio con iniciales */
-.tcard .av.av-ini{display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:600;font-size:.9rem;letter-spacing:.01em;line-height:1}
+@media (max-width:680px){
+  .pillars{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .stat-row{gap:1.4rem 2rem}
+  /* Tarjetas de programa: el pie se desbordaba, lo apilamos */
+  .prog-card .foot{flex-direction:column;align-items:stretch;gap:1rem}
+  .prog-card .foot .btn{width:100%;justify-content:center}
+  .prog-card .foot .link-arrow{justify-content:center}
+  /* Acordeón del método: quitar el sangrado grande del texto */
+  .phase-head{gap:.85rem;padding:1.1rem 1.1rem}
+  .phase-num{width:34px;height:34px;font-size:1rem}
+  .phase-head h4{font-size:1.06rem}
+  .phase-body .pb-inner{padding:0 1.2rem 1.3rem}
+  /* Badge del hero: que no quede cortado contra el borde */
+  .hero-badge{left:8px;bottom:14px;padding:.8rem 1rem;max-width:210px}
+  /* Marco de acento de Fer: reducir el voladizo */
+  .fer-media .accent-frame{inset:12px -10px -10px 12px}
+  /* Botones largos: aliviar el tracking para que no rocen los bordes */
+  .btn{letter-spacing:.08em}
+  .btn.lg{padding:1em 1.6em}
+}
+
+@media (max-width:420px){
+  body{font-size:16px}
+  .hero-badge{position:static;margin-top:1rem;max-width:none;left:auto;bottom:auto}
+}
