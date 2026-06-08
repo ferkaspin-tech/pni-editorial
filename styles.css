@@ -254,7 +254,10 @@ footer ul a:hover{color:#fff}
 @media (max-width:960px){
   .hero-grid,.fer-grid,.method{grid-template-columns:1fr}
   .fer-media{max-width:520px;margin-inline:auto;order:-1}
-  .hero-media{max-width:480px;margin-inline:auto}
+  /* Hero media: la foto y el badge van en columna, badge en flujo normal */
+  .hero-media{max-width:480px;margin-inline:auto;display:flex;flex-direction:column;align-items:center}
+  /* Badge sale del posicionamiento absoluto para que no se monte sobre nada */
+  .hero-badge{position:static;left:auto;bottom:auto;margin:1rem auto 0;max-width:100%;width:fit-content;align-self:flex-start}
   .pillars{grid-template-columns:1fr 1fr}
   .prog,.contrast{grid-template-columns:1fr}
   .tcards{grid-template-columns:1fr}
@@ -294,5 +297,4 @@ footer ul a:hover{color:#fff}
 
 @media (max-width:420px){
   body{font-size:16px}
-  .hero-badge{position:static;margin-top:1rem;max-width:none;left:auto;bottom:auto}
 }
