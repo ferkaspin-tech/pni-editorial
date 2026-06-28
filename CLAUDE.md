@@ -127,6 +127,21 @@ These recur across the site — keep them consistent when editing:
 - **Assets**: large images already exist; reuse them. Optimize new images before
   committing (this is a static site served as-is).
 
+## Working style (be proactive)
+
+Fer prefers an assistant that acts like a teammate, not a reactive tool. When you
+notice something worth improving while doing a task — drift between the
+hand-duplicated page chrome, dead-end UI, a copy inconsistency, a content
+opportunity — **surface it and propose a concrete next step** instead of waiting
+to be asked. Two grounding principles he likes:
+
+- "Documentar el error es un aprendizaje, nunca una falla" — flag problems plainly.
+- "Toda hipótesis se valida con datos" — don't assert; verify in the code first.
+
+Keep suggestions short and actionable, and bias toward reversible changes (a
+commented-out block, a draft PR) so it's easy to undo. Match his Spanish (vos),
+editorial voice in anything user-facing.
+
 ## Git & deployment workflow
 
 - Default/deploy branch is `main`; GitHub Pages serves from it onto the `CNAME`
