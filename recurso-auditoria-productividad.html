@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2 prompts para ser 10x más productivo — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.art-wrap{max-width:740px;margin-inline:auto;padding-block:clamp(48px,6vw,80px)}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.breadcrumb a{color:var(--teal);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--line)}
+.chip-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+.chip{display:inline-flex;align-items:center;gap:.45em;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.45em 1em;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+
+/* problema */
+.problem-block{background:var(--navy);color:#dfe3e8;border-radius:18px;padding:clamp(24px,3vw,36px);margin:clamp(32px,4vw,48px) 0}
+.problem-block h3{color:#fff;font-size:1.3rem;margin-bottom:.7rem}
+.problem-block p{color:#b9c1ca;font-size:.95rem;line-height:1.65;margin:0}
+.problem-block strong{color:#fff}
+
+/* tarjetas de prompt */
+.prompt-card{border:1.5px solid var(--line);border-radius:20px;overflow:hidden;margin:clamp(32px,4vw,48px) 0}
+.pc-head{padding:1.6rem 1.8rem 1.2rem;border-bottom:1px solid var(--line);background:var(--mist)}
+.pc-head .pc-tag{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.pc-head h2{font-size:1.3rem;margin:0 0 .4rem}
+.pc-head .pc-when{font-size:.9rem;color:var(--muted);line-height:1.55}
+.pc-body{padding:1.4rem 1.8rem}
+.pc-body p{font-size:.95rem;color:var(--muted);line-height:1.65;margin:0 0 1rem}
+
+/* bloque de prompt copiable */
+.prompt-box{background:#fff;border:1.5px solid var(--line);border-radius:14px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.prompt-box:hover{border-color:var(--teal);box-shadow:var(--shadow-sm)}
+.pb-header{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.1rem;background:var(--mist);border-bottom:1px solid var(--line)}
+.pb-header span{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pb-header .copy-btn{display:inline-flex;align-items:center;gap:.4em;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:none;border:none;cursor:pointer;padding:.3em .6em;border-radius:6px;transition:background .2s}
+.pb-header .copy-btn:hover{background:var(--teal-tint)}
+.pb-content{padding:1.1rem 1.2rem;font-size:.88rem;color:var(--ink-soft);line-height:1.7;font-family:'Courier New',monospace;white-space:pre-wrap;max-height:260px;overflow:hidden;position:relative}
+.pb-content.expanded{max-height:none}
+.pb-fade{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#fff);pointer-events:none;transition:opacity .2s}
+.prompt-box.expanded .pb-fade{opacity:0}
+.pb-expand{display:flex;justify-content:center;padding:.7rem;border-top:1px solid var(--line);background:var(--mist)}
+.pb-expand button{font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--teal);background:none;border:none;cursor:pointer;letter-spacing:.04em}
+
+/* cuándo usarlo */
+.when-strip{display:flex;gap:1rem;align-items:flex-start;background:var(--lav-tint);border-radius:12px;padding:1rem 1.2rem;margin:.8rem 0}
+.when-strip svg{color:var(--teal);flex:none;margin-top:.1rem}
+.when-strip p{font-size:.9rem;color:var(--navy);margin:0;line-height:1.55;font-weight:500}
+
+.copy-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.8rem;padding:.6em 1.4em;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.copy-toast.show{opacity:1}
+.attribution{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.5rem;margin:clamp(32px,4vw,48px) 0;font-size:.88rem;color:var(--muted);line-height:1.6}
+.attribution a{color:var(--teal)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  </defs>
+</svg>
+
+<div class="announce">PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+      <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a>
+      <a href="index.html#inside">INSIDE</a>
+      <a href="PNI.html">PNI</a>
+      <a href="recursos.html" style="color:var(--teal)">Recursos</a>
+      <a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<section style="padding-block:clamp(56px,7vw,88px) clamp(36px,4vw,52px);position:relative;overflow:hidden">
+  <span class="blob l" style="top:-140px;right:-80px;opacity:.5"></span>
+  <div class="wrap">
+    <div class="art-wrap" style="padding:0">
+      <div class="breadcrumb">
+        <a href="recursos.html">Recursos</a>
+        <span class="sep">›</span>
+        <span>Prompts · Principiante</span>
+      </div>
+      <div class="chip-row">
+        <span class="chip">Prompts</span>
+        <span class="chip">Principiante</span>
+        <span class="chip">Productividad</span>
+      </div>
+      <h1 class="display">2 prompts para ser 10x más productivo. De verdad.</h1>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:56ch;margin-top:.8rem">Uno te ayuda a encontrar tu meta más importante. El otro audita tu semana y te dice exactamente dónde estás perdiendo tiempo en trabajo que parece productivo pero no mueve nada.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="art-wrap">
+
+    <div class="problem-block">
+      <h3>El problema.</h3>
+      <p>Desde que la IA entró en tu vida, podés hacer más que nunca. Emails, docs, contenido, investigación — todo más rápido. Pero de alguna forma estás más estresado, más disperso y menos claro en lo que realmente importa.</p>
+      <p style="margin-top:.8rem">Eso es porque la IA te hizo más rápido en todo — <strong>incluyendo las cosas equivocadas.</strong> La productividad performativa es hacer muchas cosas que se sienten productivas pero no mueven nada importante. La IA lo hace 10x peor porque ahora podés ser performativamente productivo a velocidad sobrehumana.</p>
+    </div>
+
+    <!-- PROMPT 1 -->
+    <div class="prompt-card">
+      <div class="pc-head">
+        <div class="pc-tag">Prompt 1 de 2</div>
+        <h2>El Buscador de Meta</h2>
+        <p class="pc-when">Usalo una vez ahora, y cada vez que te sintás disperso o tironeado en demasiadas direcciones. Te fuerza a elegir UNA sola meta — la que más importa.</p>
+      </div>
+      <div class="pc-body">
+        <div class="when-strip">
+          <svg width="18" height="18"><use href="#i-clock"></use></svg>
+          <p>Cuándo usarlo: una vez ahora y cuando te sentís perdido entre muchos proyectos.</p>
+        </div>
+        <p>Este prompt funciona como un coach de claridad estratégica. Te hace listar todo lo que tenés en la cabeza, lo filtra con 4 preguntas (efecto dominó, prueba del arrepentimiento, control, energía), y te confronta con honestidad sobre cuál es tu UNA meta real para los próximos 90 días.</p>
+
+        <div class="prompt-box" id="pb1">
+          <div class="pb-header">
+            <span>Prompt — copiá y pegá en Claude</span>
+            <button class="copy-btn" data-target="pb1">
+              <svg width="13" height="13"><use href="#i-arrow"></use></svg>
+              Copiar
+            </button>
+          </div>
+          <div class="pb-content" id="pb1-content">Sos mi Coach de Claridad Estratégica. Tu trabajo es ayudarme a encontrar MI UNA meta más importante ahora mismo — la meta que, si hiciera progreso real en ella, haría la mayor diferencia en mi vida en los próximos 90 días. No tres metas. No cinco. Una.
+
+PASO 1 — EL VOLCADO: Pedime que liste cada meta, proyecto, ambición y "debería" que ocupa espacio en mi cabeza ahora mismo. No me dejes parar en 5. Empujame a llegar a por lo menos 10-15. La lista sucia y sin filtro es el punto.
+
+PASO 2 — EL FILTRO: Tomá mi lista y pasá cada meta por estas 4 preguntas:
+1. Efecto dominó: ¿Si lograra esta meta, haría otras metas de la lista más fáciles o irrelevantes?
+2. Prueba del arrepentimiento: ¿Si no hago nada con esto por 90 días, me arrepentiría genuinamente — o la vida seguiría igual?
+3. Prueba de control: ¿Tengo control real sobre el resultado, o dependo de otras personas, del timing o de la suerte?
+4. Prueba de energía: ¿Cuando pienso en trabajar en esto, me siento con energía o agotado?
+
+Puntuá cada meta: FUERTE, MEDIA o DÉBIL en cada filtro. Mostrame los resultados.
+
+PASO 3 — LA CONFRONTACIÓN: Basándote en los puntajes, decime cuál UNA meta debería ser mi foco principal. Sé directo. Si me estoy aferrando a metas con puntajes bajos, señalamelo. Si dos metas parecen igual de importantes, ayudame a ver cuál es realmente el dominó que desbloquea a la otra.
+
+Luego haceme la pregunta difícil: "¿Qué estás dispuesto a DEJAR DE HACER o poner en pausa por 90 días para hacerle lugar a esto?"
+
+No me dejes decir "nada". Si no estoy dispuesto a soltar o pausar nada, no me comprometí realmente con una prioridad.
+
+PASO 4 — EL ANCLA: Una vez que acordamos la meta, definila en una sola oración cristalina: qué será verdad en 90 días si tengo éxito, cuál es la métrica que prueba que hice progreso real. Escriibila como una declaración que pueda leer cada mañana en menos de 5 segundos.
+
+PASO 5 — EL TEST SEMANAL: Dame una pregunta para hacerme cada domingo a la noche: "¿Dediqué la mayoría de mi mejor energía esta semana a [LA META], o la dediqué a todo lo demás?"
+
+Reglas: Sé brutalmente honesto. Si todas mis metas son débiles, decilo. No me dejes tener 3 prioridades. Si la meta se siente cómoda, probablemente elegimos mal.</div>
+          <div class="pb-fade" id="pb1-fade"></div>
+          <div class="pb-expand">
+            <button onclick="toggleExpand('pb1')">Ver prompt completo ↓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMPT 2 -->
+    <div class="prompt-card">
+      <div class="pc-head">
+        <div class="pc-tag">Prompt 2 de 2</div>
+        <h2>La Auditoría Semanal</h2>
+        <p class="pc-when">Usalo cada domingo a la noche o lunes a la mañana. 5 minutos. Te dice la verdad sobre cómo gastaste la semana y construye tu plan para la siguiente.</p>
+      </div>
+      <div class="pc-body">
+        <div class="when-strip">
+          <svg width="18" height="18"><use href="#i-clock"></use></svg>
+          <p>Cuándo usarlo: todos los domingos/lunes. Si tenés Gmail conectado, Claude puede revisar tu calendario automáticamente.</p>
+        </div>
+        <p>Te audita de verdad: no el relato que te contás a vos mismo, sino lo que realmente pasó. Categoriza tu tiempo en Progreso Real, Mantenimiento Necesario, Productividad Performativa y Distracción. Te da el veredicto en una oración. Y construye tu plan para la semana siguiente con exactamente 3 sesiones de foco.</p>
+
+        <div class="prompt-box" id="pb2">
+          <div class="pb-header">
+            <span>Prompt — copiá y pegá en Claude</span>
+            <button class="copy-btn" data-target="pb2">
+              <svg width="13" height="13"><use href="#i-arrow"></use></svg>
+              Copiar
+            </button>
+          </div>
+          <div class="pb-content" id="pb2-content">Sos mi Auditor de Rendimiento Semanal. Tu trabajo es decirme la verdad sobre cómo gasté mi semana — no el relato que me cuento, sino lo que realmente pasó. Luego construís mi plan para la semana siguiente basado solo en lo que importa.
+
+Mi meta principal ahora mismo es: [PEGÁ TU META DEL PROMPT 1]
+
+Así funciona:
+
+1. LA AUDITORÍA HONESTA: Pedime que te cuente mi semana. ¿En qué realmente gasté tiempo? (Si tengo el calendario conectado, escanealo y listá cada reunión y bloque de tiempo.) Para cada bloque de tiempo significativo, categorizalo:
+- PROGRESO REAL — Movió mi meta principal hacia adelante. Output tangible. Progreso medible.
+- MANTENIMIENTO NECESARIO — Había que hacerlo (facturas, salud, obligaciones familiares, tareas de trabajo inevitables) pero no movió la meta. Está bien. La vida requiere mantenimiento.
+- PRODUCTIVIDAD PERFORMATIVA — Se sintió productivo pero no movió nada importante. Reorganizar archivos. Leer artículos "para investigar". Retocar cosas que ya estaban bien. Reuniones a las que no necesitaba ir. Responder emails no urgentes en minutos.
+- DISTRACCIÓN — Ni siquiera fingiendo ser productivo. Scroll infinito, agujeros de conejo, procrastinación disfrazada de "descanso".
+
+Sé específico. No me dejes esconder trabajo ocupado dentro de "PROGRESO REAL". Si digo "trabajé en el proyecto" — preguntame qué produje concretamente. Importa el output, no las horas.
+
+2. EL MARCADOR: Mostrame el desglose — horas estimadas en cada categoría, porcentaje del total de la semana, y específicamente: ¿qué porcentaje de mis MEJORES HORAS DE ENERGÍA (generalmente la mañana) fue a PROGRESO REAL vs. todo lo demás?
+
+Luego dame el veredicto en una sola oración. Sé directo.
+
+3. LAS PREGUNTAS INCÓMODAS: Preguntame estas y no aceptes respuestas vagas:
+- ¿Qué DIJISTE que era tu prioridad esta semana vs. qué MOSTRÓ realmente tu calendario?
+- ¿Qué tarea se sintió productiva pero, honestamente, podría haber saltado y nada sería diferente?
+- ¿Qué evitaste trabajar que sabés que importa? ¿Por qué?
+- ¿Hay algún bloque de tiempo recurrente (reunión, hábito, compromiso) que te está comiendo horas cada semana y no te da nada a cambio?
+
+4. CONSTRUÍ LA SEMANA SIGUIENTE:
+LA ÚNICA COSA: Lo más importante que necesito lograr la semana que viene para mi meta principal. No una lista de tareas. Un resultado.
+LAS 3 SESIONES: Bloqueá exactamente 3 sesiones de foco (90 minutos cada una) para LA ÚNICA COSA. Decime qué días y horarios basándote en mi calendario. Ponelas ANTES de las reuniones, no después. Protegé la energía de la mañana.
+LA LISTA DE CORTE: 2-3 cosas de esta semana que debería dejar de hacer, declinar, cancelar o delegar la semana que viene. Sé específico.
+EL CHECK DE ACCOUNTABILITY: Dame una oración para leer el viernes a la tarde: "¿Completé LA ÚNICA COSA? Sí o no."
+
+Reglas: No seas amable con esto. Ocupado no es lo mismo que productivo. Nombrá específicamente cada instancia de productividad performativa que veas.</div>
+          <div class="pb-fade" id="pb2-fade"></div>
+          <div class="pb-expand">
+            <button onclick="toggleExpand('pb2')">Ver prompt completo ↓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="attribution">
+      Prompts basados en <a href="https://learnaiwithmariah.com/guides/productivity-audit/" target="_blank" rel="noopener">"2 Prompts That Make Me 10x More Productive"</a> de Mariah Brunner. Adaptados y traducidos al español.
+    </div>
+
+    <div style="text-align:center;margin-bottom:clamp(40px,5vw,64px)">
+      <a href="recursos.html" class="btn ghost">← Ver más recursos</a>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<div class="copy-toast" id="copyToast">¡Copiado!</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:1.2rem">
+          <svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg>
+          <span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span>
+        </a>
+        <p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen.</p>
+      </div>
+      <div><h5>Navegación</h5><ul><li><a href="index.html#fer">Fer Kaspin</a></li><li><a href="recursos.html">Recursos</a></li></ul></div>
+      <div><h5>Programas</h5><ul><li><a href="PNI.html">PNI</a></li><li><a href="Bootcamp.html">Taller Presencial</a></li></ul></div>
+      <div><h5>Recibí ideas</h5><form class="news" onsubmit="return false"><input type="email" placeholder="Tu email"><button type="submit">Sumarme</button></form></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Renacer en Digital · Fer Kaspin.</span></div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+const toggle=document.getElementById('navToggle'),navlinks=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navlinks.classList.remove('open')));
+
+const toast=document.getElementById('copyToast');
+let timer;
+
+// Copiar prompts
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();
+    const target=btn.dataset.target;
+    const content=document.getElementById(target+'-content');
+    navigator.clipboard.writeText(content.textContent.trim()).then(()=>{
+      toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1800);
+    });
+  });
+});
+
+// Expandir prompt
+function toggleExpand(id){
+  const box=document.getElementById(id);
+  const content=document.getElementById(id+'-content');
+  const fade=document.getElementById(id+'-fade');
+  const btn=box.querySelector('.pb-expand button');
+  const expanded=content.classList.toggle('expanded');
+  if(fade) fade.style.opacity=expanded?'0':'1';
+  btn.textContent=expanded?'Cerrar ↑':'Ver prompt completo ↓';
+}
+</script>
+</body>
+</html>

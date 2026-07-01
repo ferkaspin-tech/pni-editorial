@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué es un archivo .md? — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.art-wrap{max-width:740px;margin-inline:auto;padding-block:clamp(48px,6vw,80px)}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.breadcrumb a{color:var(--teal);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--line)}
+.chip-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+.chip{display:inline-flex;align-items:center;gap:.45em;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.45em 1em;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+
+/* marcas md */
+.md-marks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:clamp(28px,3.5vw,44px) 0}
+.md-mark{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;display:flex;gap:1rem;align-items:flex-start}
+.md-mark .mm-code{font-family:'Courier New',monospace;font-size:.9rem;background:var(--navy);color:var(--lavender);padding:.35em .8em;border-radius:8px;flex:none;white-space:nowrap}
+.md-mark .mm-desc{font-size:.9rem;color:var(--muted);line-height:1.5}
+.md-mark .mm-desc strong{color:var(--ink)}
+@media(max-width:540px){.md-marks{grid-template-columns:1fr}}
+
+/* concepto clave */
+.key-concept{background:var(--navy);color:#dfe3e8;border-radius:18px;padding:clamp(24px,3vw,36px);margin:clamp(32px,4vw,48px) 0}
+.key-concept h3{color:#fff;font-size:1.3rem;margin-bottom:.7rem}
+.key-concept p{color:#b9c1ca;font-size:.95rem;line-height:1.65;margin:0 0 .6rem}
+.key-concept p:last-child{margin-bottom:0}
+.key-concept strong{color:#fff}
+
+/* template copiable */
+.template-box{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin:clamp(28px,3.5vw,44px) 0;cursor:pointer;transition:border-color .2s}
+.template-box:hover{border-color:var(--teal)}
+.tb-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.2rem;background:var(--mist);border-bottom:1px solid var(--line)}
+.tb-header span{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4em;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:none;border:none;cursor:pointer;padding:.3em .7em;border-radius:6px;transition:background .2s}
+.copy-btn:hover{background:var(--teal-tint)}
+.tb-content{padding:1.2rem 1.4rem;font-family:'Courier New',monospace;font-size:.84rem;color:var(--ink-soft);line-height:1.7;max-height:280px;overflow:hidden;position:relative;white-space:pre-wrap}
+.tb-content.expanded{max-height:none}
+.tb-fade{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#fff);pointer-events:none;transition:opacity .2s}
+.template-box.expanded .tb-fade{opacity:0}
+.tb-expand{display:flex;justify-content:center;padding:.7rem;border-top:1px solid var(--line);background:var(--mist)}
+.tb-expand button{font-family:var(--sans);font-size:.78rem;font-weight:700;color:var(--teal);background:none;border:none;cursor:pointer}
+
+/* pasos de uso */
+.use-steps{display:flex;flex-direction:column;gap:16px;margin:clamp(28px,3.5vw,44px) 0}
+.use-step{display:flex;gap:1rem;align-items:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem}
+.use-step .us-num{width:34px;height:34px;border-radius:10px;background:var(--teal);color:#fff;font-family:var(--serif);font-weight:600;font-size:1rem;display:grid;place-items:center;flex:none}
+.use-step .us-body h4{font-size:1rem;margin:0 0 .3rem}
+.use-step .us-body p{font-size:.9rem;color:var(--muted);margin:0;line-height:1.55}
+
+.copy-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.8rem;padding:.6em 1.4em;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.copy-toast.show{opacity:1}
+.attribution{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.5rem;margin:clamp(32px,4vw,48px) 0 0;font-size:.88rem;color:var(--muted);line-height:1.6}
+.attribution a{color:var(--teal)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+<div class="announce">PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a></div>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg><span class="wordmark">RENACER<small>EN DIGITAL</small></span></a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a><a href="index.html#inside">INSIDE</a><a href="PNI.html">PNI</a><a href="recursos.html" style="color:var(--teal)">Recursos</a><a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<main>
+<section style="padding-block:clamp(56px,7vw,88px) clamp(36px,4vw,52px);position:relative;overflow:hidden">
+  <span class="blob l" style="top:-140px;right:-80px;opacity:.5"></span>
+  <div class="wrap">
+    <div class="art-wrap" style="padding:0">
+      <div class="breadcrumb"><a href="recursos.html">Recursos</a><span class="sep">›</span><span>Guía · Principiante</span></div>
+      <div class="chip-row"><span class="chip">Guía</span><span class="chip">Principiante</span><span class="chip">Básico IA</span></div>
+      <h1 class="display">¿Qué es un archivo .md? El crash course para no-técnicos.</h1>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:56ch;margin-top:.8rem">Suena técnico. No lo es. Un archivo .md es solo texto plano con un par de marcas simples que la IA puede leer fácilmente. Es la base de todo agente de IA. Esta guía lo explica en simple, con una plantilla lista para usar.</p>
+    </div>
+  </div>
+</section>
+<div class="wrap">
+  <div class="art-wrap">
+
+    <h2 class="h3">Las únicas 4 marcas que vas a usar</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin-bottom:1rem">Eso es todo. Texto plano más estas cuatro marcas y ya podés escribir un archivo markdown.</p>
+    <div class="md-marks">
+      <div class="md-mark"><span class="mm-code"># Título</span><span class="mm-desc">Hace un título grande. Más # hacen subtítulos más chicos.</span></div>
+      <div class="md-mark"><span class="mm-code">- item</span><span class="mm-desc">Hace una viñeta. Apilá varios para una lista.</span></div>
+      <div class="md-mark"><span class="mm-code">**negrita**</span><span class="mm-desc">Hace texto <strong>en negrita</strong> para énfasis.</span></div>
+      <div class="md-mark"><span class="mm-code">1. paso</span><span class="mm-desc">Hace una lista numerada, para pasos en orden.</span></div>
+    </div>
+
+    <div class="key-concept">
+      <h3>La idea que lo cambia todo.</h3>
+      <p>Un <strong>agente de IA</strong> no es algo súper complejo. Es básicamente un asistente inteligente que sabe leer el archivo correcto en el momento correcto.</p>
+      <p>Cuando tenés un agente, vas a tener un montón de archivos .md que describen tus preferencias, info de tu negocio o trabajo, y los Skills o flujos de trabajo que repetís. El agente los lee como un <strong>índice</strong>, para saber exactamente cuál abrir y cuándo.</p>
+      <p>En palabras simples: un archivo .md es una nota que le escribís a tu IA en vez de a una persona. Un agente es un asistente con una carpeta de esas notas y el criterio para agarrar la correcta.</p>
+    </div>
+
+    <h2 class="h3">Tu primer archivo: "Cómo trabajo yo"</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin:.6rem 0 1.2rem">El archivo más útil para empezar es un <strong>"Cómo trabajo yo"</strong>: una página que le dice a cualquier IA quién sos, cómo querés que te hable y en qué necesitás ayuda. Dejás de re-explicarte en cada chat. Hacé clic para copiarlo.</p>
+
+    <div class="template-box" id="tmpl1">
+      <div class="tb-header">
+        <span>Plantilla "Cómo trabajo yo" — completá los corchetes</span>
+        <button class="copy-btn" id="copyTmpl">Copiar</button>
+      </div>
+      <div class="tb-content" id="tmpl1-content"># Cómo trabajo yo
+Última actualización: [Mes Año]
+
+## Quién soy
+- Cómo llamarme: [tu nombre o apodo]
+- Qué hago: [tu trabajo o negocio en una línea, ej: "Tengo una tienda de ropa online y manejo yo solo el marketing"]
+- Mi experiencia con IA: [cero / algo / bastante]
+
+## Mis metas
+- Este año: [la grande, ej: "crecer de 20 a 40 clientes mensuales"]
+- Ahora mismo: [foco actual, ej: "lanzar la newsletter"]
+- El éxito se ve así: [cómo vas a saber que funcionó]
+
+## Cómo quiero que me hables
+- Tono: [casual y directo / cálido / estrictamente profesional]
+- Nivel: [simple y claro / podés ponerte técnico]
+- Largo: [corto y al grano / dame el detalle]
+- Emojis: [nada / algunos están bien]
+
+## Dame una recomendación, no un menú
+- Cuando haya que elegir, decime qué HARÍAS VOS y por qué. Luego el segundo mejor.
+  No me des una lista larga y me dejes decidir solo.
+
+## Cuestioname, no solo acordes
+- Rebatí si mi idea es débil o mis datos están mal. Señalá los riesgos que no veo.
+  Prefiero que me corrijas ahora a quedar en ridículo después.
+
+## Sobre mi trabajo
+- A quién sirvo: [tu cliente o audiencia, ej: "emprendedores de 30 a 50 años, en Panamá"]
+- Qué vendo o hago: [tus productos o servicios, con precios si ayuda]
+- Datos clave: [cualquier cosa que haga las respuestas más útiles]
+
+## Herramientas que uso
+- [las apps y sistemas que realmente usás, ej: "WhatsApp Business, Canva, Instagram, Gmail"]
+
+## Lo que más pido
+1. [tu tarea más común, ej: "textos para Instagram"]
+2. [ej: "respuestas a clientes complicados"]
+3. [ej: "convertir mis notas en emails prolijos"]
+
+## Mis palabras (para que no me malinterpretes)
+- [tus términos propios y del rubro]
+
+## Nunca hagas esto
+- [tus reglas y lo que te molesta, ej: "nunca inventes estadísticas, nunca uses 'sinergia', nunca escribas más de lo que te pedí"]
+
+## Cómo se ve algo bueno (pegá ejemplos reales)
+- Algo que escribí y me gustó. Copiá este estilo y energía:
+  [pegá 1 a 3 muestras reales tuyas: un caption, un email, un mensaje que te salió bien]
+
+---
+Para la IA: Leé este archivo primero en cada conversación y usalo para trabajar como yo trabajo.</div>
+      <div class="tb-fade" id="tmpl1-fade"></div>
+      <div class="tb-expand"><button onclick="toggleTmpl()">Ver plantilla completa ↓</button></div>
+    </div>
+
+    <h2 class="h3" style="margin-top:clamp(36px,4vw,52px)">¿No querés completar los corchetes? Pedile a Claude que te entreviste.</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin:.6rem 0 1.2rem">Pegá este prompt en Claude y él hace las preguntas, vos respondés, y al final te escribe el archivo completo.</p>
+    <div class="template-box" id="tmpl2">
+      <div class="tb-header">
+        <span>Prompt para que Claude te construya el archivo</span>
+        <button class="copy-btn" id="copyTmpl2">Copiar</button>
+      </div>
+      <div class="tb-content" id="tmpl2-content" style="max-height:none">Quiero construir un archivo "Cómo trabajo yo": un archivo de contexto personal que te dice quién soy, cómo trabajo y cómo quiero que me ayudes, para no tener que repetirme nunca más.
+
+Entrevistame para construirlo. Haceme una pregunta a la vez, esperá mi respuesta, luego la siguiente. Cubrí todo esto: quién soy y qué hago, mis metas, cómo quiero que me hables, cómo me gusta que se tomen las decisiones, mi trabajo y mis clientes, las herramientas que uso, las tareas que más necesito, mis reglas fijas y lo que me molesta, y un ejemplo de output que me encantó.
+
+Haceme entre 12 y 15 preguntas en total. Simples y directas. Cuando terminemos, escribí todo como un archivo markdown limpio que pueda copiar.</div>
+    </div>
+
+    <h2 class="h3" style="margin-top:clamp(36px,4vw,52px)">Dónde pegar el archivo para que funcione</h2>
+    <div class="use-steps">
+      <div class="use-step"><div class="us-num">1</div><div class="us-body"><h4>La forma fácil: pegalo al inicio del chat</h4><p>Abrí un chat nuevo y pegá tu archivo primero con: <em>"Este es mi archivo Cómo trabajo yo. Usalo para todo en este chat."</em> Funciona en Claude, ChatGPT, Gemini — cualquiera. Hacé esto primero.</p></div></div>
+      <div class="use-step"><div class="us-num">2</div><div class="us-body"><h4>En Claude: configuralo una vez para todos los chats</h4><p>Andá a <strong>Configuración → Instrucciones para Claude</strong> y pegá el archivo. Ahora aplica a todo lo que hagas.</p></div></div>
+      <div class="use-step"><div class="us-num">3</div><div class="us-body"><h4>Todavía mejor: creá un Proyecto</h4><p>Andá a <strong>Proyectos → Nuevo Proyecto</strong> → ponele un nombre → pegá el archivo en instrucciones → subí el .md al panel de conocimiento. Todos los chats dentro de ese Proyecto te conocen.</p></div></div>
+      <div class="use-step"><div class="us-num">4</div><div class="us-body"><h4>Mantenelo vivo</h4><p>Cada vez que te agarrés re-explicando algo a la IA, agregá esa línea al archivo. Una vez al mes revisá las metas. Para verificar que funciona: <em>"Basándote en mi archivo, ¿cómo deberías hablarme y qué nunca deberías hacer?"</em></p></div></div>
+    </div>
+
+    <div class="attribution">Guía basada en <a href="https://learnaiwithmariah.com/guides/what-is-an-md-file/" target="_blank" rel="noopener">"What's an .md File?"</a> de Mariah Brunner. Adaptada y traducida al español.</div>
+
+    <div style="text-align:center;margin:clamp(32px,4vw,48px) 0">
+      <a href="recursos.html" class="btn ghost">← Ver más recursos</a>
+    </div>
+  </div>
+</div>
+</main>
+<div class="copy-toast" id="copyToast">¡Copiado!</div>
+<footer><div class="wrap"><div class="foot-grid">
+  <div><a class="brand" href="index.html" style="margin-bottom:1.2rem"><svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg><span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span></a><p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen.</p></div>
+  <div><h5>Navegación</h5><ul><li><a href="index.html#fer">Fer Kaspin</a></li><li><a href="recursos.html">Recursos</a></li></ul></div>
+  <div><h5>Programas</h5><ul><li><a href="PNI.html">PNI</a></li><li><a href="Bootcamp.html">Taller Presencial</a></li></ul></div>
+  <div><h5>Recibí ideas</h5><form class="news" onsubmit="return false"><input type="email" placeholder="Tu email"><button type="submit">Sumarme</button></form></div>
+</div><div class="foot-bottom"><span>© 2026 Renacer en Digital · Fer Kaspin.</span></div></div></footer>
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+const toast=document.getElementById('copyToast');let timer;
+function showToast(){toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1800);}
+document.getElementById('copyTmpl').addEventListener('click',e=>{e.stopPropagation();navigator.clipboard.writeText(document.getElementById('tmpl1-content').textContent.trim()).then(showToast);});
+document.getElementById('copyTmpl2').addEventListener('click',e=>{e.stopPropagation();navigator.clipboard.writeText(document.getElementById('tmpl2-content').textContent.trim()).then(showToast);});
+function toggleTmpl(){const c=document.getElementById('tmpl1-content'),f=document.getElementById('tmpl1-fade'),box=document.getElementById('tmpl1'),btn=box.querySelector('.tb-expand button');const exp=c.classList.toggle('expanded');box.classList.toggle('expanded',exp);if(f)f.style.opacity=exp?'0':'1';btn.textContent=exp?'Cerrar ↑':'Ver plantilla completa ↓';}
+</script>
+</body>
+</html>

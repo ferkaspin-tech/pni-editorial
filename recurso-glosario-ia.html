@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glosario de IA para no-técnicos — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.art-wrap{max-width:740px;margin-inline:auto;padding-block:clamp(48px,6vw,80px)}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.breadcrumb a{color:var(--teal);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--line)}
+.chip-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+.chip{display:inline-flex;align-items:center;gap:.45em;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.45em 1em;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+
+/* trio de conceptos clave */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:clamp(28px,3.5vw,44px) 0}
+.trio-card{border-radius:16px;padding:1.4rem 1.2rem;text-align:center}
+.trio-card.cable{background:#e8f4f0;border:1.5px solid #b8ddd5}
+.trio-card.manual{background:var(--lav-tint);border:1.5px solid rgba(172,162,201,.3)}
+.trio-card.package{background:#fff3e0;border:1.5px solid #f0d9a8}
+.trio-card .tc-emoji{font-size:1.8rem;margin-bottom:.6rem}
+.trio-card .tc-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.trio-card h3{font-size:1rem;margin:0 0 .4rem}
+.trio-card p{font-size:.84rem;color:var(--muted);margin:0;line-height:1.5}
+@media(max-width:560px){.trio{grid-template-columns:1fr}}
+
+/* glosario */
+.glossary{display:flex;flex-direction:column;gap:0;border:1.5px solid var(--line);border-radius:18px;overflow:hidden;margin:clamp(32px,4vw,48px) 0}
+.glo-item{padding:1.2rem 1.5rem;border-bottom:1px solid var(--line);transition:background .18s}
+.glo-item:last-child{border-bottom:none}
+.glo-item:hover{background:var(--mist)}
+.glo-item .gi-term{font-family:var(--serif);font-weight:600;font-size:1.05rem;color:var(--navy);margin-bottom:.3rem}
+.glo-item .gi-def{font-size:.92rem;color:var(--muted);line-height:1.6;margin:0}
+.glo-item .gi-def strong{color:var(--ink)}
+
+/* prompt copiable */
+.prompt-box{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin:clamp(28px,3.5vw,44px) 0;cursor:pointer;transition:border-color .2s}
+.prompt-box:hover{border-color:var(--teal)}
+.pb-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.2rem;background:var(--mist);border-bottom:1px solid var(--line)}
+.pb-header span{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.copy-btn{display:inline-flex;align-items:center;gap:.4em;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:none;border:none;cursor:pointer;padding:.3em .7em;border-radius:6px;transition:background .2s}
+.copy-btn:hover{background:var(--teal-tint)}
+.pb-content{padding:1.2rem 1.4rem;font-family:'Courier New',monospace;font-size:.84rem;color:var(--ink-soft);line-height:1.7;white-space:pre-wrap}
+
+.regla{background:var(--navy);color:#dfe3e8;border-radius:16px;padding:clamp(22px,3vw,32px);margin:clamp(28px,3.5vw,44px) 0}
+.regla h3{color:#fff;margin-bottom:.7rem;font-size:1.2rem}
+.regla p{color:#b9c1ca;font-size:.95rem;line-height:1.65;margin:0}
+.regla strong{color:#fff}
+
+.copy-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.8rem;padding:.6em 1.4em;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.copy-toast.show{opacity:1}
+.attribution{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.5rem;margin:clamp(32px,4vw,48px) 0 0;font-size:.88rem;color:var(--muted);line-height:1.6}
+.attribution a{color:var(--teal)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+<div class="announce">PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a></div>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html"><svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg><span class="wordmark">RENACER<small>EN DIGITAL</small></span></a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a><a href="index.html#inside">INSIDE</a><a href="PNI.html">PNI</a><a href="recursos.html" style="color:var(--teal)">Recursos</a><a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<main>
+<section style="padding-block:clamp(56px,7vw,88px) clamp(36px,4vw,52px);position:relative;overflow:hidden">
+  <span class="blob l" style="top:-140px;right:-80px;opacity:.5"></span>
+  <div class="wrap">
+    <div class="art-wrap" style="padding:0">
+      <div class="breadcrumb"><a href="recursos.html">Recursos</a><span class="sep">›</span><span>Guía · Principiante</span></div>
+      <div class="chip-row"><span class="chip">Guía</span><span class="chip">Principiante</span><span class="chip">Básico IA</span></div>
+      <h1 class="display">Glosario de IA para no-técnicos. Todo lo que vas a escuchar este año.</h1>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:56ch;margin-top:.8rem">Conectores, Skills, Plugins, MCPs, Agentes, Artefactos, Memoria. Suenan parecido. No son lo mismo. Esta guía los explica en simple, con un prompt para traducir cualquier término nuevo que te aparezca.</p>
+    </div>
+  </div>
+</section>
+<div class="wrap">
+  <div class="art-wrap">
+
+    <h2 class="h3">Los 3 que más se confunden</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin:.5rem 0 1rem">Si solo recordás tres cosas de esta guía, que sean estas.</p>
+    <div class="trio">
+      <div class="trio-card cable">
+        <div class="tc-label">Conector</div>
+        <h3>El cable</h3>
+        <p>Conecta a Claude con las apps que ya usás. Gmail, Drive, Slack. Sin conector, Claude es solo un chat sin acceso al mundo real.</p>
+      </div>
+      <div class="trio-card manual">
+        <div class="tc-label">Skill</div>
+        <h3>El manual</h3>
+        <p>Le enseñás a Claude cómo hacés una tarea. Una vez. Después la hace igual cada vez, sin que vos lo re-expliques.</p>
+      </div>
+      <div class="trio-card package">
+        <div class="tc-label">Plugin</div>
+        <h3>El paquete</h3>
+        <p>Agrupa varios Skills más los conectores que necesitan. Instalás uno y te aparece un flujo entero armado.</p>
+      </div>
+    </div>
+
+    <h2 class="h3">El glosario completo</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin:.5rem 0 1.2rem">Todos los términos que vas a escuchar este año, explicados en una línea.</p>
+    <div class="glossary">
+      <div class="glo-item"><div class="gi-term">Conector</div><div class="gi-def">El cable de Claude hacia tus apps. Gmail, Drive, Slack. Cuando está activo, Claude puede leer y (en muchos casos) actuar dentro de esa app.</div></div>
+      <div class="glo-item"><div class="gi-term">Skill</div><div class="gi-def">Un flujo de trabajo que le enseñás a Claude una vez. Desde ese momento lo sigue exactamente cada vez que lo llamás. Tu voz de marca, tu formato de reunión, tu reporte semanal.</div></div>
+      <div class="glo-item"><div class="gi-term">Plugin</div><div class="gi-def">Un paquete de Skills y conectores instalados juntos. En vez de construir un flujo de marketing desde cero, instalás un plugin y ya aparece todo armado.</div></div>
+      <div class="glo-item"><div class="gi-term">Proyecto</div><div class="gi-def">Un espacio de trabajo de largo plazo dentro de Claude con sus propios archivos, instrucciones y memoria. El contexto se mantiene entre conversaciones, a diferencia de un chat común.</div></div>
+      <div class="glo-item"><div class="gi-term">Memoria</div><div class="gi-def">El contexto que Claude acumula entre chats sobre quién sos y cómo trabajás. Útil cuando es precisa, molesta cuando está desactualizada.</div></div>
+      <div class="glo-item"><div class="gi-term">Artefacto</div><div class="gi-def">Un output independiente que Claude genera: un doc, una presentación, una página web, un dashboard interactivo. Vive dentro del chat como su propio objeto que podés editar, copiar y compartir.</div></div>
+      <div class="glo-item"><div class="gi-term">Cowork</div><div class="gi-def">El espacio colaborativo de Claude donde vos y tu equipo pueden trabajar junto a Claude en proyectos y Skills compartidos.</div></div>
+      <div class="glo-item"><div class="gi-term">MCP (Model Context Protocol)</div><div class="gi-def">Una forma estándar de conectar Claude a herramientas de terceros que no tienen un conector nativo todavía. Pensalo como un puerto USB para Claude.</div></div>
+      <div class="glo-item"><div class="gi-term">Agente</div><div class="gi-def">Una IA que toma múltiples acciones por vos sin que tengas que guiar cada paso. "Reservame un vuelo" en vez de "buscá vuelos, compará precios, completá mis datos, hacé clic en pagar".</div></div>
+      <div class="glo-item"><div class="gi-term">Prompt</div><div class="gi-def">Lo que escribís en Claude. Las instrucciones, el contexto, la pregunta. Mejores prompts = mejores respuestas. La mayoría de los problemas de calidad en IA vienen de prompts débiles.</div></div>
+      <div class="glo-item"><div class="gi-term">System prompt</div><div class="gi-def">Un prompt que corre por debajo de cada chat en un Proyecto o Skill, fijando las reglas y el tono que Claude sigue por defecto. Lo escribís una vez, moldea todas las respuestas.</div></div>
+      <div class="glo-item"><div class="gi-term">Alucinación</div><div class="gi-def">Cuando la IA inventa un dato con confianza total. El fix es pedirle que diga "no sé" en vez de adivinar.</div></div>
+      <div class="glo-item"><div class="gi-term">Sycophancy</div><div class="gi-def">Cuando la IA te da la razón aunque no la tengas. El fix es pedirle que argumente en contra tuya, no a favor.</div></div>
+      <div class="glo-item"><div class="gi-term">Token</div><div class="gi-def">La unidad de texto que la IA lee y escribe. Aproximadamente media palabra. Importa cuando estás llegando al límite de contexto o pagando por uso.</div></div>
+      <div class="glo-item"><div class="gi-term">Ventana de contexto</div><div class="gi-def">Cuánto texto puede ver Claude al mismo tiempo. Ventana más grande = puede leer docs más largos sin olvidar el principio.</div></div>
+      <div class="glo-item"><div class="gi-term">Tarea programada</div><div class="gi-def">Un flujo que configurás para que corra en un horario recurrente. Todos los lunes a la mañana, todos los viernes a las 5pm. Convierte a Claude de "chatbot que vos buscás" en "asistente que aparece solo".</div></div>
+    </div>
+
+    <!-- PROMPT TRADUCTOR -->
+    <h2 class="h3" style="margin-top:clamp(36px,4vw,52px)">Prompt para traducir cualquier término nuevo</h2>
+    <p style="color:var(--muted);font-size:.95rem;margin:.5rem 0 1.1rem">Pegalo en Claude y tirá cualquier término que no entiendas. Te lo explica en tu idioma.</p>
+    <div class="prompt-box" id="pb1">
+      <div class="pb-header">
+        <span>Prompt — copiá y pegá en Claude</span>
+        <button class="copy-btn" id="copyPb">Copiar</button>
+      </div>
+      <div class="pb-content" id="pb1-content">Sos mi traductor de términos de IA. Cada vez que te tire un término, explicámelo en este formato exacto:
+
+1. DEFINICIÓN EN SIMPLE. Una oración. Sin tecnicismos. Sin "potencia" ni "sinergia". Hablame como a un adulto inteligente que no trabaja en tecnología.
+
+2. LA ANALOGÍA. Una analogía concreta de la vida real que haga que el concepto quede claro.
+
+3. CUÁNDO LO USARÍA. Un escenario específico donde una persona no-técnica se cruzaría con este término en la vida real. Si es algo que solo le interesa a desarrolladores, decilo.
+
+4. QUÉ NO ES. La cosa con la que este término más se confunde, y la diferencia real.
+
+5. ¿ME IMPORTA? Respondé con una de estas tres: "Sí, aprendé esto ahora." O "Sí, pero solo cuando estés listo para X." O "No, es solo para desarrolladores — podés ignorarlo con seguridad."
+
+Sé brutal con la claridad. Si el término es marketing sin contenido real, decilo. El objetivo es que al terminar el chat pueda explicarle el término a otra persona.</div>
+    </div>
+
+    <div class="regla">
+      <h3>La regla para términos nuevos.</h3>
+      <p>Si un término no encaja claramente en una de estas categorías — <strong>cable / manual / paquete / espacio de trabajo / output / estándar / acción / problema de calidad</strong> — probablemente es lenguaje de marketing, no una función real. Tratalo con suspicacia hasta que alguien te muestre qué hace concretamente en la vida real.</p>
+    </div>
+
+    <div class="attribution">Guía basada en <a href="https://learnaiwithmariah.com/guides/ai-terms-dictionary/" target="_blank" rel="noopener">"The AI Terms Dictionary Every Non-Tech Person Needs"</a> de Mariah Brunner. Adaptada y traducida al español.</div>
+    <div style="text-align:center;margin:clamp(32px,4vw,48px) 0"><a href="recursos.html" class="btn ghost">← Ver más recursos</a></div>
+  </div>
+</div>
+</main>
+<div class="copy-toast" id="copyToast">¡Copiado!</div>
+<footer><div class="wrap"><div class="foot-grid">
+  <div><a class="brand" href="index.html" style="margin-bottom:1.2rem"><svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg><span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span></a><p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen.</p></div>
+  <div><h5>Navegación</h5><ul><li><a href="index.html#fer">Fer Kaspin</a></li><li><a href="recursos.html">Recursos</a></li></ul></div>
+  <div><h5>Programas</h5><ul><li><a href="PNI.html">PNI</a></li><li><a href="Bootcamp.html">Taller Presencial</a></li></ul></div>
+  <div><h5>Recibí ideas</h5><form class="news" onsubmit="return false"><input type="email" placeholder="Tu email"><button type="submit">Sumarme</button></form></div>
+</div><div class="foot-bottom"><span>© 2026 Renacer en Digital · Fer Kaspin.</span></div></div></footer>
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+const toast=document.getElementById('copyToast');let timer;
+function showToast(){toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1800);}
+document.getElementById('copyPb').addEventListener('click',e=>{e.stopPropagation();navigator.clipboard.writeText(document.getElementById('pb1-content').textContent.trim()).then(showToast);});
+</script>
+</body>
+</html>

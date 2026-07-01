@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Skills en 10 minutos — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.art-wrap{max-width:740px;margin-inline:auto;padding-block:clamp(48px,6vw,80px)}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.breadcrumb a{color:var(--teal);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--line)}
+.chip-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+.chip{display:inline-flex;align-items:center;gap:.45em;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.45em 1em;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+
+/* intro box */
+.intro-box{background:var(--mist);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,3vw,32px);margin:clamp(32px,4vw,48px) 0;display:flex;gap:1.1rem}
+.intro-box .ib-icon{width:44px;height:44px;background:var(--teal);border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
+.intro-box p{font-size:.95rem;color:var(--muted);margin:0;line-height:1.65}
+.intro-box strong{color:var(--ink)}
+
+/* pasos */
+.steps{display:flex;flex-direction:column;gap:0;position:relative}
+.steps::before{content:"";position:absolute;left:22px;top:24px;bottom:24px;width:2px;background:var(--line)}
+.step{display:flex;gap:1.4rem;padding-bottom:2.2rem;position:relative}
+.step:last-child{padding-bottom:0}
+.step-num{width:46px;height:46px;border-radius:14px;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:600;font-size:1.1rem;display:grid;place-items:center;flex:none;position:relative;z-index:1;border:3px solid #fff}
+.step-body{flex:1;padding-top:.4rem}
+.step-body .s-phase{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.step-body h3{font-size:1.12rem;margin:0 0 .45rem}
+.step-body p{font-size:.94rem;color:var(--muted);line-height:1.65;margin:0 0 .8rem}
+.step-body p:last-child{margin-bottom:0}
+
+/* code block */
+.code-block{background:var(--navy);color:#e2e8f0;border-radius:12px;padding:1.1rem 1.4rem;font-family:'Courier New',monospace;font-size:.88rem;line-height:1.6;position:relative;margin:.9rem 0;cursor:pointer}
+.code-block .cb-copy{position:absolute;top:.7rem;right:.8rem;font-family:var(--sans);font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--lavender);opacity:.7;transition:opacity .2s}
+.code-block:hover .cb-copy{opacity:1}
+.code-block em{color:var(--lavender);font-style:normal}
+
+/* tip pill */
+.tip{display:inline-flex;align-items:center;gap:.5em;background:var(--lav-tint);border-radius:8px;padding:.5em .9em;font-size:.82rem;color:var(--navy);font-weight:500;margin:.6rem 0}
+
+/* skill anatomy */
+.skill-anatomy{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin:clamp(36px,4vw,52px) 0}
+.sa-head{background:var(--navy);color:#dfe3e8;padding:1rem 1.4rem;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.sa-body{background:#fff}
+.sa-part{padding:1.2rem 1.4rem;border-bottom:1px solid var(--line)}
+.sa-part:last-child{border-bottom:none}
+.sa-part .sp-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lavender);margin-bottom:.4rem}
+.sa-part h4{font-size:1rem;margin:0 0 .3rem}
+.sa-part p{font-size:.9rem;color:var(--muted);margin:0;line-height:1.55}
+
+/* tips grid */
+.tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:clamp(32px,4vw,48px) 0}
+.tip-card{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem}
+.tip-card .tc-num{font-family:var(--serif);font-size:1.2rem;color:var(--lavender);font-weight:600;margin-bottom:.35rem}
+.tip-card p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.55}
+.tip-card strong{color:var(--ink)}
+@media(max-width:560px){.tips-grid{grid-template-columns:1fr}}
+
+.copy-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.8rem;padding:.6em 1.4em;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.copy-toast.show{opacity:1}
+
+.attribution{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.5rem;margin:clamp(32px,4vw,48px) 0;font-size:.88rem;color:var(--muted);line-height:1.6}
+.attribution a{color:var(--teal)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6a3.5 3.5 0 0 0-4.6 4.5L4 16.4 7.6 20l5.9-5.9A3.5 3.5 0 0 0 18 9.5l-2.3 2.3-1.8-1.8L16.2 7.7A3.5 3.5 0 0 0 14.5 6Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="announce">PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+      <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a>
+      <a href="index.html#inside">INSIDE</a>
+      <a href="PNI.html">PNI</a>
+      <a href="recursos.html" style="color:var(--teal)">Recursos</a>
+      <a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<section style="padding-block:clamp(56px,7vw,88px) clamp(36px,4vw,52px);position:relative;overflow:hidden">
+  <span class="blob l" style="top:-140px;right:-80px;opacity:.5"></span>
+  <div class="wrap">
+    <div class="art-wrap" style="padding:0">
+      <div class="breadcrumb">
+        <a href="recursos.html">Recursos</a>
+        <span class="sep">›</span>
+        <span>Guía · Intermedio</span>
+      </div>
+      <div class="chip-row">
+        <span class="chip">Guía</span>
+        <span class="chip">Intermedio</span>
+        <span class="chip">Claude</span>
+        <span class="chip">Skills</span>
+      </div>
+      <h1 class="display">Claude Skills en 10 minutos: construí el tuyo ahora.</h1>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:56ch;margin-top:.8rem">Un Skill es una instrucción que Claude carga automáticamente cuando detecta una tarea que le enseñaste. Lo configurás una vez, y funciona para siempre. Sin código. Sin API. Solo texto.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="art-wrap">
+
+    <div class="intro-box">
+      <div class="ib-icon"><svg width="22" height="22"><use href="#i-tools"></use></svg></div>
+      <div>
+        <p><strong>¿Qué es un Skill de Claude?</strong> Es un conjunto de instrucciones que Claude carga solo cuando detecta que aplica a tu tarea. En vez de re-explicar "escribí este email en mi voz, menos de 4 líneas, tono casual y siempre con un próximo paso claro" cada vez — lo guardás como Skill y Claude lo aplica automáticamente.</p>
+        <p style="margin-top:.7rem">Por dentro, un Skill es solo una carpeta con un archivo <strong>SKILL.md</strong> — texto plano con dos partes: cuándo usarlo y cómo hacerlo. Nada más.</p>
+      </div>
+    </div>
+
+    <h2 class="h3" style="margin-bottom:1.6rem">Cómo armarlo — 4 pasos</h2>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="s-phase">~2 minutos</div>
+          <h3>Abrí Cowork y lanzá el Skill Creator</h3>
+          <p>Abrí la app de escritorio de Claude y andá a <strong>Cowork</strong> (en el panel izquierdo). Asegurate de estar en <strong>Opus</strong> con <strong>Pensamiento Extendido</strong> activado — da los mejores resultados para construir Skills.</p>
+          <p>Luego escribí esto:</p>
+          <div class="code-block" data-text="Usá el skill-creator para ayudarme a construir un skill para [LA TAREA QUE SIEMPRE TENÉS QUE RE-EXPLICAR]">
+            Usá el skill-creator para ayudarme a construir un skill para <em>[LA TAREA QUE SIEMPRE TENÉS QUE RE-EXPLICAR]</em>
+            <span class="cb-copy">COPIAR</span>
+          </div>
+          <p>Ejemplos: "...un skill para escribir emails de seguimiento a clientes en mi voz" · "...un skill para resumir actas en puntos de acción" · "...un skill para revisar contratos y marcar cláusulas riesgosas"</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="s-phase">~3 minutos</div>
+          <h3>La entrevista — sé específico</h3>
+          <p>Claude te va a hacer preguntas sobre cómo querés que funcione el Skill: qué tiene que hacer exactamente, qué tono usar, qué incluir siempre, qué evitar siempre, un ejemplo de buen output.</p>
+          <span class="tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.5l4 4 10-10"/></svg>
+            Pro tip: hablá las respuestas con el micrófono — vas a dar 3x más detalle que escribiendo
+          </span>
+          <p style="margin-top:.7rem">Cuando termina, Claude genera el archivo <strong>SKILL.md</strong>. Revisalo y pedile ajustes si algo no cierra. Itera hasta que quede bien.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="s-phase">~3 minutos</div>
+          <h3>Instalá y probá</h3>
+          <p><strong>1.</strong> Guardá la carpeta del Skill que creó Claude.<br>
+          <strong>2.</strong> Comprimila en ZIP (clic derecho → Comprimir).<br>
+          <strong>3.</strong> Andá a <strong>Configuración → Funciones → Skills</strong> → botón "+" → subí el ZIP → activalo.<br>
+          <strong>4.</strong> Abrí un chat <em>nuevo</em> y escribí algo que debería activar el Skill.</p>
+          <p>Si no activa, escribile a Claude:</p>
+          <div class="code-block" data-text="¿Cuándo usarías [nombre del skill]? Leeme la descripción textualmente.">
+            ¿Cuándo usarías <em>[nombre del skill]</em>? Leeme la descripción textualmente.
+            <span class="cb-copy">COPIAR</span>
+          </div>
+          <p>Te va a leer la descripción exacta. Vas a ver al instante qué está fallando. Corregís la descripción, resubís, probás.</p>
+          <span class="tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            El 90% de los problemas están en la <strong>descripción</strong>, no en las instrucciones
+          </span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <div class="s-phase">~2 minutos</div>
+          <h3>Explorá la biblioteca de Skills</h3>
+          <p>Ya que sabés construirlos, explorá lo que ya existe:</p>
+          <p>· <strong>Marketplace en Cowork:</strong> Cowork → "Personalizar" → "Explorar plugins". Skills listos para instalar con un clic.<br>
+          · <strong>GitHub de Anthropic:</strong> github.com/anthropics/skills — biblioteca oficial open source.<br>
+          · <strong>Convertí conversaciones en Skills:</strong> En Cowork, flecha al lado del nombre del chat → "Convertir en skill". Cada buena conversación es un Skill esperando ser guardado.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ANATOMÍA DEL SKILL.MD -->
+    <div class="skill-anatomy" style="margin-top:clamp(36px,4vw,52px)">
+      <div class="sa-head">Cómo se ve un archivo SKILL.md</div>
+      <div class="sa-body">
+        <div class="sa-part">
+          <div class="sp-label">Parte 1 — Frontmatter (el disparador)</div>
+          <h4>La descripción: cuándo activar el Skill</h4>
+          <p>Sé específico sobre cuándo usarlo Y cuándo no. Claude tiende a activar menos de lo esperado — sé "agresivo" en el cuándo. Siempre agregá una línea "NO usar para..." para eliminar falsos positivos.</p>
+        </div>
+        <div class="sa-part">
+          <div class="sp-label">Parte 2 — Instrucciones (el cómo)</div>
+          <h4>Las instrucciones: cómo hacer la tarea</h4>
+          <p>Sé concreto. "Escribí un buen email" es inútil. "Menos de 150 palabras, cálido pero profesional, siempre terminá con un próximo paso claro, nunca uses 'espero que este email te encuentre bien'" — eso sí funciona.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <h2 class="h3" style="margin:clamp(36px,4vw,52px) 0 1.2rem">Tips para Skills que realmente funcionan</h2>
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tc-num">01</div><p><strong>La descripción es el disparador.</strong> Invertí más tiempo en la descripción que en las instrucciones. Si no activa, las mejores instrucciones no sirven de nada.</p></div>
+      <div class="tip-card"><div class="tc-num">02</div><p><strong>Siempre agregá "NO usar para".</strong> Esta sola línea elimina la mayoría de los falsos positivos.</p></div>
+      <div class="tip-card"><div class="tc-num">03</div><p><strong>Probá de a uno.</strong> No construyas 5 Skills y pruebes después. Construís uno, lo probás, lo arreglás, y pasás al siguiente.</p></div>
+      <div class="tip-card"><div class="tc-num">04</div><p><strong>Usá nombres con /comandos.</strong> Nombrá tus Skills /inbox, /draft, /recap — podés escribirlo directamente para activarlos al instante.</p></div>
+      <div class="tip-card"><div class="tc-num">05</div><p><strong>Usalo dentro de Proyectos.</strong> Un Skill dentro de un Proyecto obtiene todo el contexto del Proyecto gratis. Mismo Skill, output mucho mejor.</p></div>
+      <div class="tip-card"><div class="tc-num">06</div><p><strong>Instalá todo, sin miedo.</strong> Tener 100 Skills instalados no hace más lento a Claude. Solo lee las instrucciones cuando el Skill hace match con tu tarea.</p></div>
+    </div>
+
+    <div class="attribution">
+      Guía basada en <a href="https://learnaiwithmariah.com/guides/learn-skills/" target="_blank" rel="noopener">"Learn Claude Skills in 10 Minutes"</a> de Mariah Brunner. Adaptada y traducida al español.
+    </div>
+
+    <div style="text-align:center;margin-bottom:clamp(40px,5vw,64px)">
+      <a href="recursos.html" class="btn ghost">← Ver más recursos</a>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<div class="copy-toast" id="copyToast">¡Copiado!</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:1.2rem">
+          <svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg>
+          <span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span>
+        </a>
+        <p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen.</p>
+      </div>
+      <div><h5>Navegación</h5><ul><li><a href="index.html#fer">Fer Kaspin</a></li><li><a href="recursos.html">Recursos</a></li></ul></div>
+      <div><h5>Programas</h5><ul><li><a href="PNI.html">PNI</a></li><li><a href="Bootcamp.html">Taller Presencial</a></li></ul></div>
+      <div><h5>Recibí ideas</h5><form class="news" onsubmit="return false"><input type="email" placeholder="Tu email"><button type="submit">Sumarme</button></form></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Renacer en Digital · Fer Kaspin.</span></div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+const toggle=document.getElementById('navToggle'),navlinks=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navlinks.classList.remove('open')));
+const toast=document.getElementById('copyToast');
+let timer;
+document.querySelectorAll('.code-block').forEach(el=>{
+  el.addEventListener('click',()=>{
+    navigator.clipboard.writeText(el.dataset.text||el.textContent.replace('COPIAR','').trim()).then(()=>{
+      toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),1800);
+    });
+  });
+});
+</script>
+</body>
+</html>

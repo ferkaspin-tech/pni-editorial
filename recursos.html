@@ -92,23 +92,17 @@
     .res-cta{flex-direction:column;align-items:flex-start}
   }
 </style>
-<!-- Meta Pixel Code -->
+<!-- Meta Pixel -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '230704174608041');
-fbq('track', 'PageView');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
-</noscript>
-<!-- End Meta Pixel Code -->
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -206,7 +200,7 @@ src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
 
     <!-- contador -->
     <div class="res-count">
-      <span class="n"><b id="count">7</b> recursos</span>
+      <span class="n"><b id="count">14</b> recursos</span>
       <span class="hint">Acceso gratis · se suman nuevos cada semana</span>
     </div>
 
@@ -255,7 +249,7 @@ src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/>
         <h5>Programas</h5>
         <ul>
           <li><a href="index.html#inside">INSIDE — Para equipos</a></li>
-          <li><a href="https://www.ferkaspin.com/negociosinteligentesoferta" target="_blank" rel="noopener">PNI — Comprar programa</a></li>
+          <li><a href="PNI.html">PNI — Negocios Inteligentes</a></li>
           <li><a href="diagnostico.html">Diagnóstico 1:1</a></li>
         </ul>
       </div>
@@ -289,6 +283,13 @@ const ICON = {
   "Herramienta":"t-herramienta", "Video":"t-video"
 };
 const RESOURCES = [
+  { type:"Guía", level:"Principiante", title:"Glosario de IA para no-técnicos", desc:"Conectores, Skills, Plugins, MCPs, Agentes, Artefactos, Memoria. Esta guía los explica en simple más un prompt para traducir cualquier término nuevo que te aparezca.", tags:["glosario","conceptos","básico"], link:"recurso-glosario-ia.html" },
+  { type:"Guía", level:"Principiante", title:"¿Es seguro conectar tus herramientas a Claude?", desc:"La pregunta más frecuente respondida. 3 capas de protección, lo que Anthropic hace y no hace con tus datos, y un checklist de 5 pasos para configurarlo bien en 10 minutos.", tags:["privacidad","seguridad","conectores"], link:"recurso-claude-seguro.html" },
+  { type:"Guía", level:"Principiante", title:"¿Qué es un archivo .md? El crash course para no-técnicos", desc:"Suena técnico, no lo es. Un .md es solo texto plano con 4 marcas simples que la IA lee perfecto. Incluímos la plantilla \"Cómo trabajo yo\" lista para usar.", tags:[".md","archivos","contexto"], link:"recurso-que-es-md.html" },
+  { type:"Guía", level:"Intermedio", title:"Claude Skills en 10 minutos: construí el tuyo", desc:"Un Skill es una instrucción que Claude carga solo cuando detectó la tarea. Sin código, sin API. Guía paso a paso para armar, instalar y afinar tu primer Skill en menos de 10 minutos.", tags:["skills","claude","automatización"], link:"recurso-claude-skills.html" },
+  { type:"Prompts", level:"Principiante", title:"2 prompts para ser 10x más productivo", desc:"Uno encuentra tu meta más importante. El otro audita tu semana y te dice exactamente dónde estás perdiendo tiempo en trabajo que parece productivo pero no mueve nada.", tags:["productividad","prompts","estrategia"], link:"recurso-auditoria-productividad.html" },
+  { type:"Guía", level:"Principiante", title:"Conectá Gmail a Claude: delegá tu bandeja", desc:"Claude puede leer tu inbox en tiempo real — no copiás y pegás, él va y busca. 3 pasos para configurarlo y 5 prompts para usar desde el primer día.", tags:["gmail","conectores","productividad"], link:"recurso-conectar-gmail-claude.html" },
+  { type:"Guía", level:"Principiante", title:"Los 4 Claudes: para qué sirve cada uno", desc:"Una sola suscripción, cuatro herramientas distintas. Chat, Cowork, Code y Design — aprendé cuál usar para cada tarea y dejá de usar solo el 25% de lo que pagás.", tags:["claude","básico","herramientas"], link:"recurso-4-claudes.html" },
   { type:"Guía", level:"Principiante", title:"Claude para tu negocio: por dónde empezar", desc:"Tu hoja de ruta: qué aprender primero y en qué orden según tu perfil. El mejor lugar para arrancar.", tags:["empezar","ruta","básico"], link:"recurso-empezar-negocio.html" },
   { type:"Guía", level:"Intermedio", title:"Conectá Claude a tus herramientas", desc:"Qué son los conectores, cómo activarlos y 3 formas de usarlos hoy para que Claude trabaje con tu info real.", tags:["claude","conectores","productividad"], link:"recurso-conectores-claude.html" },
   { type:"Guía", level:"Principiante", title:"Los modos de Claude: cuál usar para qué", desc:"Modelos, pensamiento extendido, proyectos, artefactos, estilos y búsqueda. Una guía simple para sacarle el jugo.", tags:["claude","modos","básico"], link:"recurso-modos-claude.html" },

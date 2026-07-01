@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conectá Gmail a Claude — Renacer en Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.art-wrap{max-width:740px;margin-inline:auto;padding-block:clamp(48px,6vw,80px)}
+.art-hero{padding-block:clamp(56px,7vw,88px) clamp(36px,4vw,52px);position:relative;overflow:hidden}
+.chip-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.6rem}
+.chip{display:inline-flex;align-items:center;gap:.45em;background:var(--mist);border:1px solid var(--line);border-radius:999px;padding:.45em 1em;font-size:.73rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+
+.breadcrumb{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.breadcrumb a{color:var(--teal);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{color:var(--line)}
+
+/* quick win badge */
+.qw-badge{display:inline-flex;align-items:center;gap:.55em;background:#e8f4f0;border:1px solid #b8ddd5;border-radius:999px;padding:.55em 1.1em;font-size:.78rem;font-weight:700;color:#0F4C5C;letter-spacing:.06em;margin-bottom:1.4rem}
+
+/* pasos */
+.steps{display:flex;flex-direction:column;gap:0;margin:clamp(36px,4vw,52px) 0;position:relative}
+.steps::before{content:"";position:absolute;left:22px;top:24px;bottom:24px;width:2px;background:var(--line)}
+.step{display:flex;gap:1.4rem;padding-bottom:2rem;position:relative}
+.step:last-child{padding-bottom:0}
+.step-num{width:46px;height:46px;border-radius:14px;background:var(--navy);color:#fff;font-family:var(--serif);font-weight:600;font-size:1.1rem;display:grid;place-items:center;flex:none;position:relative;z-index:1;border:3px solid #fff}
+.step-body{flex:1;padding-top:.45rem}
+.step-body .s-label{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.step-body h3{font-size:1.15rem;margin:0 0 .5rem}
+.step-body p{font-size:.95rem;color:var(--muted);line-height:1.65;margin:0}
+.step-body .s-tip{display:inline-flex;align-items:center;gap:.5em;background:var(--lav-tint);border-radius:8px;padding:.5em .85em;font-size:.82rem;color:var(--navy);font-weight:500;margin-top:.75rem}
+
+/* prompts */
+.prompts-block{margin:clamp(36px,4vw,52px) 0}
+.prompts-block h3{font-size:1.4rem;margin-bottom:1.1rem}
+.prompt-list{display:flex;flex-direction:column;gap:.8rem}
+.prompt-item{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;transition:border-color .2s,box-shadow .2s;cursor:pointer;position:relative}
+.prompt-item:hover{border-color:var(--teal);box-shadow:var(--shadow-sm)}
+.prompt-item p{font-size:.94rem;color:var(--ink);margin:0;line-height:1.55;font-style:italic}
+.prompt-item .copy-hint{position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--muted);opacity:0;transition:opacity .2s}
+.prompt-item:hover .copy-hint{opacity:1}
+.copy-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:.8rem;padding:.6em 1.4em;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.copy-toast.show{opacity:1}
+
+/* shift block */
+.shift-block{background:var(--navy);color:#dfe3e8;border-radius:20px;padding:clamp(28px,4vw,44px);margin:clamp(36px,4vw,52px) 0}
+.shift-block h3{color:#fff;font-size:1.6rem;margin-bottom:.8rem}
+.shift-block p{color:#b9c1ca;font-size:.97rem;line-height:1.65;margin:0}
+.shift-block strong{color:#fff}
+.shift-stat{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.8rem 1.2rem;margin-top:1.4rem;font-size:.92rem;color:#e8ecef}
+.shift-stat b{font-family:var(--serif);font-size:1.5rem;color:var(--lavender)}
+
+.attribution{background:var(--mist);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.5rem;margin:clamp(32px,4vw,48px) 0;font-size:.88rem;color:var(--muted);line-height:1.6}
+.attribution a{color:var(--teal)}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9"><path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/></g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/><circle cx="17" cy="38" r="2.2" fill="currentColor"/><circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none"><path d="M70 26 l8 -8"/><path d="M74 34 h10"/></g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/><circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></symbol>
+  </defs>
+</svg>
+
+<div class="announce">
+  PNI · Programa de Negocios Inteligentes — <a href="PNI.html">creá tus asistentes de IA en 4 semanas →</a>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="Renacer en Digital — inicio">
+      <svg class="mark" style="color:var(--navy)"><use href="#mark"></use></svg>
+      <span class="wordmark">RENACER<small>EN DIGITAL</small></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a href="index.html#fer">Fer Kaspin</a>
+      <a href="index.html#inside">INSIDE</a>
+      <a href="PNI.html">PNI</a>
+      <a href="recursos.html" style="color:var(--teal)">Recursos</a>
+      <a href="diagnostico.html" class="btn navy">Hablemos</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<section class="art-hero">
+  <span class="blob l" style="top:-140px;right:-80px;opacity:.5"></span>
+  <div class="wrap">
+    <div class="art-wrap" style="padding-top:0;padding-bottom:0">
+
+      <div class="breadcrumb">
+        <a href="recursos.html">Recursos</a>
+        <span class="sep">›</span>
+        <span>Guía · Principiante</span>
+      </div>
+
+      <div class="qw-badge">
+        <svg width="15" height="15"><use href="#i-spark"></use></svg>
+        Quick win · 3 pasos
+      </div>
+
+      <div class="chip-row">
+        <span class="chip">Guía</span>
+        <span class="chip">Principiante</span>
+        <span class="chip">Claude</span>
+        <span class="chip">Gmail</span>
+      </div>
+
+      <h1 class="display">Conectá Gmail a Claude. Dejá de leer cada email.</h1>
+      <p class="lead" style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:56ch;margin-top:.8rem">Claude puede acceder a tu bandeja de entrada en tiempo real. No copiás y pegás — él va y busca. Configurás una vez y delegás el email para siempre.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="art-wrap">
+
+    <!-- QUÉ ES -->
+    <div style="background:var(--mist);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,3vw,36px);margin-bottom:clamp(36px,4vw,52px)">
+      <div style="display:flex;gap:1rem;align-items:flex-start">
+        <div style="width:44px;height:44px;background:var(--teal);border-radius:12px;display:grid;place-items:center;flex:none;color:#fff">
+          <svg width="22" height="22"><use href="#i-mail"></use></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1.15rem;margin:0 0 .5rem">¿Qué son los conectores?</h3>
+          <p style="font-size:.95rem;color:var(--muted);margin:0;line-height:1.65">Son integraciones que le dan a Claude acceso a tus herramientas reales: Gmail, Google Calendar, Slack, Notion y más. En vez de que vos copies y pegues información, Claude va y la busca solo. Lo configurás una sola vez en Ajustes y queda conectado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASOS -->
+    <h2 class="h3" style="margin-bottom:1.6rem">Cómo configurarlo — 3 pasos</h2>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="s-label">Paso 1</div>
+          <h3>Abrí Claude y andá a Ajustes</h3>
+          <p>Entrá a <strong>claude.ai</strong> → hacé clic en tu ícono de perfil (arriba a la derecha) → seleccioná <strong>Configuración</strong>. Necesitás Claude Pro — los conectores son una función paga.</p>
+          <span class="s-tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            Claude Pro cuesta ~$20/mes y te da acceso a todos los conectores
+          </span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="s-label">Paso 2</div>
+          <h3>Buscá Integraciones y conectá Gmail</h3>
+          <p>En Configuración, buscá la sección <strong>Integraciones</strong> o <strong>Conectores</strong>. Encontrás Gmail en la lista y hacés clic en conectar. Te va a pedir que inicies sesión con tu cuenta de Google y que le des permiso a Claude para leer tu bandeja. Tarda unos 60 segundos.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="s-label">Paso 3</div>
+          <h3>Abrí una conversación y preguntá</h3>
+          <p>Abrí un chat nuevo en Claude. Ahora tiene acceso a tu Gmail real. Solo decile lo que necesitás — va a buscar en tu bandeja y te va a responder con lo que hay ahí en este momento.</p>
+          <span class="s-tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.5l4 4 10-10"/></svg>
+            Listo. No hay paso 4.
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PROMPTS -->
+    <div class="prompts-block">
+      <h2 class="h3">Prompts para usar desde el primer día</h2>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:1.4rem">Hacé clic en cualquiera para copiarlo.</p>
+      <div class="prompt-list">
+        <div class="prompt-item" data-prompt="¿Qué emails en mi bandeja necesitan respuesta hoy? Dame una lista priorizada con un resumen de una línea de cada uno.">
+          <p>"¿Qué emails en mi bandeja necesitan respuesta hoy? Dame una lista priorizada con un resumen de una línea de cada uno."</p>
+          <span class="copy-hint">COPIAR</span>
+        </div>
+        <div class="prompt-item" data-prompt="¿Qué es urgente en mi bandeja ahora mismo y qué puede esperar hasta más tarde en la semana?">
+          <p>"¿Qué es urgente en mi bandeja ahora mismo y qué puede esperar hasta más tarde en la semana?"</p>
+          <span class="copy-hint">COPIAR</span>
+        </div>
+        <div class="prompt-item" data-prompt="Redactá respuestas para todos los emails que necesitan una respuesta hoy. Usá mi tono habitual: profesional pero directo.">
+          <p>"Redactá respuestas para todos los emails que necesitan una respuesta hoy. Usá mi tono habitual: profesional pero directo."</p>
+          <span class="copy-hint">COPIAR</span>
+        </div>
+        <div class="prompt-item" data-prompt="Resumí todos los emails no leídos de las últimas 24 horas en puntos concretos para que pueda hacer triage rápido.">
+          <p>"Resumí todos los emails no leídos de las últimas 24 horas en puntos concretos para que pueda hacer triage rápido."</p>
+          <span class="copy-hint">COPIAR</span>
+        </div>
+        <div class="prompt-item" data-prompt="Buscá todos los emails de [nombre o empresa] y decime qué necesitan de mi parte.">
+          <p>"Buscá todos los emails de [nombre o empresa] y decime qué necesitan de mi parte."</p>
+          <span class="copy-hint">COPIAR</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EL CAMBIO -->
+    <div class="shift-block">
+      <h3>El cambio real.</h3>
+      <p>Ya no leés emails. <strong>Delegás tu bandeja.</strong> Claude los lee, los filtra y redacta las respuestas. Vos aprobás y enviás. La mayoría de las personas ahorra entre 30 y 60 minutos cada mañana una vez que esto está configurado.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.4rem">
+        <div class="shift-stat"><b>60s</b> para configurarlo</div>
+        <div class="shift-stat"><b>30–60 min</b> que recuperás cada día</div>
+        <div class="shift-stat"><b>1 vez</b> lo configurás, funciona siempre</div>
+      </div>
+    </div>
+
+    <!-- ATRIBUCIÓN -->
+    <div class="attribution">
+      Guía basada en <a href="https://learnaiwithmariah.com/guides/connect-gmail/" target="_blank" rel="noopener">"Connect Gmail to Claude"</a> de Mariah Brunner. Adaptada y traducida al español para el contexto de negocios latinoamericanos.
+    </div>
+
+    <div style="text-align:center;margin-bottom:clamp(40px,5vw,64px)">
+      <a href="recursos.html" class="btn ghost">← Ver más recursos</a>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<div class="copy-toast" id="copyToast">¡Copiado!</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:1.2rem">
+          <svg class="mark" style="color:#fff;width:46px;height:46px"><use href="#mark"></use></svg>
+          <span class="wordmark">RENACER<small style="color:var(--lavender)">EN DIGITAL</small></span>
+        </a>
+        <p style="font-size:.92rem;max-width:34ch">Inteligencia aplicada a negocios que crecen.</p>
+      </div>
+      <div>
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="index.html#fer">Fer Kaspin</a></li>
+          <li><a href="index.html#metodo">El método</a></li>
+          <li><a href="recursos.html">Recursos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Programas</h5>
+        <ul>
+          <li><a href="index.html#inside">INSIDE</a></li>
+          <li><a href="PNI.html">PNI — Negocios Inteligentes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Recibí ideas que aplican</h5>
+        <p style="font-size:.9rem">Estrategia, sistemas e IA aplicada a tu negocio.</p>
+        <form class="news" onsubmit="return false">
+          <input type="email" placeholder="Tu email" aria-label="Tu email">
+          <button type="submit">Sumarme</button>
+        </form>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Renacer en Digital · Fer Kaspin. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>10),{passive:true});
+const toggle=document.getElementById('navToggle'),navlinks=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>navlinks.classList.toggle('open'));
+navlinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>navlinks.classList.remove('open')));
+
+// Copiar prompts
+const toast=document.getElementById('copyToast');
+let toastTimer;
+document.querySelectorAll('.prompt-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const text=item.dataset.prompt;
+    navigator.clipboard.writeText(text).then(()=>{
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
+    });
+  });
+});
+</script>
+</body>
+</html>
