@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico de Saturación — Renacer IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0E1B2D;
+    --navy-card: #16263C;
+    --teal: #0F4C5C;
+    --teal-light: #1A6B80;
+    --lavanda: #ACA2C9;
+    --blanco: #F2F3F5;
+    --salvia: #7A8F7A;
+    --rosa: #C9A2A2;
+    --rojo-suave: #C97B7B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--navy);
+    color: var(--blanco);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .brand {
+    padding: 28px 20px 8px;
+    text-align: center;
+  }
+  .brand h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .brand span {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    color: var(--lavanda);
+    margin-top: 4px;
+  }
+  .container {
+    width: 100%;
+    max-width: 560px;
+    padding: 16px 20px 48px;
+    flex: 1;
+  }
+  .screen { display: none; animation: fadein .35s ease; }
+  .screen.active { display: block; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- Intro ---------- */
+  .intro-card {
+    background: var(--navy-card);
+    border: 1px solid rgba(172,162,201,.18);
+    border-radius: 18px;
+    padding: 36px 28px;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .intro-card .decor {
+    width: 44px; height: 3px;
+    background: var(--lavanda);
+    margin: 0 auto 22px;
+    border-radius: 2px;
+  }
+  .intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+  .intro-card h2 em {
+    font-style: normal;
+    color: var(--lavanda);
+  }
+  .intro-card p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: rgba(242,243,245,.82);
+    margin-bottom: 26px;
+  }
+  .intro-card input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(172,162,201,.35);
+    background: rgba(14,27,45,.6);
+    color: var(--blanco);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 16px;
+    outline: none;
+  }
+  .intro-card input:focus { border-color: var(--lavanda); }
+  .btn {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 34px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .btn:hover { background: var(--teal-light); }
+  .btn:active { transform: scale(.98); }
+  .meta-line {
+    margin-top: 18px;
+    font-size: 12px;
+    color: rgba(242,243,245,.5);
+  }
+
+  /* ---------- Quiz ---------- */
+  .progress-wrap {
+    margin: 18px 0 26px;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--lavanda);
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: rgba(242,243,245,.12);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--lavanda);
+    border-radius: 3px;
+    transition: width .35s ease;
+  }
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 26px;
+  }
+  .option {
+    background: var(--navy-card);
+    border: 1px solid rgba(172,162,201,.18);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 14.5px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    user-select: none;
+  }
+  .option:hover { border-color: var(--lavanda); }
+  .option.selected {
+    background: var(--teal);
+    border-color: var(--lavanda);
+  }
+
+  /* ---------- Resultado ---------- */
+  .result-head {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .result-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .result-head p {
+    font-size: 13.5px;
+    color: rgba(242,243,245,.7);
+  }
+  .gauge-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 26px 0 10px;
+  }
+  .gauge { position: relative; width: 200px; height: 200px; }
+  .gauge svg { transform: rotate(-90deg); }
+  .gauge .track { fill: none; stroke: rgba(242,243,245,.1); stroke-width: 14; }
+  .gauge .value {
+    fill: none;
+    stroke: var(--lavanda);
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-dasharray: 502.65;
+    stroke-dashoffset: 502.65;
+    transition: stroke-dashoffset 1.4s ease, stroke .4s;
+  }
+  .gauge-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .gauge-center .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .gauge-center .of {
+    font-size: 12px;
+    color: rgba(242,243,245,.55);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+  .band {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .band .band-name {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 30px;
+    border: 1px solid;
+  }
+  .band-text {
+    background: var(--navy-card);
+    border: 1px solid rgba(172,162,201,.18);
+    border-radius: 14px;
+    padding: 22px 22px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin-bottom: 26px;
+  }
+  .band-text strong { color: var(--lavanda); }
+  .fugas h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .fuga {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--navy-card);
+    border: 1px solid rgba(172,162,201,.18);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .fuga .n {
+    flex: none;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--teal);
+    color: var(--blanco);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .empleado-card {
+    background: linear-gradient(135deg, rgba(172,162,201,.14), rgba(15,76,92,.35));
+    border: 1px solid var(--lavanda);
+    border-radius: 14px;
+    padding: 22px 22px;
+    margin-top: 22px;
+  }
+  .empleado-card .empleado-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--lavanda);
+    margin-bottom: 10px;
+  }
+  .empleado-card p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  .empleado-card strong { color: var(--lavanda); }
+  .btn-wa {
+    display: inline-block;
+    background: #25D366;
+    color: #0E1B2D;
+    border-radius: 10px;
+    padding: 14px 26px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 6px;
+    transition: transform .1s, opacity .2s;
+  }
+  .btn-wa:hover { opacity: .9; }
+  .btn-wa:active { transform: scale(.98); }
+  .cta-final {
+    background: var(--teal);
+    border-radius: 14px;
+    padding: 24px 22px;
+    text-align: center;
+    margin-top: 28px;
+  }
+  .cta-final p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin-bottom: 6px;
+  }
+  .cta-final .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .cta-final em { font-style: normal; color: var(--lavanda); font-weight: 600; }
+  .retry {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    color: rgba(242,243,245,.5);
+    font-size: 12.5px;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none; border: none;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+  }
+  footer {
+    padding: 18px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(242,243,245,.4);
+    text-align: center;
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','230704174608041');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=230704174608041&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<div class="brand">
+  <h1>RENACER IA</h1>
+  <span>DIAGNÓSTICO DE SATURACIÓN</span>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <section class="screen active" id="intro">
+    <div class="intro-card">
+      <div class="decor"></div>
+      <h2>¿Cuánto de tu negocio<br>depende <em>solo de vos</em>?</h2>
+      <p>10 preguntas, 2 minutos. Al final vas a tener tu <strong>nivel de saturación</strong> y las 3 fugas de tiempo más grandes de tu semana. Traé el resultado al Día 1 del Bootcamp — vamos a trabajar sobre eso.</p>
+      <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name">
+      <button class="btn" onclick="empezar()">EMPEZÁ HOY</button>
+      <div class="meta-line">Tus respuestas no se envían a ningún lado. El resultado es tuyo.</div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen" id="quiz">
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="p-count">PREGUNTA 1 DE 10</span><span id="p-pct">10%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
+    </div>
+    <div class="question-text" id="q-text"></div>
+    <div id="q-opts"></div>
+  </section>
+
+  <!-- RESULTADO -->
+  <section class="screen" id="result">
+    <div class="result-head">
+      <h2 id="r-title"></h2>
+      <p>Tu nivel de saturación</p>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle class="track" cx="100" cy="100" r="80"></circle>
+          <circle class="value" id="g-value" cx="100" cy="100" r="80"></circle>
+        </svg>
+        <div class="gauge-center">
+          <div class="num" id="g-num">0</div>
+          <div class="of">DE 100</div>
+        </div>
+      </div>
+    </div>
+    <div class="band"><span class="band-name" id="b-name"></span></div>
+    <div class="band-text" id="b-text"></div>
+    <div class="fugas" id="fugas-block">
+      <h3>Tus 3 fugas principales</h3>
+      <div id="fugas-list"></div>
+    </div>
+    <div class="empleado-card" id="empleado-block">
+      <div class="empleado-label">TU PRIMER EMPLEADO DE IA</div>
+      <p id="empleado-text"></p>
+    </div>
+    <div class="cta-final">
+      <p class="big">Traé este resultado al <em>Día 1</em></p>
+      <p>Esto es exactamente lo que vamos a atacar en el Bootcamp: construir <em>empleados de IA</em> que se hagan cargo de estas fugas.</p>
+      <p style="margin-top:14px;">Compartí tu puntaje en el grupo 👇</p>
+      <a id="wa-btn" class="btn-wa" href="#" target="_blank" rel="noopener">📲 &nbsp;Compartir por WhatsApp</a>
+    </div>
+    <button class="retry" onclick="reiniciar()">Hacer el diagnóstico de nuevo</button>
+  </section>
+
+</div>
+
+<footer>ESTRATEGIA · SISTEMAS · RESULTADOS</footer>
+
+<script>
+const PUNTOS = [0, 3, 7, 10];
+
+const PREGUNTAS = [
+  {
+    q: "De las horas que trabajaste esta semana, ¿cuántas fueron en tareas que podría hacer alguien más si le explicaras cómo?",
+    area: "Demasiadas horas en tareas delegables",
+    empleado: "Un <strong>asistente de tareas repetitivas</strong> — se hace cargo de lo que hoy hacés en piloto automático.",
+    opts: ["Casi ninguna", "Algunas", "La mitad", "Casi todas"]
+  },
+  {
+    q: "Si mañana te internan una semana sin celular, ¿qué pasa con tu negocio?",
+    area: "El negocio se frena sin vos",
+    empleado: "Un <strong>empleado de operaciones</strong> — uno que sepa cómo se hace todo, para que el negocio no dependa de tu memoria.",
+    opts: ["Sigue andando", "Se atrasa, pero sobrevive", "Se frena casi todo", "Se detiene por completo"]
+  },
+  {
+    q: "Un cliente te escribe a las 10 de la mañana. ¿Cuándo le llega la respuesta?",
+    area: "Respuesta a clientes lenta o manual",
+    empleado: "Un <strong>respondedor de mensajes entrenado en tu voz</strong> — contesta al toque, como vos.",
+    opts: ["Al toque, hay sistema", "Ese mismo día", "Cuando puedo", "A veces se me pierde"]
+  },
+  {
+    q: "Te piden una propuesta o cotización. ¿Cuánto tardás en mandarla?",
+    area: "Propuestas y cotizaciones lentas",
+    empleado: "Un <strong>generador de propuestas</strong> — de la conversación a la cotización lista en minutos.",
+    opts: ["Minutos, tengo sistema", "Ese día", "Varios días", "La termino postergando"]
+  },
+  {
+    q: "¿Publicaste esta semana todo el contenido que querías publicar?",
+    area: "El contenido queda postergado",
+    empleado: "Un <strong>asistente de contenido</strong> — escribe en tu voz lo que hoy postergás.",
+    opts: ["Sí, sale solo", "Casi todo", "Menos de lo que quería", "Hace semanas que no publico"]
+  },
+  {
+    q: "Si contratás a alguien mañana, ¿tenés algo escrito para explicarle cómo se hace tu trabajo?",
+    area: "Procesos que viven solo en tu cabeza",
+    empleado: "Un <strong>documentador de procesos</strong> — saca tu negocio de tu cabeza y lo deja por escrito.",
+    opts: ["Sí, documentado", "Algo", "Nada, se lo explico yo", "Está todo en mi cabeza"]
+  },
+  {
+    q: "¿Con qué frecuencia trabajás de noche o el finde para ponerte al día?",
+    area: "Trabajo fuera de horario para alcanzar",
+    empleado: "Un <strong>equipo de IA que avanza mientras descansás</strong> — para que el atraso no lo pague tu descanso.",
+    opts: ["Nunca", "A veces", "Casi todas las semanas", "Es mi único momento"]
+  },
+  {
+    q: "¿Cuántas oportunidades (consultas, seguimientos, leads) se te escaparon este mes por no llegar a responder?",
+    area: "Oportunidades que se enfrían sin respuesta",
+    empleado: "Un <strong>cazador de seguimientos</strong> — ningún interesado se enfría por falta de respuesta.",
+    opts: ["Ninguna", "Alguna", "Varias", "Ni sé cuántas"]
+  },
+  {
+    q: "¿Qué relación tenés con la IA hoy?",
+    area: "IA sin aprovechar",
+    empleado: "Tu <strong>primer empleado entrenado</strong> — pasar de usar IA suelta a tener una que conoce tu negocio.",
+    opts: ["Tengo asistentes trabajando para mí", "La uso suelta (ChatGPT o Claude)", "Probé y abandoné", "Nunca arranqué"]
+  },
+  {
+    q: "¿Cada cuánto pensás \"no llego a todo\"?",
+    area: "Sobrecarga constante",
+    empleado: "Un <strong>asistente de prioridades</strong> — te devuelve el control de la semana.",
+    opts: ["Casi nunca", "Algunas semanas", "Casi siempre", "Todos los días"]
+  }
+];
+
+const BANDAS = [
+  {
+    max: 29, nombre: "OPERACIÓN ORDENADA", color: "#7A8F7A",
+    texto: "Tenés una base ordenada — y eso te pone en ventaja. Con <strong>empleados de IA</strong> no venís a arreglar el caos: venís a <strong>escalar lo que ya funciona</strong>."
+  },
+  {
+    max: 54, nombre: "SATURACIÓN MODERADA", color: "#ACA2C9",
+    texto: "Todavía lo sostenés, pero hay <strong>fugas claras de tiempo</strong>. Cada semana se te va energía en tareas que un <strong>empleado de IA</strong> podría hacer por vos."
+  },
+  {
+    max: 79, nombre: "SATURACIÓN ALTA", color: "#C9A2A2",
+    texto: "Tu negocio funciona — pero <strong>solo si estás vos en todo</strong>. Eso no es un negocio, es un trabajo que te contrató a tiempo completo. La salida no es trabajar más: es <strong>armar tu equipo de IA</strong>."
+  },
+  {
+    max: 100, nombre: "SATURACIÓN CRÍTICA", color: "#C97B7B",
+    texto: "Sos el <strong>cuello de botella</strong> de tu propio negocio. Y no es falta de capacidad — es falta de equipo. Eso es exactamente lo que vamos a construir juntas: <strong>empleados de IA</strong> que trabajen para vos."
+  }
+];
+
+let idx = 0;
+let respuestas = [];
+let nombre = "";
+
+function show(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({ top: 0 });
+}
+
+function empezar() {
+  nombre = document.getElementById("nombre").value.trim();
+  idx = 0;
+  respuestas = [];
+  show("quiz");
+  render();
+}
+
+function render() {
+  const p = PREGUNTAS[idx];
+  document.getElementById("p-count").textContent = "PREGUNTA " + (idx + 1) + " DE " + PREGUNTAS.length;
+  const pct = Math.round(((idx) / PREGUNTAS.length) * 100);
+  document.getElementById("p-pct").textContent = pct + "%";
+  document.getElementById("p-fill").style.width = pct + "%";
+  document.getElementById("q-text").textContent = p.q;
+  const box = document.getElementById("q-opts");
+  box.innerHTML = "";
+  p.opts.forEach((o, i) => {
+    const d = document.createElement("div");
+    d.className = "option";
+    d.textContent = o;
+    d.onclick = () => elegir(d, i);
+    box.appendChild(d);
+  });
+}
+
+function elegir(el, i) {
+  document.querySelectorAll(".option").forEach(o => o.onclick = null);
+  el.classList.add("selected");
+  respuestas.push(i);
+  setTimeout(() => {
+    idx++;
+    if (idx < PREGUNTAS.length) render();
+    else resultado();
+  }, 320);
+}
+
+function resultado() {
+  const score = respuestas.reduce((acc, r) => acc + PUNTOS[r], 0);
+  const banda = BANDAS.find(b => score <= b.max);
+
+  document.getElementById("r-title").textContent = nombre ? (nombre + ", este es tu resultado") : "Este es tu resultado";
+  document.getElementById("b-name").textContent = banda.nombre;
+  document.getElementById("b-name").style.color = banda.color;
+  document.getElementById("b-name").style.borderColor = banda.color;
+  document.getElementById("b-text").innerHTML = banda.texto;
+
+  // Botón de WhatsApp con el puntaje
+  const msg = "Hice el Diagnóstico de Saturación del Bootcamp y saqué " + score + " de 100 😅 ¿y vos?";
+  document.getElementById("wa-btn").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+
+  // Fugas: las 3 respuestas con más puntos (solo si sumaron 7+)
+  const fugas = respuestas
+    .map((r, i) => ({ pts: PUNTOS[r], area: PREGUNTAS[i].area, empleado: PREGUNTAS[i].empleado }))
+    .filter(f => f.pts >= 7)
+    .sort((a, b) => b.pts - a.pts)
+    .slice(0, 3);
+
+  const fb = document.getElementById("fugas-block");
+  const fl = document.getElementById("fugas-list");
+  const eb = document.getElementById("empleado-block");
+  fl.innerHTML = "";
+  if (fugas.length === 0) {
+    fb.style.display = "none";
+    eb.style.display = "none";
+  } else {
+    fb.style.display = "block";
+    fugas.forEach((f, i) => {
+      const d = document.createElement("div");
+      d.className = "fuga";
+      d.innerHTML = '<div class="n">' + (i + 1) + '</div><div>' + f.area + '</div>';
+      fl.appendChild(d);
+    });
+    // Recomendación según la fuga #1
+    eb.style.display = "block";
+    document.getElementById("empleado-text").innerHTML =
+      "Por tu fuga principal, tu primer empleado debería ser: " + fugas[0].empleado;
+  }
+
+  show("result");
+
+  // Animación del gauge
+  const circ = 2 * Math.PI * 80;
+  const gv = document.getElementById("g-value");
+  gv.style.stroke = banda.color;
+  setTimeout(() => {
+    gv.style.strokeDashoffset = circ * (1 - score / 100);
+  }, 120);
+
+  // Contador animado (basado en tiempo real, dura 1.2s)
+  const num = document.getElementById("g-num");
+  const dur = 1200;
+  const t0 = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - t0) / dur);
+    num.textContent = Math.round(score * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  setTimeout(() => { num.textContent = score; }, dur + 150);
+}
+
+function reiniciar() {
+  idx = 0;
+  respuestas = [];
+  show("intro");
+}
+</script>
+</body>
+</html>
