@@ -349,6 +349,11 @@
     color: rgba(242,243,245,.4);
     text-align: center;
   }
+  .logo-lockup { display:inline-flex; align-items:center; gap:12px; justify-content:center; }
+  .logo-mark { width:46px; height:46px; color:var(--blanco); flex:none; }
+  .logo-word { display:flex; flex-direction:column; align-items:flex-start; line-height:1; font-family:'Playfair Display',serif; font-size:22px; font-weight:600; letter-spacing:1px; color:var(--blanco); }
+  .logo-word small { font-family:'Montserrat',sans-serif; font-size:9px; font-weight:500; letter-spacing:5px; color:var(--lavanda); margin-top:4px; }
+  .brand-sub { display:block; margin-top:12px; font-size:10px; font-weight:500; letter-spacing:5px; color:var(--lavanda); }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -365,8 +370,25 @@ fbq('init','230704174608041');fbq('track','PageView');
 <body>
 
 <div class="brand">
-  <h1>RENACER IA</h1>
-  <span>DIAGNÓSTICO DE SATURACIÓN</span>
+  <div class="logo-lockup">
+    <svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="46" r="34" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none" opacity=".9">
+        <path d="M14 46 H30"/><path d="M18 38 H30"/><path d="M18 54 H30"/>
+      </g>
+      <circle cx="13" cy="46" r="2.6" fill="currentColor"/>
+      <circle cx="17" cy="38" r="2.2" fill="currentColor"/>
+      <circle cx="17" cy="54" r="2.2" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="1.6" fill="none">
+        <path d="M70 26 l8 -8"/><path d="M74 34 h10"/>
+      </g>
+      <circle cx="80" cy="16" r="2.6" fill="currentColor"/>
+      <circle cx="86" cy="34" r="2.2" fill="currentColor"/>
+      <text x="50" y="64" font-family="Playfair Display, serif" font-weight="600" font-size="48" text-anchor="middle" fill="currentColor">R</text>
+    </svg>
+    <span class="logo-word">RENACER<small>EN DIGITAL</small></span>
+  </div>
+  <span class="brand-sub">DIAGNÓSTICO DE SATURACIÓN</span>
 </div>
 
 <div class="container">
