@@ -180,10 +180,13 @@ fbq('init','230704174608041');fbq('track','PageView');
       <div class="pills" id="typePills">
         <button class="pill on" data-type="Todo">Todo</button>
         <button class="pill" data-type="Guía">Guías</button>
-        <button class="pill" data-type="Plantilla">Plantillas</button>
-        <button class="pill" data-type="Prompts">Prompts</button>
-        <button class="pill" data-type="Herramienta">Herramientas</button>
-        <button class="pill" data-type="Video">Videos</button>
+        <!-- Tipos en roadmap: descomentar cada chip cuando exista al menos un recurso
+             de ese tipo en el array RESOURCES (hoy todos son "Guía", así que estos
+             filtros darían cero resultados). -->
+        <!-- <button class="pill" data-type="Plantilla">Plantillas</button> -->
+        <!-- <button class="pill" data-type="Prompts">Prompts</button> -->
+        <!-- <button class="pill" data-type="Herramienta">Herramientas</button> -->
+        <!-- <button class="pill" data-type="Video">Videos</button> -->
       </div>
     </div>
 
@@ -297,6 +300,7 @@ const RESOURCES = [
   { type:"Guía", level:"Principiante", title:"Cómo armar tu Proyecto en Claude", desc:"El lugar donde todo se integra: instrucciones, archivos y contexto en un solo espacio. Cómo crear el tuyo paso a paso.", tags:["proyectos","contexto","básico"], link:"recurso-proyectos-claude.html" },
   { type:"Guía", level:"Intermedio", title:"Cómo ahorrar tokens (y elegir el modelo)", desc:"Qué son los tokens, por qué cuestan, cuándo usar Opus, Sonnet o Haiku y 7 trucos para gastar menos sin perder calidad.", tags:["tokens","modelos","ahorro"], link:"recurso-ahorrar-tokens.html" },
   { type:"Guía", level:"Principiante", title:"El orden con el que le hablás a Claude", desc:"Un método simple —rol, contexto, tarea, formato y ejemplo— para que la IA te entienda a la primera.", tags:["prompts","estructura","básico"], link:"recurso-estructura-claude.html" },
+  { type:"Guía", level:"Intermedio", title:"Agentes como equipo, no como herramientas", desc:"Identidad, principios y rituales para que tus asistentes dejen de solo reaccionar y empiecen a proponer, documentar y mejorar solos.", tags:["agentes","equipo","cultura"], link:"recurso-agentes-como-equipo.html" },
 ];
 
 // ===== Estado y render =====
