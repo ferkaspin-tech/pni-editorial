@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Investment ROI Calculator</title>
+<style>
+  :root{
+    --navy:#0b2545;
+    --navy-light:#13315c;
+    --gold:#c9a227;
+    --gold-light:#e6c85c;
+    --bg:#f4f6f9;
+    --card:#ffffff;
+    --border:#e2e6ec;
+    --text:#1c2733;
+    --muted:#5b6875;
+    --green:#1e8a5f;
+    --green-bg:#e7f6ee;
+    --amber:#a9740a;
+    --amber-bg:#fdf3dc;
+    --red:#b3312c;
+    --red-bg:#fbe9e8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+  }
+  .topbar{
+    background:var(--navy);
+    color:#fff;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:8px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:var(--navy);font-size:18px;
+    flex:none;
+  }
+  .brand-text h1{font-size:17px;margin:0;font-weight:600;}
+  .brand-text p{font-size:12px;margin:2px 0 0;color:#c9d3e0;}
+  .lang-toggle{
+    display:flex;background:rgba(255,255,255,0.1);border-radius:8px;padding:4px;
+  }
+  .lang-toggle button{
+    background:transparent;border:none;color:#c9d3e0;padding:6px 14px;
+    border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .lang-toggle button.active{background:var(--gold);color:var(--navy);}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px;}
+  .intro{margin-bottom:24px;}
+  .intro h2{font-size:22px;margin:0 0 6px;}
+  .intro p{color:var(--muted);margin:0;font-size:14px;max-width:640px;}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+  @media(max-width:860px){.grid{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:22px;
+  }
+  .card h3{margin:0 0 16px;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:var(--navy);}
+
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;color:var(--text);}
+  .field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+  .input-prefix{position:relative;}
+  .input-prefix span{
+    position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    color:var(--muted);font-size:14px;
+  }
+  input[type=number], input[type=text], select{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:14px;
+    background:#fbfcfe;
+    color:var(--text);
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .input-prefix input{padding-left:28px;}
+  input:focus, select:focus{
+    border-color:var(--navy-light);
+    box-shadow:0 0 0 3px rgba(11,37,69,0.08);
+  }
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+  .btn-primary{
+    width:100%;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    padding:13px;
+    border-radius:9px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:6px;
+    transition:background .15s ease;
+  }
+  .btn-primary:hover{background:var(--navy-light);}
+  .btn-secondary{
+    width:100%;
+    background:transparent;
+    color:var(--muted);
+    border:1px solid var(--border);
+    padding:10px;
+    border-radius:9px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:8px;
+  }
+  .btn-secondary:hover{background:#f0f2f5;}
+
+  .results{display:none;}
+  .results.show{display:block;}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+  .metric{
+    background:#fbfcfe;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .metric .label{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;}
+  .metric .value{font-size:21px;font-weight:700;color:var(--navy);}
+  .metric .value.neg{color:var(--red);}
+
+  .verdict{
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:16px;
+    font-size:14px;
+  }
+  .verdict.good{background:var(--green-bg);color:var(--green);border:1px solid rgba(30,138,95,0.25);}
+  .verdict.ok{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(169,116,10,0.25);}
+  .verdict.bad{background:var(--red-bg);color:var(--red);border:1px solid rgba(179,49,44,0.25);}
+  .verdict h4{margin:0 0 6px;font-size:14px;}
+  .verdict p{margin:0;color:var(--text);opacity:.9;}
+
+  .assumptions{
+    font-size:12.5px;
+    color:var(--muted);
+    background:#fbfcfe;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:14px;
+  }
+  .assumptions ul{margin:6px 0 0;padding-left:18px;}
+
+  .disclaimer{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:30px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+  }
+
+  .placeholder{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+    padding:50px 20px;
+    font-size:13.5px;
+  }
+  .placeholder .icon{font-size:34px;margin-bottom:10px;}
+
+  .faq-card{margin-top:24px;}
+  .faq-note{font-size:12.5px;color:var(--muted);margin:0 0 16px;}
+  .faq-item{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:2px 16px;
+    margin-bottom:10px;
+    background:#fbfcfe;
+  }
+  .faq-item summary{
+    cursor:pointer;
+    padding:14px 0;
+    font-weight:600;
+    font-size:14px;
+    color:var(--navy);
+    list-style:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{
+    content:"+";
+    font-size:18px;
+    color:var(--gold);
+    flex:none;
+    font-weight:700;
+  }
+  .faq-item[open] summary::after{content:"–";}
+  .faq-item p{
+    margin:0 0 16px;
+    font-size:13.5px;
+    color:var(--text);
+    opacity:.9;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">$</div>
+    <div class="brand-text">
+      <h1 id="t-title">Property Investment ROI Calculator</h1>
+      <p id="t-subtitle-small">For foreign real estate investors</p>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+    <button id="btn-es" onclick="setLang('es')">ES</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <h2 id="t-intro-h">Know your numbers before you buy</h2>
+    <p id="t-intro-p">Enter the property's price and expected income to get Cap Rate, cash flow, ROI, and payback period — with a clear verdict on whether the deal makes sense.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3 id="t-form-h">Property & Income Details</h3>
+
+      <div class="field">
+        <label id="t-price" for="price">Purchase Price (USD)</label>
+        <div class="input-prefix"><span>$</span><input type="number" id="price" min="0" placeholder="250000" oninput="updateRentSuggestion()"></div>
+      </div>
+
+      <div class="field">
+        <label id="t-zone" for="zone">Neighborhood / Zone (Panama City)</label>
+        <select id="zone" onchange="updateRentSuggestion()">
+          <option value="" id="opt-zone-blank">Select a zone (optional)</option>
+          <option value="puntapacifica">Punta Pacífica</option>
+          <option value="costadeleste">Costa del Este</option>
+          <option value="paitilla">Paitilla</option>
+          <option value="avenidabalboa">Avenida Balboa</option>
+          <option value="bellavista">Bella Vista</option>
+          <option value="elcangrejo">El Cangrejo</option>
+          <option value="sanfrancisco">San Francisco</option>
+          <option value="obarreomarbella">Obarrio / Marbella</option>
+          <option value="cocodelmar">Coco del Mar</option>
+          <option value="other" id="opt-zone-other">Other Panama City area</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label id="t-rent" for="rent">Monthly Gross Rent (USD)</label>
+        <div class="input-prefix"><span>$</span><input type="number" id="rent" min="0" placeholder="1800" oninput="updateRentSuggestion()"></div>
+        <div class="hint" id="rent-suggestion" style="display:none;"></div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label id="t-expenses" for="expenses">Monthly Expenses (USD)</label>
+          <div class="input-prefix"><span>$</span><input type="number" id="expenses" min="0" placeholder="250"></div>
+        </div>
+        <div class="field">
+          <label id="t-newconstruction-label" for="newConstruction" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" id="newConstruction" style="width:auto;margin:0;" onchange="">
+            <span id="t-newconstruction">New construction</span>
+          </label>
+          <div class="hint" id="t-tax-auto-hint">Annual property tax is calculated automatically from the purchase price.</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label id="t-vacancy" for="vacancy">Vacancy Rate (%)</label>
+          <input type="number" id="vacancy" min="0" max="100" placeholder="6">
+        </div>
+        <div class="field">
+          <label id="t-closing" for="closing">Closing Costs (USD)</label>
+          <div class="input-prefix"><span>$</span><input type="number" id="closing" min="0" placeholder="0"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="hint" id="t-expenses-hint">Expenses = maintenance, HOA/condo fees, insurance, property management, etc.</div>
+      </div>
+
+      <button class="btn-primary" id="t-calc" onclick="calculate()">Calculate Return</button>
+      <button class="btn-secondary" id="t-reset" onclick="resetForm()">Reset</button>
+    </div>
+
+    <div class="card">
+      <h3 id="t-results-h">Investment Analysis</h3>
+
+      <div class="placeholder" id="placeholder">
+        <div class="icon">📊</div>
+        <div id="t-placeholder-text">Fill in the property details and click "Calculate Return" to see your analysis here.</div>
+      </div>
+
+      <div class="results" id="results">
+        <div class="metrics">
+          <div class="metric">
+            <div class="label" id="t-m-caprate">Cap Rate</div>
+            <div class="value" id="r-caprate">–</div>
+          </div>
+          <div class="metric">
+            <div class="label" id="t-m-yield">Gross Rental Yield</div>
+            <div class="value" id="r-yield">–</div>
+          </div>
+          <div class="metric">
+            <div class="label" id="t-m-cfmonth">Monthly Net Cash Flow</div>
+            <div class="value" id="r-cfmonth">–</div>
+          </div>
+          <div class="metric">
+            <div class="label" id="t-m-cfyear">Annual Net Cash Flow</div>
+            <div class="value" id="r-cfyear">–</div>
+          </div>
+          <div class="metric">
+            <div class="label" id="t-m-roi">ROI</div>
+            <div class="value" id="r-roi">–</div>
+          </div>
+          <div class="metric">
+            <div class="label" id="t-m-payback">Payback Period</div>
+            <div class="value" id="r-payback">–</div>
+          </div>
+        </div>
+
+        <div class="verdict" id="verdict-box">
+          <h4 id="verdict-title">–</h4>
+          <p id="verdict-text">–</p>
+        </div>
+
+        <div class="assumptions">
+          <strong id="t-assumptions-h">Assumptions used</strong>
+          <ul id="assumptions-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card faq-card">
+    <h3 id="t-faq-h">Common Questions from Foreign Investors (Panama)</h3>
+    <p class="faq-note" id="t-faq-note">These are general reference points, not live market data or tax advice — always confirm current figures with a local accountant, broker, or property manager before you buy.</p>
+
+    <details class="faq-item">
+      <summary id="t-faq-q1">What property taxes will I have to pay in Panama?</summary>
+      <p id="t-faq-a1"></p>
+    </details>
+    <details class="faq-item">
+      <summary id="t-faq-q2">How much can I actually rent the property for in this area?</summary>
+      <p id="t-faq-a2"></p>
+    </details>
+    <details class="faq-item">
+      <summary id="t-faq-q3">How much does property management cost?</summary>
+      <p id="t-faq-a3"></p>
+    </details>
+    <details class="faq-item">
+      <summary id="t-faq-q4">How much are PH (condo) maintenance fees?</summary>
+      <p id="t-faq-a4"></p>
+    </details>
+  </div>
+
+  <div class="disclaimer" id="t-disclaimer">
+    This is an orientative analysis for early-stage screening, not formal financial or legal advice. Cap rate benchmarks are general regional references — always validate with a local real estate advisor before making a purchase decision.
+  </div>
+</div>
+
+<script>
+const dict = {
+  en: {
+    title: "Property Investment ROI Calculator",
+    subtitleSmall: "For foreign real estate investors",
+    introH: "Know your numbers before you buy",
+    introP: "Enter the property's price and expected income to get Cap Rate, cash flow, ROI, and payback period — with a clear verdict on whether the deal makes sense.",
+    formH: "Property & Income Details",
+    price: "Purchase Price (USD)",
+    rent: "Monthly Gross Rent (USD)",
+    expenses: "Monthly Expenses (USD)",
+    vacancy: "Vacancy Rate (%)",
+    closing: "Closing Costs (USD)",
+    expensesHint: "Expenses = maintenance, HOA/condo fees, insurance, property management, etc.",
+    zoneLabel: "Neighborhood / Zone (Panama City)",
+    zoneBlank: "Select a zone (optional)",
+    zoneOther: "Other Panama City area",
+    newConstruction: "New construction",
+    taxAutoHint: "Annual property tax is calculated automatically from the purchase price.",
+    useEstimate: "Use this estimate",
+    rentSuggestion: (zone, low, high, yLow, yHigh) => `Typical range for ${zone}: ${low}–${high}/month, based on a ${yLow}%–${yHigh}% gross rental yield reference for this area.`,
+    calc: "Calculate Return",
+    reset: "Reset",
+    resultsH: "Investment Analysis",
+    placeholderText: "Fill in the property details and click \"Calculate Return\" to see your analysis here.",
+    mCaprate: "Cap Rate",
+    mYield: "Gross Rental Yield",
+    mCfMonth: "Monthly Net Cash Flow",
+    mCfYear: "Annual Net Cash Flow",
+    mRoi: "ROI (Return on Investment)",
+    mPayback: "Payback Period",
+    assumptionsH: "Assumptions used",
+    disclaimer: "This is an orientative analysis for early-stage screening, not formal financial or legal advice. Cap rate benchmarks are general regional references — always validate with a local real estate advisor before making a purchase decision.",
+    years: "years",
+    fillRequired: "Please enter at least the purchase price and monthly rent.",
+    assumeVacancy: "Vacancy rate defaulted to 6% (typical regional range).",
+    assumeExpenses: "Monthly expenses assumed as $0 (not provided).",
+    assumeClosing: "Closing costs assumed as $0 (not provided) — invested capital equals purchase price.",
+    assumeCash: "Analysis assumes an all-cash purchase (no financing/mortgage).",
+    taxNoteNew20: "Marked as new construction with a value up to $120,000 — under Panama's current schedule this typically qualifies for a property tax exoneration of up to 20 years from the occupancy permit date. Property tax used in this analysis: $0/year. This exoneration is temporary — confirm the exact expiration date with the seller or developer.",
+    taxNoteNew5: "Marked as new construction with a value between $120,001 and $300,000 — this typically qualifies for a property tax exoneration of about 5 years from the occupancy permit date. Property tax used in this analysis: $0/year. Confirm the exact expiration date with the seller or developer.",
+    taxNoteNew3: "Marked as new construction with a value above $300,000 — this typically qualifies for a property tax exoneration of about 3 years from the occupancy permit date. Property tax used in this analysis: $0/year. Confirm the exact expiration date with the seller or developer.",
+    taxNoteStandard: (amt) => `Estimated annual property tax: ${amt}, calculated using Panama's tiered "Impuesto de Inmueble" schedule for investment properties (0% up to $30,000; 0.6% from $30,000–$250,000; 0.8% from $250,000–$500,000; 1.0% above $500,000).`,
+    verdictGoodTitle: "Looks like a strong deal",
+    verdictOkTitle: "Reasonable, worth a closer look",
+    verdictBadTitle: "Numbers don't look attractive as-is",
+    verdictGoodBody: (cr, pb, cf) => `A ${cr}% cap rate is at or above the strong range for this market. ${cf} The payback period of ${pb} years is solid for real estate. Main things to verify: actual achievable rent, vacancy history in the area, and total closing/legal costs.`,
+    verdictOkBody: (cr, pb, cf) => `A ${cr}% cap rate sits in the reasonable range for this market — not a clear win, not a clear pass. ${cf} At ${pb} years, payback is on the longer side. This could still work if there's upside in appreciation, or if you can negotiate a lower purchase price or higher rent.`,
+    verdictBadBody: (cr, pb, cf) => `A ${cr}% cap rate is below what's typically considered attractive for this market. ${cf} Payback of ${pb} years is long for a rental property. For the numbers to work, you'd need either a lower purchase price, materially higher rent, or lower operating costs — unless you're betting primarily on appreciation rather than income.`,
+    cfPositive: "Cash flow is positive.",
+    cfNegative: "Cash flow is negative — the property would cost you money every month.",
+    faqH: "Common Questions from Foreign Investors (Panama)",
+    faqNote: "These are general reference points, not live market data or tax advice — always confirm current figures with a local accountant, broker, or property manager before you buy.",
+    faqQ1: "What property taxes will I have to pay in Panama?",
+    faqA1: "Panama charges an annual property tax (\"Impuesto de Inmueble\") based on the registered value of the property. For investment properties (not your primary residence), the current tiered schedule is roughly: 0% on the first $30,000, 0.6% on the portion between $30,000–$250,000, 0.8% between $250,000–$500,000, and 1.0% above $500,000 (a primary residence instead gets a larger $120,000 exemption). New-construction properties often get a temporary exoneration too — up to 20 years if the registered value is $120,000 or less, about 5 years between $120,001–$300,000, and about 3 years above $300,000, counted from the occupancy permit date. This calculator applies that schedule automatically from your purchase price and the \"new construction\" checkbox. On top of property tax, rental income itself is subject to income tax — non-resident landlords can often choose a simplified flat rate (commonly cited around 10% of gross rental income) instead of the standard progressive scale. Rates and exonerations change with tax reforms, so always confirm the current numbers with a Panamanian accountant before you buy.",
+    faqQ2: "How much can I actually rent the property for in this area?",
+    faqA2: "Achievable rent depends heavily on the specific neighborhood, building quality, floor, view and finishes — there's no single citywide number. This calculator includes a zone selector with typical gross rental yield ranges for well-known Panama City areas (Punta Pacífica, Costa del Este, El Cangrejo, San Francisco, Bella Vista and others) — pick your zone and it suggests a rent range based on your purchase price, which you can use as a starting point and then adjust. Those ranges are general market references, not live listings. The only reliable way to price a specific unit precisely is to pull 3-5 comparable active listings in the same building or block and ask a local property manager or broker what similar units have actually rented for recently — not just what they're listed at.",
+    faqQ3: "How much does property management cost?",
+    faqA3: "In Panama, professional property management typically runs about 8-10% of the monthly rent collected, and many managers also charge a one-time tenant-placement fee (often around half to a full month's rent) when they find a new tenant. Some also charge extra for maintenance coordination or vacancy marketing — always ask for the full fee schedule up front, not just the headline percentage.",
+    faqQ4: "How much are PH (condo) maintenance fees?",
+    faqA4: "The monthly maintenance fee (\"cuota de mantenimiento\" or \"expensas\") for a PH (propiedad horizontal / condo building) is set by the building's administration and varies a lot by amenities and age. As a rough range, simpler buildings with fewer amenities often run around $0.30-$0.60 per m² per month, while full-amenity towers (pool, gym, 24h security, concierge, generators) can run $0.80-$1.50+ per m². Always ask the building administration for the exact current fee and whether any special assessments (\"cuota extraordinaria\") are planned — those can significantly change your cash flow."
+  },
+  es: {
+    title: "Calculadora de Retorno de Inversión Inmobiliaria",
+    subtitleSmall: "Para inversores extranjeros",
+    introH: "Conocé los números antes de comprar",
+    introP: "Ingresá el precio de la propiedad y el ingreso esperado para obtener el Cap Rate, flujo de caja, ROI y período de recuperación — con un veredicto claro sobre si conviene.",
+    formH: "Datos de la propiedad e ingresos",
+    price: "Precio de compra (USD)",
+    rent: "Renta mensual bruta (USD)",
+    expenses: "Gastos mensuales (USD)",
+    vacancy: "Tasa de vacancia (%)",
+    closing: "Gastos de cierre (USD)",
+    expensesHint: "Gastos = administración, mantenimiento, cuota de condominio, seguros, etc.",
+    zoneLabel: "Barrio / Zona (Ciudad de Panamá)",
+    zoneBlank: "Seleccioná una zona (opcional)",
+    zoneOther: "Otra zona de Ciudad de Panamá",
+    newConstruction: "Construcción nueva",
+    taxAutoHint: "El impuesto anual sobre la propiedad se calcula automáticamente a partir del precio de compra.",
+    useEstimate: "Usar esta estimación",
+    rentSuggestion: (zone, low, high, yLow, yHigh) => `Rango típico para ${zone}: ${low}–${high}/mes, según una referencia de rentabilidad bruta de ${yLow}%–${yHigh}% para esta zona.`,
+    calc: "Calcular retorno",
+    reset: "Reiniciar",
+    resultsH: "Análisis de inversión",
+    placeholderText: "Completá los datos de la propiedad y hacé clic en \"Calcular retorno\" para ver el análisis acá.",
+    mCaprate: "Cap Rate",
+    mYield: "Rentabilidad bruta",
+    mCfMonth: "Flujo de caja neto mensual",
+    mCfYear: "Flujo de caja neto anual",
+    mRoi: "ROI (Retorno sobre la inversión)",
+    mPayback: "Período de recuperación",
+    assumptionsH: "Supuestos utilizados",
+    disclaimer: "Este es un análisis orientativo para una evaluación inicial, no asesoramiento financiero o legal formal. Las referencias de Cap Rate son regionales y generales — siempre validá con un asesor inmobiliario local antes de tomar una decisión de compra.",
+    years: "años",
+    fillRequired: "Por favor ingresá al menos el precio de compra y la renta mensual.",
+    assumeVacancy: "Se asumió una vacancia del 6% (rango regional típico).",
+    assumeExpenses: "Se asumieron gastos mensuales de $0 (no se ingresaron).",
+    assumeClosing: "Se asumieron gastos de cierre de $0 (no se ingresaron) — el capital invertido es igual al precio de compra.",
+    assumeCash: "El análisis asume compra de contado (sin financiamiento/hipoteca).",
+    taxNoteNew20: "Marcada como construcción nueva con un valor de hasta $120,000 — según el esquema actual de Panamá, esto normalmente califica para una exoneración del impuesto de inmueble de hasta 20 años desde la fecha del permiso de ocupación. Impuesto utilizado en este análisis: $0/año. Esta exoneración es temporal — confirmá el vencimiento exacto con el vendedor o desarrollador.",
+    taxNoteNew5: "Marcada como construcción nueva con un valor entre $120,001 y $300,000 — esto normalmente califica para una exoneración del impuesto de inmueble de unos 5 años desde el permiso de ocupación. Impuesto utilizado en este análisis: $0/año. Confirmá el vencimiento exacto con el vendedor o desarrollador.",
+    taxNoteNew3: "Marcada como construcción nueva con un valor superior a $300,000 — esto normalmente califica para una exoneración del impuesto de inmueble de unos 3 años desde el permiso de ocupación. Impuesto utilizado en este análisis: $0/año. Confirmá el vencimiento exacto con el vendedor o desarrollador.",
+    taxNoteStandard: (amt) => `Impuesto de inmueble anual estimado: ${amt}, calculado con la escala progresiva del "Impuesto de Inmueble" de Panamá para propiedades de inversión (0% hasta $30,000; 0.6% entre $30,000–$250,000; 0.8% entre $250,000–$500,000; 1.0% sobre el excedente de $500,000).`,
+    verdictGoodTitle: "Se ve como una buena oportunidad",
+    verdictOkTitle: "Razonable, vale la pena revisarla",
+    verdictBadTitle: "Los números no se ven atractivos así como están",
+    verdictGoodBody: (cr, pb, cf) => `Un Cap Rate de ${cr}% está en el rango bueno o por encima para este mercado. ${cf} El período de recuperación de ${pb} años es sólido para bienes raíces. Lo principal a verificar: la renta realmente alcanzable, el historial de vacancia en la zona, y los costos totales de cierre y escrituración.`,
+    verdictOkBody: (cr, pb, cf) => `Un Cap Rate de ${cr}% está en el rango razonable para este mercado — no es un gran acierto, pero tampoco es malo. ${cf} Con ${pb} años, el período de recuperación es más largo de lo ideal. Podría funcionar si hay potencial de plusvalía, o si podés negociar un mejor precio o una renta más alta.`,
+    verdictBadBody: (cr, pb, cf) => `Un Cap Rate de ${cr}% está por debajo de lo que se considera atractivo en este mercado. ${cf} Un período de recuperación de ${pb} años es largo para una propiedad de renta. Para que los números cierren, necesitarías un precio de compra más bajo, una renta bastante más alta, o menores costos operativos — salvo que la apuesta sea principalmente por plusvalía y no por ingreso.`,
+    cfPositive: "El flujo de caja es positivo.",
+    cfNegative: "El flujo de caja es negativo — la propiedad te costaría dinero cada mes.",
+    faqH: "Preguntas frecuentes de inversores extranjeros (Panamá)",
+    faqNote: "Estos son puntos de referencia generales, no datos de mercado en vivo ni asesoría fiscal — siempre confirmá las cifras actuales con un contador, corredor o property manager local antes de comprar.",
+    faqQ1: "¿Qué impuestos tengo que pagar por la propiedad en Panamá?",
+    faqA1: "Panamá cobra un impuesto anual sobre inmuebles (\"Impuesto de Inmueble\") calculado sobre el valor registrado de la propiedad. Para propiedades de inversión (que no son tu vivienda principal), la escala progresiva vigente es aproximadamente: 0% sobre los primeros $30,000, 0.6% entre $30,000–$250,000, 0.8% entre $250,000–$500,000, y 1.0% sobre el excedente de $500,000 (la vivienda principal en cambio tiene una exoneración mayor, de $120,000). Las propiedades de construcción nueva suelen tener además una exoneración temporal — hasta 20 años si el valor registrado es de $120,000 o menos, unos 5 años entre $120,001–$300,000, y unos 3 años por encima de $300,000, contados desde la fecha del permiso de ocupación. Esta calculadora aplica esa escala automáticamente a partir del precio de compra y del check \"construcción nueva\". Además del impuesto de inmueble, la renta que generes está sujeta a impuesto sobre la renta — como propietario no residente muchas veces podés optar por una tasa fija simplificada (comúnmente citada en alrededor del 10% sobre el ingreso bruto de alquiler) en vez de la escala progresiva normal. Las tasas y exoneraciones cambian con las reformas fiscales, así que siempre confirmá las cifras actuales con un contador panameño antes de comprar.",
+    faqQ2: "¿En cuánto puedo alquilar realmente la propiedad según la zona?",
+    faqA2: "La renta real depende muchísimo del barrio específico, la calidad del edificio, el piso, la vista y los acabados — no hay un número único para toda la ciudad. Esta calculadora incluye un selector de zona con rangos típicos de rentabilidad bruta para áreas conocidas de Ciudad de Panamá (Punta Pacífica, Costa del Este, El Cangrejo, San Francisco, Bella Vista y otras) — elegí tu zona y te sugiere un rango de renta según tu precio de compra, que podés usar como punto de partida y después ajustar. Esos rangos son referencias generales de mercado, no publicaciones en vivo. La única forma confiable de fijar el precio de una unidad específica es revisar 3-5 comparables activos en el mismo edificio o cuadra, y preguntarle a un property manager o corredor local en cuánto se alquilaron realmente unidades similares recientemente — no solo en cuánto están publicadas.",
+    faqQ3: "¿Cuánto cuesta el property management (administración de la propiedad)?",
+    faqA3: "En Panamá, la administración profesional de propiedades suele costar entre 8% y 10% de la renta mensual cobrada, y muchos administradores también cobran una comisión única de colocación de inquilino (frecuentemente entre medio mes y un mes de renta) cuando consiguen un nuevo inquilino. Algunos cobran extra por coordinación de mantenimiento o marketing de la vacante — siempre pedí el detalle completo de cobros, no solo el porcentaje principal.",
+    faqQ4: "¿Cuánto cuesta el mantenimiento de un PH (cuota de condominio)?",
+    faqA4: "La cuota de mantenimiento mensual de un PH (propiedad horizontal) la fija la administración del edificio y varía mucho según las amenidades y la antigüedad. Como rango muy general, edificios más sencillos con pocas amenidades suelen rondar $0.30-$0.60 por m² al mes, mientras que torres con amenidades completas (piscina, gimnasio, seguridad 24h, conserjería, plantas eléctricas) pueden llegar a $0.80-$1.50+ por m². Siempre pedile a la administración del edificio la cuota exacta actual y si hay alguna cuota extraordinaria planeada — eso puede cambiar bastante tu flujo de caja."
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang){
+  currentLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-es').classList.toggle('active', lang==='es');
+  document.documentElement.lang = lang;
+  const d = dict[lang];
+
+  document.title = d.title;
+  document.getElementById('t-title').textContent = d.title;
+  document.getElementById('t-subtitle-small').textContent = d.subtitleSmall;
+  document.getElementById('t-intro-h').textContent = d.introH;
+  document.getElementById('t-intro-p').textContent = d.introP;
+  document.getElementById('t-form-h').textContent = d.formH;
+  document.getElementById('t-price').textContent = d.price;
+  document.getElementById('t-rent').textContent = d.rent;
+  document.getElementById('t-expenses').textContent = d.expenses;
+  document.getElementById('t-vacancy').textContent = d.vacancy;
+  document.getElementById('t-closing').textContent = d.closing;
+  document.getElementById('t-expenses-hint').textContent = d.expensesHint;
+  document.getElementById('t-zone').textContent = d.zoneLabel;
+  document.getElementById('opt-zone-blank').textContent = d.zoneBlank;
+  document.getElementById('opt-zone-other').textContent = d.zoneOther;
+  document.getElementById('t-newconstruction').textContent = d.newConstruction;
+  document.getElementById('t-tax-auto-hint').textContent = d.taxAutoHint;
+  document.getElementById('t-calc').textContent = d.calc;
+  document.getElementById('t-reset').textContent = d.reset;
+  document.getElementById('t-results-h').textContent = d.resultsH;
+  document.getElementById('t-placeholder-text').textContent = d.placeholderText;
+  document.getElementById('t-m-caprate').textContent = d.mCaprate;
+  document.getElementById('t-m-yield').textContent = d.mYield;
+  document.getElementById('t-m-cfmonth').textContent = d.mCfMonth;
+  document.getElementById('t-m-cfyear').textContent = d.mCfYear;
+  document.getElementById('t-m-roi').textContent = d.mRoi;
+  document.getElementById('t-m-payback').textContent = d.mPayback;
+  document.getElementById('t-assumptions-h').textContent = d.assumptionsH;
+  document.getElementById('t-disclaimer').textContent = d.disclaimer;
+
+  document.getElementById('t-faq-h').textContent = d.faqH;
+  document.getElementById('t-faq-note').textContent = d.faqNote;
+  document.getElementById('t-faq-q1').textContent = d.faqQ1;
+  document.getElementById('t-faq-a1').textContent = d.faqA1;
+  document.getElementById('t-faq-q2').textContent = d.faqQ2;
+  document.getElementById('t-faq-a2').textContent = d.faqA2;
+  document.getElementById('t-faq-q3').textContent = d.faqQ3;
+  document.getElementById('t-faq-a3').textContent = d.faqA3;
+  document.getElementById('t-faq-q4').textContent = d.faqQ4;
+  document.getElementById('t-faq-a4').textContent = d.faqA4;
+
+  if(lastResult){ renderResults(lastResult); }
+  updateRentSuggestion();
+}
+
+let lastResult = null;
+let lastEstimate = null;
+
+const ZONE_YIELDS = {
+  puntapacifica: {min:6.0, max:8.0, name:'Punta Pacífica'},
+  costadeleste: {min:5.0, max:7.0, name:'Costa del Este'},
+  paitilla: {min:5.0, max:7.0, name:'Paitilla'},
+  avenidabalboa: {min:7.0, max:9.5, name:'Avenida Balboa'},
+  bellavista: {min:7.0, max:9.0, name:'Bella Vista'},
+  elcangrejo: {min:6.5, max:8.5, name:'El Cangrejo'},
+  sanfrancisco: {min:6.0, max:9.0, name:'San Francisco'},
+  obarreomarbella: {min:4.0, max:6.5, name:'Obarrio / Marbella'},
+  cocodelmar: {min:4.5, max:6.5, name:'Coco del Mar'}
+};
+
+function zoneDisplayName(key){
+  const d = dict[currentLang];
+  if(key === 'other') return d.zoneOther;
+  return ZONE_YIELDS[key] ? ZONE_YIELDS[key].name : '';
+}
+
+function updateRentSuggestion(){
+  const d = dict[currentLang];
+  const zoneKey = document.getElementById('zone').value;
+  const box = document.getElementById('rent-suggestion');
+  const price = parseFloat(document.getElementById('price').value);
+
+  if(!zoneKey || !price || price <= 0){
+    box.style.display = 'none';
+    box.innerHTML = '';
+    lastEstimate = null;
+    return;
+  }
+
+  const z = zoneKey === 'other' ? {min:5.0, max:8.0} : ZONE_YIELDS[zoneKey];
+  const low = Math.round(price * (z.min/100) / 12);
+  const high = Math.round(price * (z.max/100) / 12);
+  lastEstimate = Math.round((low + high) / 2);
+
+  box.style.display = 'block';
+  box.innerHTML = d.rentSuggestion(zoneDisplayName(zoneKey), fmtMoney(low), fmtMoney(high), z.min, z.max) +
+    ' <a href="#" onclick="applyRentEstimate();return false;" style="color:var(--navy);font-weight:600;text-decoration:underline;">' + d.useEstimate + '</a>';
+}
+
+function applyRentEstimate(){
+  if(lastEstimate){
+    document.getElementById('rent').value = lastEstimate;
+  }
+}
+
+function calcPanamaPropertyTax(price, isNewConstruction){
+  if(isNewConstruction){
+    if(price <= 120000) return {tax:0, bracket:'new20'};
+    if(price <= 300000) return {tax:0, bracket:'new5'};
+    return {tax:0, bracket:'new3'};
+  }
+  let tax = 0;
+  if(price > 30000){
+    tax += (Math.min(price, 250000) - 30000) * 0.006;
+  }
+  if(price > 250000){
+    tax += (Math.min(price, 500000) - 250000) * 0.008;
+  }
+  if(price > 500000){
+    tax += (price - 500000) * 0.01;
+  }
+  return {tax, bracket:'standard'};
+}
+
+function fmtMoney(n){
+  const sign = n < 0 ? '-' : '';
+  return sign + '$' + Math.abs(n).toLocaleString('en-US', {maximumFractionDigits:0});
+}
+function fmtPct(n){
+  return n.toLocaleString('en-US', {maximumFractionDigits:1, minimumFractionDigits:1}) + '%';
+}
+
+function calculate(){
+  const d = dict[currentLang];
+  const price = parseFloat(document.getElementById('price').value);
+  const rent = parseFloat(document.getElementById('rent').value);
+
+  if(!price || !rent || price <= 0 || rent <= 0){
+    alert(d.fillRequired);
+    return;
+  }
+
+  const expensesRaw = document.getElementById('expenses').value;
+  const vacancyRaw = document.getElementById('vacancy').value;
+  const closingRaw = document.getElementById('closing').value;
+  const isNewConstruction = document.getElementById('newConstruction').checked;
+
+  const expenses = expensesRaw === '' ? 0 : parseFloat(expensesRaw);
+  const vacancy = vacancyRaw === '' ? 6 : parseFloat(vacancyRaw);
+  const closing = closingRaw === '' ? 0 : parseFloat(closingRaw);
+
+  const taxResult = calcPanamaPropertyTax(price, isNewConstruction);
+  const tax = taxResult.tax;
+
+  const assumptionsUsed = [];
+  if(vacancyRaw === '') assumptionsUsed.push(d.assumeVacancy);
+  if(expensesRaw === '') assumptionsUsed.push(d.assumeExpenses);
+  if(closingRaw === '') assumptionsUsed.push(d.assumeClosing);
+  if(taxResult.bracket === 'new20') assumptionsUsed.push(d.taxNoteNew20);
+  else if(taxResult.bracket === 'new5') assumptionsUsed.push(d.taxNoteNew5);
+  else if(taxResult.bracket === 'new3') assumptionsUsed.push(d.taxNoteNew3);
+  else assumptionsUsed.push(d.taxNoteStandard(fmtMoney(tax)));
+  assumptionsUsed.push(d.assumeCash);
+
+  const grossAnnualRent = rent * 12;
+  const effectiveGrossIncome = grossAnnualRent * (1 - vacancy/100);
+  const annualOperatingExpenses = (expenses * 12) + tax;
+  const noi = effectiveGrossIncome - annualOperatingExpenses;
+
+  const capRate = (noi / price) * 100;
+  const grossYield = (grossAnnualRent / price) * 100;
+  const cashFlowMonthly = noi / 12;
+  const cashFlowAnnual = noi;
+  const capitalInvested = price + closing;
+  const roi = (noi / capitalInvested) * 100;
+  const payback = noi > 0 ? capitalInvested / noi : Infinity;
+
+  lastResult = {capRate, grossYield, cashFlowMonthly, cashFlowAnnual, roi, payback, assumptionsUsed};
+  renderResults(lastResult);
+}
+
+function renderResults(res){
+  const d = dict[currentLang];
+  document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('results').classList.add('show');
+
+  document.getElementById('r-caprate').textContent = fmtPct(res.capRate);
+  document.getElementById('r-yield').textContent = fmtPct(res.grossYield);
+  document.getElementById('r-cfmonth').textContent = fmtMoney(res.cashFlowMonthly);
+  document.getElementById('r-cfmonth').classList.toggle('neg', res.cashFlowMonthly < 0);
+  document.getElementById('r-cfyear').textContent = fmtMoney(res.cashFlowAnnual);
+  document.getElementById('r-cfyear').classList.toggle('neg', res.cashFlowAnnual < 0);
+  document.getElementById('r-roi').textContent = fmtPct(res.roi);
+  document.getElementById('r-roi').classList.toggle('neg', res.roi < 0);
+  document.getElementById('r-payback').textContent = isFinite(res.payback) ? res.payback.toLocaleString('en-US',{maximumFractionDigits:1}) + ' ' + d.years : '—';
+
+  const goodThreshold = 8, okThreshold = 5;
+  let tier;
+  if(res.capRate >= goodThreshold) tier = 'good';
+  else if(res.capRate >= okThreshold) tier = 'ok';
+  else tier = 'bad';
+
+  const box = document.getElementById('verdict-box');
+  box.className = 'verdict ' + tier;
+
+  const crStr = res.capRate.toLocaleString('en-US',{maximumFractionDigits:1});
+  const pbStr = isFinite(res.payback) ? res.payback.toLocaleString('en-US',{maximumFractionDigits:1}) : '—';
+  const cfStr = res.cashFlowMonthly >= 0 ? d.cfPositive : d.cfNegative;
+
+  if(tier === 'good'){
+    document.getElementById('verdict-title').textContent = d.verdictGoodTitle;
+    document.getElementById('verdict-text').textContent = d.verdictGoodBody(crStr, pbStr, cfStr);
+  } else if(tier === 'ok'){
+    document.getElementById('verdict-title').textContent = d.verdictOkTitle;
+    document.getElementById('verdict-text').textContent = d.verdictOkBody(crStr, pbStr, cfStr);
+  } else {
+    document.getElementById('verdict-title').textContent = d.verdictBadTitle;
+    document.getElementById('verdict-text').textContent = d.verdictBadBody(crStr, pbStr, cfStr);
+  }
+
+  const list = document.getElementById('assumptions-list');
+  list.innerHTML = '';
+  res.assumptionsUsed.forEach(a => {
+    const li = document.createElement('li');
+    li.textContent = a;
+    list.appendChild(li);
+  });
+}
+
+function resetForm(){
+  ['price','rent','expenses','vacancy','closing'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('newConstruction').checked = false;
+  document.getElementById('zone').value = '';
+  document.getElementById('rent-suggestion').style.display = 'none';
+  document.getElementById('rent-suggestion').innerHTML = '';
+  document.getElementById('placeholder').style.display = 'flex';
+  document.getElementById('results').classList.remove('show');
+  lastResult = null;
+  lastEstimate = null;
+}
+
+setLang('en');
+</script>
+
+</body>
+</html>
