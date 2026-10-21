@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B1D4F">
+<meta name="robots" content="noindex">
+<title>Cabina SHE IA</title>
+<meta name="description" content="Creá tu tira de tres fotos de SHE IA. Las fotos se procesan en tu teléfono y no se suben a ningún servidor.">
+<link rel="preload" href="fonts/poppins-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<div class="deco" aria-hidden="true">
+  <svg class="deco-circuit deco-a" viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <path d="M4 20h70l18 18h60l14-14h40"/><path d="M4 60h40l16 16h90"/><path d="M60 100h50l14-14h70"/>
+    <circle cx="74" cy="20" r="3.5"/><circle cx="214" cy="24" r="3.5"/><circle cx="150" cy="76" r="3.5"/><circle cx="194" cy="86" r="3.5"/>
+  </svg>
+  <svg class="deco-circuit deco-b" viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <path d="M216 20h-70l-18 18H68L54 24H14"/><path d="M216 60h-40l-16 16H70"/><path d="M160 100h-50l-14-14H26"/>
+    <circle cx="146" cy="20" r="3.5"/><circle cx="6" cy="24" r="3.5"/><circle cx="70" cy="76" r="3.5"/><circle cx="26" cy="86" r="3.5"/>
+  </svg>
+</div>
+
+<header class="top">
+  <div class="logo-slot" id="logoSlot">
+    <img id="brandLogo" src="assets/logo-she-ia.png" alt="SHE IA" hidden>
+    <span class="logo-missing" id="logoMissing" hidden>Espacio reservado · logo SHE IA<br><small>Agregar assets/logo-she-ia.png</small></span>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 1. Bienvenida -->
+  <section class="screen" id="screenWelcome" aria-labelledby="welcomeTitle">
+    <p class="kicker">22 de octubre de 2026 · Learning Vila, Atrio Mall · Panamá</p>
+    <h1 id="welcomeTitle">Tu momento SHE IA</h1>
+    <p class="lead">Creá una tira de tres fotos con la identidad del evento para compartir con tus amigas y nuevas conexiones.</p>
+
+    <div class="notice" id="inAppNotice" role="note" hidden>
+      <strong>Abrí este enlace en Safari o Chrome.</strong>
+      <span>El navegador de Instagram suele bloquear la cámara. Tocá los tres puntos (⋯) y elegí «Abrir en el navegador», o copiá el enlace.</span>
+      <button type="button" class="btn btn-ghost btn-small" id="btnCopyLink">Copiar enlace</button>
+    </div>
+    <div class="notice" id="noCameraNotice" role="note" hidden>
+      <strong>Este navegador no permite usar la cámara.</strong>
+      <span id="noCameraText">Podés elegir tres fotos de tu galería.</span>
+    </div>
+
+    <fieldset class="frames" id="framePicker">
+      <legend>Elegí tu marco</legend>
+      <div class="frame-grid" role="radiogroup" aria-label="Marco de la tira">
+        <label class="frame-opt"><input type="radio" name="frame" value="esencial" checked><span class="swatch sw-esencial" aria-hidden="true"></span><span class="frame-name">Esencial</span><span class="frame-sub">Blanco</span></label>
+        <label class="frame-opt"><input type="radio" name="frame" value="noche"><span class="swatch sw-noche" aria-hidden="true"></span><span class="frame-name">Noche</span><span class="frame-sub">Azul profundo</span></label>
+        <label class="frame-opt"><input type="radio" name="frame" value="conexion"><span class="swatch sw-conexion" aria-hidden="true"></span><span class="frame-name">Conexión</span><span class="frame-sub">Lavanda</span></label>
+      </div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="btnOpenCamera">Abrir cámara</button>
+      <button type="button" class="btn btn-secondary" id="btnGallery">Elegir 3 fotos de la galería</button>
+    </div>
+    <p class="fineprint">Tus fotos se procesan solo en este teléfono. No se guardan ni se suben a ningún servidor.</p>
+    <p class="status error" id="welcomeError" role="alert" hidden></p>
+  </section>
+
+  <!-- 2. Cámara -->
+  <section class="screen" id="screenCamera" aria-labelledby="camTitle" hidden>
+    <h2 id="camTitle" class="sr-only">Cámara</h2>
+    <div class="viewfinder" id="viewfinder">
+      <video id="video" playsinline muted autoplay disablepictureinpicture></video>
+      <div class="guide" aria-hidden="true"></div>
+      <div class="overlay" id="overlay" aria-hidden="true">
+        <span class="shot-label" id="shotLabel"></span>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="flash" id="flash" aria-hidden="true"></div>
+    </div>
+    <p class="sr-only" id="liveRegion" aria-live="assertive"></p>
+    <div class="thumbs" id="thumbs" aria-label="Fotos tomadas">
+      <span class="thumb"></span><span class="thumb"></span><span class="thumb"></span>
+    </div>
+    <p class="hint" id="camHint">Acomodá tu rostro dentro del recuadro. Se tomarán 3 fotos con cuenta regresiva.</p>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="btnShoot">Tomar mis 3 fotos</button>
+      <button type="button" class="btn btn-secondary" id="btnCancelShoot" hidden>Cancelar</button>
+      <button type="button" class="btn btn-ghost" id="btnExitCamera">Salir de la cámara</button>
+    </div>
+  </section>
+
+  <!-- 3. Resultado -->
+  <section class="screen" id="screenResult" aria-labelledby="resultTitle" hidden>
+    <h2 id="resultTitle">Tu tira está lista</h2>
+    <div class="result-wrap">
+      <canvas id="stripCanvas" width="900" height="2400" role="img" aria-label="Tira vertical de tres fotos con marco SHE IA"></canvas>
+    </div>
+    <fieldset class="frames compact">
+      <legend>Cambiar marco</legend>
+      <div class="chip-row" role="radiogroup" aria-label="Marco de la tira">
+        <label class="chip"><input type="radio" name="frame2" value="esencial"><span>Esencial</span></label>
+        <label class="chip"><input type="radio" name="frame2" value="noche"><span>Noche</span></label>
+        <label class="chip"><input type="radio" name="frame2" value="conexion"><span>Conexión</span></label>
+      </div>
+    </fieldset>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="btnSaveStrip">Guardar tira de fotos</button>
+      <button type="button" class="btn btn-primary" id="btnSaveStory">Guardar para historias</button>
+      <button type="button" class="btn btn-secondary" id="btnShare">Compartir</button>
+      <button type="button" class="btn btn-ghost" id="btnRestart">Volver a empezar</button>
+    </div>
+    <p class="status" id="resultStatus" role="status" hidden></p>
+    <p class="fineprint">Compartir abre las opciones de tu teléfono. Desde ahí podés elegir Instagram u otra app; no se publica nada automáticamente.</p>
+  </section>
+
+  <p class="working" id="working" role="status" hidden>Preparando tu imagen…</p>
+</main>
+
+<footer class="foot">
+  <p>Mujeres en IA, creando el futuro · <strong>#SheIAExpo</strong></p>
+</footer>
+
+<input type="file" id="fileInput" accept="image/*" multiple hidden>
+<script src="app.js"></script>
+</body>
+</html>
